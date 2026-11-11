@@ -20,7 +20,7 @@ median, quartiles, minimum and maximum.  Standard library only, no network, temp
 
     python bench/scale_throughput.py --render OUT1.json [OUT2.json ...]     # markdown tables from saved results
 
-Run it from the repository root with PYTHONPATH=src (or with convpreserve installed).
+Run it from tooling/convpreserve with PYTHONPATH=src (or with convpreserve installed).
 """
 import argparse
 import gzip

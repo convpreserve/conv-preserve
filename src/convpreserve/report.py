@@ -1,7 +1,6 @@
 """Output formats of `check` and `batch`: text, json and GitHub-flavoured Markdown.
 
-`render_check_text` and `render_check_json` produce exactly what `convpreserve check` printed before this module
-existed (tab-separated lines; one pretty-printed JSON object).  `render_github` produces Markdown for a pull-request
+`render_check_text` and `render_check_json` format findings as tab-separated lines or a single JSON object.  `render_github` produces Markdown for a pull-request
 comment or a workflow step summary: a heading with the tier counts and the oracle version, then one table of
 findings (rule id, tier, path or field, meaning of the rule, detail); more than FOLD_AFTER findings are folded into a
 <details> block.  Standard library only.

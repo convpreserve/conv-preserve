@@ -1,4 +1,4 @@
-"""V11 tool-schema change (oracle v0.10 PREREG; dim Partition) with the L09 equivalence class.
+"""V11 tool-schema change with the L09 equivalence class.
 extract_tools(target, wire) -> {tool name: parameter schema | None}; canon(schema) -> canonical JSON Schema under L09;
 v11(src_tools, dst_tools) -> findings [{rule:'V11', sub:'a'|'b'|'c'|'d'|'e', tool, path, detail}].
 L09 (representation, not meaning): parameters ↔ parametersJsonSchema ↔ input_schema (and snake_case containers);
@@ -56,7 +56,7 @@ def canon(schema):
             nk = _camel(k) if k in ("property_ordering", "additional_properties", "min_items", "max_items", "min_length", "max_length", "exclusive_minimum", "exclusive_maximum", "multiple_of", "unique_items", "any_of", "one_of", "all_of") else k
             o[nk] = v
         s = o
-        for k in ("$schema", "title", "$defs", "definitions"): s.pop(k, None)   # propertyOrdering is NOT stripped: not in the PREREG L09 list (dropping it is V11.a)
+        for k in ("$schema", "title", "$defs", "definitions"): s.pop(k, None)   # propertyOrdering is NOT stripped: not in the L09 equivalence list (dropping it is V11.a)
         # single-member anyOf/oneOf/allOf == that member (JSON Schema semantics)
         for comb in ("anyOf", "oneOf", "allOf"):
             if isinstance(s.get(comb), list) and len(s[comb]) == 1 and isinstance(s[comb][0], dict):

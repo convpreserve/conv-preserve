@@ -5,15 +5,16 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "convpreserve"
 version = "0.1.0"
-description = "Deterministic checker for silent semantic changes when LLM API requests, responses and streams are translated between dialects"
+description = "Deterministic, rule-based test oracle for silent semantic changes across LLM API translators"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-keywords = ["llm", "api-gateway", "openai", "anthropic", "gemini", "translation", "testing"]
+keywords = ["llm", "api-gateway", "openai", "anthropic", "gemini", "translation", "testing", "oracle"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
@@ -22,8 +23,11 @@ classifiers = [
 ]
 dependencies = []
 
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pyyaml>=6.0"]
+
 [project.urls]
-Homepage = "https://github.com/convpreserve/conv-preserve"
+Homepage = "https://convpreserve.github.io"
 Repository = "https://github.com/convpreserve/conv-preserve"
 Issues = "https://github.com/convpreserve/conv-preserve/issues"
 
@@ -36,3 +40,6 @@ where = ["src"]
 [tool.setuptools.package-data]
 "convpreserve.data" = ["*.json", "*.json.gz"]
 "convpreserve.judge_v13" = ["SHA256SUMS", "CHANGES_FROM_V100.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

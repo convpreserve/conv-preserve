@@ -1,299 +1,297 @@
 {
- "version": 1,
- "description": "Curated common root causes per rule for `convpreserve explain`. Each note is one translator behaviour from the mechanism catalogue of the study, located in code, with the rule that reported it. Only rules for which the study has a located mechanism appear here; for every other rule `explain` prints that no curated notes exist yet.",
- "scope": "Translators and releases pinned in the study (see the source of each note); a note says what the code at those releases did, not what a current release does.",
- "kind_legend": {
-  "omission": "the handler for the enclosing construct never maps the field or block",
-  "explicit": "a statement actively produces the change (default injected, name rewritten, value folded into another field)"
- },
- "rule_mapping_source": "artifacts/g4/census_recount/src/mechanisms.py (RULES, symptom to mechanism) applied to artifacts/g4/census_recount_r2/out/per_cell_findings_v3_2026-10-12T0845Z.json (rule ids of the matched findings)",
- "counts_source": "paper/tables/mechanisms.tex (paths, cells, silent cells per mechanism; S-strict-R9 step-4 T1 cells)",
- "rules": {
-  "S03": [
-   {
-    "mechanism": "is_error_dropped",
-    "kind": "omission (7 paths), explicit (2 paths)",
-    "paths": [
-     "litellm->openai",
-     "fuergaosi233->openai",
-     "rosetta->openai",
-     "musistudio->openai",
-     "musistudio->gemini",
-     "aisdk5->openai",
-     "aisdk7->openai",
-     "aisdk5->gemini",
-     "aisdk7->gemini"
+  "version": 1,
+  "description": "Curated translator root causes per rule for `convpreserve explain`, grounded in pinned releases of the evaluated translation libraries.",
+  "scope": "Pinned translator versions evaluated in the accompanying study; behaviour in newer releases may differ.",
+  "kind_legend": {
+    "omission": "the handler for the enclosing construct never maps the field or block",
+    "explicit": "a statement actively produces the change (default injected, name rewritten, value folded into another field)"
+  },
+  "rules": {
+    "S03": [
+      {
+        "mechanism": "is_error_dropped",
+        "kind": "omission (7 paths), explicit (2 paths)",
+        "paths": [
+          "litellm->openai",
+          "fuergaosi233->openai",
+          "rosetta->openai",
+          "musistudio->openai",
+          "musistudio->gemini",
+          "aisdk5->openai",
+          "aisdk7->openai",
+          "aisdk5->gemini",
+          "aisdk7->gemini"
+        ],
+        "cells": 154,
+        "silent_cells": 92,
+        "cause": "The converter that turns a tool result into the target message never reads is_error: the target tool message is built from role, tool_call_id and content only (litellm, fuergaosi233, rosetta, musistudio), or the Gemini function response is built from the output without telling error text from text (aisdk). On the aisdk OpenAI exits an output of type error-text is written exactly like text.",
+        "source": "Study mechanism catalogue (is_error_dropped)"
+      }
     ],
-    "cells": 154,
-    "silent_cells": 92,
-    "cause": "The converter that turns a tool result into the target message never reads is_error: the target tool message is built from role, tool_call_id and content only (litellm, fuergaosi233, rosetta, musistudio), or the Gemini function response is built from the output without telling error text from text (aisdk). On the aisdk OpenAI exits an output of type error-text is written exactly like text.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism is_error_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ],
-  "S04": [
-   {
-    "mechanism": "list_tool_result_reencoded",
-    "kind": "explicit",
-    "paths": [
-     "rosetta->gemini"
+    "S04": [
+      {
+        "mechanism": "list_tool_result_reencoded",
+        "kind": "explicit",
+        "paths": [
+          "rosetta->gemini"
+        ],
+        "cells": 7,
+        "silent_cells": 7,
+        "cause": "A tool result given as a list of content blocks is converted to Google parts and embedded as functionResponse.response.output, a JSON list of {text: ...} objects, instead of the text itself.",
+        "caveat": "Marked in the source as a human-review item: whether this is a semantic change (T1) or a representation difference (T3) is a judgement.",
+        "source": "Study mechanism catalogue (list_tool_result_reencoded)"
+      },
+      {
+        "mechanism": "list_tool_result_split",
+        "kind": "explicit",
+        "paths": [
+          "aisdk5->gemini",
+          "aisdk7->gemini"
+        ],
+        "cells": 6,
+        "silent_cells": 6,
+        "cause": "On the legacy tool-result path (Gemini model names without function-response parts) a list result is written as one functionResponse per text part, with the same id repeated, instead of one response.",
+        "source": "Study mechanism catalogue (list_tool_result_split)"
+      }
     ],
-    "cells": 7,
-    "silent_cells": 7,
-    "cause": "A tool result given as a list of content blocks is converted to Google parts and embedded as functionResponse.response.output, a JSON list of {text: ...} objects, instead of the text itself.",
-    "caveat": "Marked in the source as a human-review item: whether this is a semantic change (T1) or a representation difference (T3) is a judgement.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism list_tool_result_reencoded); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "list_tool_result_split",
-    "kind": "explicit",
-    "paths": [
-     "aisdk5->gemini",
-     "aisdk7->gemini"
+    "S05": [
+      {
+        "mechanism": "list_tool_result_split",
+        "kind": "explicit",
+        "paths": [
+          "aisdk5->gemini",
+          "aisdk7->gemini"
+        ],
+        "cells": 6,
+        "silent_cells": 6,
+        "cause": "On the legacy tool-result path (Gemini model names without function-response parts) a list result is written as one functionResponse per text part, with the same id repeated, instead of one response.",
+        "source": "Study mechanism catalogue (list_tool_result_split)"
+      },
+      {
+        "mechanism": "redacted_thinking_dropped",
+        "kind": "omission",
+        "paths": [
+          "rosetta->openai",
+          "rosetta->gemini",
+          "rosetta->anthropic",
+          "musistudio->openai",
+          "musistudio->gemini",
+          "aisdk5->openai",
+          "aisdk7->openai",
+          "aisdk5->gemini",
+          "aisdk7->gemini"
+        ],
+        "cells": 261,
+        "silent_cells": 210,
+        "cause": "No handler exists for redacted_thinking blocks: rosetta's ingress part dispatcher returns no part for any block type other than text, image, document, tool_use, tool_result and thinking; musistudio's ingress reads only thinking blocks that carry a signature; the aisdk modules never mention redactedData. The block is dropped before a target converter runs.",
+        "source": "Study mechanism catalogue (redacted_thinking_dropped)"
+      },
+      {
+        "mechanism": "user_tail_text_dropped",
+        "kind": "omission",
+        "paths": [
+          "fuergaosi233->openai"
+        ],
+        "cells": 7,
+        "silent_cells": 2,
+        "cause": "A user message that contains tool_result blocks is consumed whole by the tool-result converter, which emits only the tool results; the text blocks of the same message are never emitted.",
+        "source": "Study mechanism catalogue (user_tail_text_dropped)"
+      }
     ],
-    "cells": 6,
-    "silent_cells": 6,
-    "cause": "On the legacy tool-result path (Gemini model names without function-response parts) a list result is written as one functionResponse per text part, with the same id repeated, instead of one response.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism list_tool_result_split); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ],
-  "S05": [
-   {
-    "mechanism": "list_tool_result_split",
-    "kind": "explicit",
-    "paths": [
-     "aisdk5->gemini",
-     "aisdk7->gemini"
+    "S06": [
+      {
+        "mechanism": "list_tool_result_split",
+        "kind": "explicit",
+        "paths": [
+          "aisdk5->gemini",
+          "aisdk7->gemini"
+        ],
+        "cells": 6,
+        "silent_cells": 6,
+        "cause": "On the legacy tool-result path (Gemini model names without function-response parts) a list result is written as one functionResponse per text part, with the same id repeated, instead of one response.",
+        "source": "Study mechanism catalogue (list_tool_result_split)"
+      },
+      {
+        "mechanism": "function_response_id_dropped",
+        "kind": "omission",
+        "paths": [
+          "musistudio->gemini"
+        ],
+        "cells": 37,
+        "silent_cells": 37,
+        "cause": "functionCall parts carry an id, but functionResponse parts are built from name and response only (no id key), so a Gemini function response cannot be matched to its call by id.",
+        "source": "Study mechanism catalogue (function_response_id_dropped)"
+      },
+      {
+        "mechanism": "function_response_name_by_position",
+        "kind": "explicit",
+        "paths": [
+          "musistudio->gemini"
+        ],
+        "cells": 13,
+        "silent_cells": 13,
+        "cause": "Responses are re-emitted in the order of the model's tool calls, each paired with its call by an id lookup, and written without ids; a reader that pairs by position sees a different name order than the source.",
+        "caveat": "Marked in the source as a human-review item: the observable change is result re-ordering plus the id drop, which is counted separately (function_response_id_dropped).",
+        "source": "Study mechanism catalogue (function_response_name_by_position)"
+      }
     ],
-    "cells": 6,
-    "silent_cells": 6,
-    "cause": "On the legacy tool-result path (Gemini model names without function-response parts) a list result is written as one functionResponse per text part, with the same id repeated, instead of one response.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism list_tool_result_split); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "redacted_thinking_dropped",
-    "kind": "omission",
-    "paths": [
-     "rosetta->openai",
-     "rosetta->gemini",
-     "rosetta->anthropic",
-     "musistudio->openai",
-     "musistudio->gemini",
-     "aisdk5->openai",
-     "aisdk7->openai",
-     "aisdk5->gemini",
-     "aisdk7->gemini"
+    "S07": [
+      {
+        "mechanism": "assistant_text_after_call_moved",
+        "kind": "explicit",
+        "paths": [
+          "musistudio->gemini",
+          "aisdk5->anthropic",
+          "aisdk7->anthropic"
+        ],
+        "cells": 54,
+        "silent_cells": 54,
+        "cause": "Assistant text that followed a tool call ends up before it: musistudio joins all assistant text blocks into one string and emits the text part before the functionCall parts; the aisdk Anthropic provider passes assistant content through moveToolUseBlocksToEnd.",
+        "source": "Study mechanism catalogue (assistant_text_after_call_moved)"
+      }
     ],
-    "cells": 261,
-    "silent_cells": 210,
-    "cause": "No handler exists for redacted_thinking blocks: rosetta's ingress part dispatcher returns no part for any block type other than text, image, document, tool_use, tool_result and thinking; musistudio's ingress reads only thinking blocks that carry a signature; the aisdk modules never mention redactedData. The block is dropped before a target converter runs.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism redacted_thinking_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "user_tail_text_dropped",
-    "kind": "omission",
-    "paths": [
-     "fuergaosi233->openai"
+    "S08": [
+      {
+        "mechanism": "control_max_tokens_dropped",
+        "kind": "omission",
+        "paths": [
+          "musistudio->gemini"
+        ],
+        "cells": 51,
+        "silent_cells": 51,
+        "cause": "generationConfig is built with thinkingConfig only; request.max_tokens is never copied into it.",
+        "source": "Study mechanism catalogue (control_max_tokens_dropped)"
+      },
+      {
+        "mechanism": "control_temperature_dropped",
+        "kind": "omission",
+        "paths": [
+          "musistudio->gemini"
+        ],
+        "cells": 32,
+        "silent_cells": 32,
+        "cause": "generationConfig never receives request.temperature.",
+        "source": "Study mechanism catalogue (control_temperature_dropped)"
+      },
+      {
+        "mechanism": "control_top_k_dropped",
+        "kind": "omission",
+        "paths": [
+          "fuergaosi233->openai",
+          "rosetta->openai",
+          "musistudio->openai",
+          "musistudio->gemini",
+          "aisdk5->openai",
+          "aisdk7->openai"
+        ],
+        "cells": 86,
+        "silent_cells": 55,
+        "cause": "The request builder forwards a fixed list of optional parameters that does not include top_k (fuergaosi233: stop_sequences and top_p only; musistudio: the unified request carries no top_k). rosetta and aisdk drop it with a runtime warning, i.e. as a declared degradation.",
+        "source": "Study mechanism catalogue (control_top_k_dropped)"
+      },
+      {
+        "mechanism": "control_top_p_dropped",
+        "kind": "omission (2 paths), explicit (1 path)",
+        "paths": [
+          "musistudio->openai",
+          "musistudio->gemini",
+          "aisdk7->anthropic"
+        ],
+        "cells": 39,
+        "silent_cells": 29,
+        "cause": "musistudio's unified request carries no top_p. The aisdk Anthropic provider deletes top_p with a warning when temperature is also set; this is declared at runtime and in the SDK documentation.",
+        "source": "Study mechanism catalogue (control_top_p_dropped)"
+      },
+      {
+        "mechanism": "control_stop_dropped",
+        "kind": "omission",
+        "paths": [
+          "musistudio->openai",
+          "musistudio->gemini"
+        ],
+        "cells": 34,
+        "silent_cells": 24,
+        "cause": "stop_sequences is never read at the Anthropic ingress: the unified request carries only messages, model, max_tokens, temperature, stream, tools and tool_choice.",
+        "source": "Study mechanism catalogue (control_stop_dropped)"
+      },
+      {
+        "mechanism": "control_user_id_dropped",
+        "kind": "omission",
+        "paths": [
+          "fuergaosi233->openai",
+          "rosetta->openai",
+          "rosetta->gemini",
+          "rosetta->anthropic",
+          "musistudio->openai",
+          "musistudio->gemini"
+        ],
+        "cells": 92,
+        "silent_cells": 71,
+        "cause": "The request-level metadata block (metadata.user_id) is never read: fuergaosi233 builds the body from model, messages, max_tokens, temperature, stream (plus stop, top_p); rosetta builds its intermediate request from system, messages, tools, tool_choice, config, reasoning and stream; musistudio's unified request has no metadata.",
+        "source": "Study mechanism catalogue (control_user_id_dropped)"
+      },
+      {
+        "mechanism": "control_parallel_tool_calls_dropped",
+        "kind": "omission",
+        "paths": [
+          "litellm->openai",
+          "fuergaosi233->openai",
+          "rosetta->gemini",
+          "musistudio->openai",
+          "musistudio->gemini"
+        ],
+        "cells": 41,
+        "silent_cells": 23,
+        "cause": "The tool_choice handler maps only type and name; disable_parallel_tool_use is never read and no parallel_tool_calls is set (litellm, fuergaosi233, musistudio). rosetta's Google tool-config converter returns an empty config, documented as having no direct mapping.",
+        "source": "Study mechanism catalogue (control_parallel_tool_calls_dropped)"
+      },
+      {
+        "mechanism": "control_temperature_injected",
+        "kind": "explicit",
+        "paths": [
+          "fuergaosi233->openai"
+        ],
+        "cells": 9,
+        "silent_cells": 3,
+        "cause": "The request model defaults temperature to 1.0 when the client sent none, and the defaulted value is always forwarded.",
+        "source": "Study mechanism catalogue (control_temperature_injected)"
+      },
+      {
+        "mechanism": "tool_choice_any_weakened_or_dropped",
+        "kind": "explicit",
+        "paths": [
+          "fuergaosi233->openai",
+          "musistudio->gemini"
+        ],
+        "cells": 16,
+        "silent_cells": 13,
+        "cause": "tool_choice type any has no equivalent branch: fuergaosi233 maps it to auto; musistudio passes it through as a string and its Gemini egress branches on auto, none, required and function name only, so any yields functionCallingConfig {} (no mode).",
+        "source": "Study mechanism catalogue (tool_choice_any_weakened_or_dropped)"
+      },
+      {
+        "mechanism": "tool_choice_forced_name_rewritten",
+        "kind": "explicit",
+        "paths": [
+          "litellm->openai"
+        ],
+        "cells": 10,
+        "silent_cells": 0,
+        "cause": "A forced tool_choice {type: tool, name} passes the name through the same truncate_tool_name rewrite as the tool list, so it changes only when the declared tool name is rewritten (dependent on tool_name_rewritten).",
+        "source": "Study mechanism catalogue (tool_choice_forced_name_rewritten)"
+      }
     ],
-    "cells": 7,
-    "silent_cells": 2,
-    "cause": "A user message that contains tool_result blocks is consumed whole by the tool-result converter, which emits only the tool results; the text blocks of the same message are never emitted.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism user_tail_text_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ],
-  "S06": [
-   {
-    "mechanism": "list_tool_result_split",
-    "kind": "explicit",
-    "paths": [
-     "aisdk5->gemini",
-     "aisdk7->gemini"
-    ],
-    "cells": 6,
-    "silent_cells": 6,
-    "cause": "On the legacy tool-result path (Gemini model names without function-response parts) a list result is written as one functionResponse per text part, with the same id repeated, instead of one response.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism list_tool_result_split); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "function_response_id_dropped",
-    "kind": "omission",
-    "paths": [
-     "musistudio->gemini"
-    ],
-    "cells": 37,
-    "silent_cells": 37,
-    "cause": "functionCall parts carry an id, but functionResponse parts are built from name and response only (no id key), so a Gemini function response cannot be matched to its call by id.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism function_response_id_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "function_response_name_by_position",
-    "kind": "explicit",
-    "paths": [
-     "musistudio->gemini"
-    ],
-    "cells": 13,
-    "silent_cells": 13,
-    "cause": "Responses are re-emitted in the order of the model's tool calls, each paired with its call by an id lookup, and written without ids; a reader that pairs by position sees a different name order than the source.",
-    "caveat": "Marked in the source as a human-review item: the observable change is result re-ordering plus the id drop, which is counted separately (function_response_id_dropped).",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism function_response_name_by_position); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ],
-  "S07": [
-   {
-    "mechanism": "assistant_text_after_call_moved",
-    "kind": "explicit",
-    "paths": [
-     "musistudio->gemini",
-     "aisdk5->anthropic",
-     "aisdk7->anthropic"
-    ],
-    "cells": 54,
-    "silent_cells": 54,
-    "cause": "Assistant text that followed a tool call ends up before it: musistudio joins all assistant text blocks into one string and emits the text part before the functionCall parts; the aisdk Anthropic provider passes assistant content through moveToolUseBlocksToEnd.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism assistant_text_after_call_moved); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ],
-  "S08": [
-   {
-    "mechanism": "control_max_tokens_dropped",
-    "kind": "omission",
-    "paths": [
-     "musistudio->gemini"
-    ],
-    "cells": 51,
-    "silent_cells": 51,
-    "cause": "generationConfig is built with thinkingConfig only; request.max_tokens is never copied into it.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_max_tokens_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_temperature_dropped",
-    "kind": "omission",
-    "paths": [
-     "musistudio->gemini"
-    ],
-    "cells": 32,
-    "silent_cells": 32,
-    "cause": "generationConfig never receives request.temperature.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_temperature_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_top_k_dropped",
-    "kind": "omission",
-    "paths": [
-     "fuergaosi233->openai",
-     "rosetta->openai",
-     "musistudio->openai",
-     "musistudio->gemini",
-     "aisdk5->openai",
-     "aisdk7->openai"
-    ],
-    "cells": 86,
-    "silent_cells": 55,
-    "cause": "The request builder forwards a fixed list of optional parameters that does not include top_k (fuergaosi233: stop_sequences and top_p only; musistudio: the unified request carries no top_k). rosetta and aisdk drop it with a runtime warning, i.e. as a declared degradation.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_top_k_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_top_p_dropped",
-    "kind": "omission (2 paths), explicit (1 path)",
-    "paths": [
-     "musistudio->openai",
-     "musistudio->gemini",
-     "aisdk7->anthropic"
-    ],
-    "cells": 39,
-    "silent_cells": 29,
-    "cause": "musistudio's unified request carries no top_p. The aisdk Anthropic provider deletes top_p with a warning when temperature is also set; this is declared at runtime and in the SDK documentation.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_top_p_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_stop_dropped",
-    "kind": "omission",
-    "paths": [
-     "musistudio->openai",
-     "musistudio->gemini"
-    ],
-    "cells": 34,
-    "silent_cells": 24,
-    "cause": "stop_sequences is never read at the Anthropic ingress: the unified request carries only messages, model, max_tokens, temperature, stream, tools and tool_choice.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_stop_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_user_id_dropped",
-    "kind": "omission",
-    "paths": [
-     "fuergaosi233->openai",
-     "rosetta->openai",
-     "rosetta->gemini",
-     "rosetta->anthropic",
-     "musistudio->openai",
-     "musistudio->gemini"
-    ],
-    "cells": 92,
-    "silent_cells": 71,
-    "cause": "The request-level metadata block (metadata.user_id) is never read: fuergaosi233 builds the body from model, messages, max_tokens, temperature, stream (plus stop, top_p); rosetta builds its intermediate request from system, messages, tools, tool_choice, config, reasoning and stream; musistudio's unified request has no metadata.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_user_id_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_parallel_tool_calls_dropped",
-    "kind": "omission",
-    "paths": [
-     "litellm->openai",
-     "fuergaosi233->openai",
-     "rosetta->gemini",
-     "musistudio->openai",
-     "musistudio->gemini"
-    ],
-    "cells": 41,
-    "silent_cells": 23,
-    "cause": "The tool_choice handler maps only type and name; disable_parallel_tool_use is never read and no parallel_tool_calls is set (litellm, fuergaosi233, musistudio). rosetta's Google tool-config converter returns an empty config, documented as having no direct mapping.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_parallel_tool_calls_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "control_temperature_injected",
-    "kind": "explicit",
-    "paths": [
-     "fuergaosi233->openai"
-    ],
-    "cells": 9,
-    "silent_cells": 3,
-    "cause": "The request model defaults temperature to 1.0 when the client sent none, and the defaulted value is always forwarded.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism control_temperature_injected); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "tool_choice_any_weakened_or_dropped",
-    "kind": "explicit",
-    "paths": [
-     "fuergaosi233->openai",
-     "musistudio->gemini"
-    ],
-    "cells": 16,
-    "silent_cells": 13,
-    "cause": "tool_choice type any has no equivalent branch: fuergaosi233 maps it to auto; musistudio passes it through as a string and its Gemini egress branches on auto, none, required and function name only, so any yields functionCallingConfig {} (no mode).",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism tool_choice_any_weakened_or_dropped); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   },
-   {
-    "mechanism": "tool_choice_forced_name_rewritten",
-    "kind": "explicit",
-    "paths": [
-     "litellm->openai"
-    ],
-    "cells": 10,
-    "silent_cells": 0,
-    "cause": "A forced tool_choice {type: tool, name} passes the name through the same truncate_tool_name rewrite as the tool list, so it changes only when the declared tool name is rewritten (dependent on tool_name_rewritten).",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism tool_choice_forced_name_rewritten); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ],
-  "S09": [
-   {
-    "mechanism": "tool_name_rewritten",
-    "kind": "explicit",
-    "paths": [
-     "litellm->openai"
-    ],
-    "cells": 26,
-    "silent_cells": 0,
-    "cause": "Tool names longer than 64 characters are replaced by a 55-character prefix, an underscore and 8 hex characters of a SHA-256 of the name, for every tool in the request; the library keeps a mapping table to restore the name.",
-    "source": "artifacts/g4/mechanism_code_locations/out/mechanism_code_locations_2026-10-12T0939Z.json (mechanism tool_name_rewritten); paper/tables/mechanisms.tex; paper/CLAIMS.md C-604"
-   }
-  ]
- }
+    "S09": [
+      {
+        "mechanism": "tool_name_rewritten",
+        "kind": "explicit",
+        "paths": [
+          "litellm->openai"
+        ],
+        "cells": 26,
+        "silent_cells": 0,
+        "cause": "Tool names longer than 64 characters are replaced by a 55-character prefix, an underscore and 8 hex characters of a SHA-256 of the name, for every tool in the request; the library keeps a mapping table to restore the name.",
+        "source": "Study mechanism catalogue (tool_name_rewritten)"
+      }
+    ]
+  }
 }

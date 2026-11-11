@@ -1,7 +1,7 @@
-"""Core comparator for Oracle v1.3 (Oracle v1.0 with the changes in CHANGES_FROM_V100.md; `PREREG_V100.md` §2-4 for the rest).
+"""Core comparator for Oracle v1.3 (Oracle v1.0 with the changes in CHANGES_FROM_V100.md).
 Exposes `Finding(rule_id, tier, object_id, detail, evidence)` and
 `compare(src_body, src_dialect, dst_body, dst_dialect, side, *, context=None) -> list[Finding]`.
-Supports ablation switches `V100_DISABLE=P1,...,P6` (`PREREG_V100.md` §4, §5 P-V100-15).
+Supports ablation switches `V100_DISABLE=P1,...,P6`.
 Zero vendor wire field names or sentinel strings live in Python code; all come from `carriers.json`.
 """
 from collections import namedtuple

@@ -140,8 +140,7 @@ class TestVendorTokensOnCommandLine(unittest.TestCase):
 # SHA-256 of json.dumps([exit code, stdout, stderr]) of the runs below, taken from the sources before `--context` list
 # parsing was added. The directory of examples/ is replaced by "<EX>" because the github format prints the file paths,
 # and the SHA-256 of carriers.json by "<CARRIERS>" because the JSON output carries it and a copy of the package may
-# have another metadata string in that file. The json and github digests were re-taken after the package rename;
-# the outputs equal the earlier ones with only the package name replaced.
+# have another metadata string in that file.
 GOLDEN = {
     "check_text": "942b224f97e3f39a8ea8b71ada4c46c9d94419e18c0eea9323c447a8af91f7a9",
     "batch_text": "efb7e506830c15706e3deebb1a377865555aa43c0a0b3b5b2e2d88582e315c52",

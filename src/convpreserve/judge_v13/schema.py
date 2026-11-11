@@ -1,5 +1,4 @@
-"""Tool JSON-Schema structural/constraint checker (`S11` T1 vs `R06` T3) for Oracle v1.0 (`PREREG_V100.md` §3-4).
-Imports `artifacts/g1/m1/procheck/schemacanon.py` read-only (`PREREG_V100.md` §1).
+"""Tool JSON-Schema structural/constraint checker (`S11` T1 vs `R06` T3) for Oracle v1.0.
 All keyword sets are loaded from `carriers.py` (`carriers.json`).
 """
 import json
@@ -8,7 +7,7 @@ import sys
 from . import carriers as C
 
 _HERE = os.path.dirname(os.path.abspath(__file__))
-from . import schemacanon as _sc  # read-only import authorized by PREREG_V100.md §1
+from . import schemacanon as _sc
 
 
 def _norm_ws(s):

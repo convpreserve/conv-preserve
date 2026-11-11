@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Throughput of convpreserve on the bundled selftest sample (feeds figure G7).
+"""Throughput of convpreserve on the bundled selftest sample.
 
 Judges every record of src/convpreserve/data/selftest_sample.json.gz through
 convpreserve.judge.judge.compare, 5 timed runs after 1 warm-up run, and reports the

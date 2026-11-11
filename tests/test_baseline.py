@@ -184,7 +184,7 @@ class TestCheckBaseline(Tmp):
             json.dump({"findings": []}, f)
         code, _, err = run(CHECK + ["--baseline", wrong] + self.PAIR)
         self.assertEqual(code, 2)
-        self.assertIn("is not an convpreserve baseline", err)
+        self.assertIn("is not a convpreserve baseline", err)
         noentry = self.p("noentry.json")
         with open(noentry, "w") as f:
             json.dump({"convpreserve_baseline": 1, "entries": [{"rule_id": "S08"}]}, f)

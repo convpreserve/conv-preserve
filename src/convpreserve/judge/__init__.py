@@ -1,4 +1,4 @@
-"""Oracle v1.0 judge package (PREREG_V100.md)."""
+"""Oracle v1.0 judge package."""
 from .judge import compare, Finding
 from .ir import parse_ir
 from .carriers import load_carriers, resolve_dialect

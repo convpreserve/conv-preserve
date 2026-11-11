@@ -55,7 +55,7 @@
       "tier": "T1",
       "principle": "P2",
       "replaces": "V07",
-      "meaning": "causal partial order violated: edge families E1-E5 of CAUSAL_ORDER.md \u00a72, with sibling tool_results unordered (R07)"
+      "meaning": "causal partial order violated across edge families E1-E5, with sibling tool_results unordered (R07)"
     },
     {
       "id": "S08",

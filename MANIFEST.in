@@ -1,5 +1,5 @@
-include LICENSE README.md CITATION.cff VENDORED.md CHANGELOG.md
-recursive-include examples *.json *.jsonl *.sse *.py
+include LICENSE README.md CHANGELOG.md
+recursive-include examples *.json *.jsonl *.sse *.py *.yml *.yaml
 recursive-include bench *.py
 recursive-include tests *.py *.md
 global-exclude __pycache__ *.py[cod]

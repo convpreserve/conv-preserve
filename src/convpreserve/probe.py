@@ -6,9 +6,6 @@ request shapes to the gateway under test, captures the request body the gateway 
 judges (source shape, forwarded body) on the request side.  Only requests are examined; the sink returns a
 minimal valid non-streaming reply.  Standard library only.
 
-The sink replies follow the mock upstream of tooling/leaderboard/drivers/driver_gateways.py (MockRecorder,
-ANTH_OK, GEM_OK, OAI_OK); the Responses reply follows
-artifacts/g4/release_recheck_2026-10-11/src/verify_fixed_items.py.
 
 Exit codes: 0 no finding at or above --fail-on, 1 at least one such finding, 2 usage, bind or connection error.
 """

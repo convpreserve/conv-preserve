@@ -61,7 +61,7 @@ def load(path):
     except ValueError as e:
         raise ValueError(f"baseline {path} is not valid JSON: {e}") from e
     if not isinstance(doc, dict) or doc.get("convpreserve_baseline") != FORMAT or not isinstance(doc.get("entries"), list):
-        raise ValueError(f"baseline {path} is not an convpreserve baseline (format {FORMAT}); "
+        raise ValueError(f"baseline {path} is not a convpreserve baseline (format {FORMAT}); "
                          "create one with --write-baseline")
     keys = set()
     for i, e in enumerate(doc["entries"]):

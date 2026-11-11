@@ -1,4 +1,4 @@
-"""Unified 4-dialect × {request, response, stream} IR for Oracle v1.0 (`PREREG_V100.md` §4).
+"""Unified 4-dialect × {request, response, stream} IR for Oracle v1.0.
 All vendor wire field names, role names, block/item types, error carriers, and stop maps
 are read exclusively from `carriers.py` (`carriers.json`).
 """

@@ -1,4 +1,4 @@
-"""Causal partial order checker (`E1`–`E5` + `R07`) for Oracle v1.0 (`CAUSAL_ORDER.md` §2, `PREREG_V100.md` §3).
+"""Causal partial order checker (`E1`–`E5` + `R07`) for Oracle v1.0.
 Zero vendor wire field names live here; operates exclusively on unified IR events.
 """
 import re

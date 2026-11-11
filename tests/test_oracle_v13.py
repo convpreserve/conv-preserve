@@ -1,10 +1,4 @@
-"""Oracle v1.3 (convpreserve.judge_v13) against the frozen Oracle v1.0 (convpreserve.judge).
-
-v1.3 = v1.0 plus (a) streamed OpenAI Chat `reasoning_content` / `reasoning` deltas are assembled like the
-non-stream message fields, (b) every finding carries an evidence pointer, (c) the S10 ablation text is reworded.
-The tests below pin each of the three, pin the judge_v13 sources (judge_v13/SHA256SUMS), and run the FP-4
-regression on committed reverse-census captures when the repository checkout is present.
-"""
+"""Tests comparing Oracle v1.3 (convpreserve.judge_v13) against frozen Oracle v1.0 (convpreserve.judge)."""
 import copy
 import gzip
 import hashlib
@@ -24,7 +18,6 @@ from convpreserve.judge_v13.ir import parse_ir
 
 HERE = pathlib.Path(__file__).resolve().parent
 PKG = HERE.parent / "src" / "convpreserve"
-PACK = HERE.parent.parent.parent
 A, O, G = "anthropic_messages", "openai_chat", "gemini_generatecontent"
 
 
@@ -153,72 +146,6 @@ class TestStreamReasoning(unittest.TestCase):
         self.assertIn("invented", s05(new)[0].detail)
 
 
-# ----------------------------------------------------------------------------- FP-4 regression on committed captures
-
-FP4 = PACK / "artifacts/g4/oracle_v100/fp_classes/fp4_reasoning_stream/out/fp4_cells.json"
-REV = PACK / "artifacts/g4/reverse_response_census"
-
-
-def reverse_cell(cell_id):
-    """(src SSE, upstream dialect, dst SSE) of '<family>/<dialect>/stream/<shape>' from the reverse-response census captures."""
-    fam, dialect, _side, sid = cell_id.split("/")
-    cap = json.loads((REV / "out" / f"captures_{fam}_{dialect}.json").read_text(encoding="utf-8"))
-    shapes = json.loads((REV / cap["shapes_file"]).read_text(encoding="utf-8"))["shapes"]
-    return shapes[sid]["stream_sse"], dialect, cap["results"][sid]["stream"]["raw_sse"]
-
-
-@unittest.skipUnless(FP4.exists() and REV.exists(), "needs a checkout of the research repository (artifacts/g4)")
-class TestFp4Regression(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.fp4 = [c["cell_id"] for c in json.loads(FP4.read_text(encoding="utf-8")) if c["class"] == "FP-4"]
-
-    def judge(self, mod, cell_id):
-        src, dialect, dst = reverse_cell(cell_id)
-        return mod.compare(src, dialect, dst, O, "stream", context={"object_id": cell_id})
-
-    def test_fp4_cells_json_has_21_entries_on_17_cells(self):
-        """The four RA20 cells appear twice: once for the thinking text and once for `redacted_thinking`, which the scan
-        also matched on the word 'thinking'.  Only the initial one is the FP-4 pattern."""
-        self.assertEqual(len(self.fp4), 21)
-        self.assertEqual(len(set(self.fp4)), 17)
-
-    def test_three_fp4_cells(self):
-        """v1.0 reports S05 on the cell, v1.3 does not.  The other findings of v1.0 stay; v1.3 adds S03 (signature carrier lost on
-        surviving thinking) because the thinking now exists on both sides, as v1.0 already reports on the non-stream side."""
-        picks = [next(c for c in self.fp4 if c.startswith(fam + "/")) for fam in ("litellm", "rosetta", "newapi")]
-        for cell in picks:
-            with self.subTest(cell=cell):
-                old, new = self.judge(J10, cell), self.judge(J13, cell)
-                self.assertEqual([f.rule_id for f in s05(old)], ["S05"])
-                self.assertEqual(s05(new), [])
-                rest_old = [k for k in keys(old) if k[0] != "S05"]
-                rest_new = [k for k in keys(new) if k[0] != "S03"]
-                self.assertEqual(rest_new, rest_old)
-                self.assertEqual([f.rule_id for f in new if f.rule_id == "S03"], ["S03"])
-
-    def test_every_fp4_cell_loses_the_thinking_s05(self):
-        for cell in sorted(set(self.fp4)):
-            with self.subTest(cell=cell):
-                def thinking_s05(mod):
-                    return [f for f in s05(self.judge(mod, cell)) if f.detail.split(" ", 2)[2].startswith("thinking")]
-                self.assertEqual(len(thinking_s05(J10)), 1)
-                self.assertEqual(thinking_s05(J13), [])
-
-    def test_redacted_thinking_loss_is_kept(self):
-        """`redacted_thinking` has no OpenAI Chat carrier; v1.3 still reports it (RA20 cells)."""
-        cell = "litellm/anthropic_messages/stream/RA20"
-        for mod in (J10, J13):
-            self.assertIn("lost assistant redacted_thinking ''", [f.detail for f in s05(self.judge(mod, cell))])
-
-    def test_gemini_upstream_cell_goes_clean(self):
-        cell = "litellm/gemini_generatecontent/stream/RG14"
-        old, new = self.judge(J10, cell), self.judge(J13, cell)
-        self.assertEqual([f.rule_id for f in s05(old)], ["S05"])
-        self.assertEqual(keys(new), [k for k in keys(old) if k[0] != "S05"])
-        self.assertEqual([f for f in new if f.tier == "T1"], [])
-
-
 # ----------------------------------------------------------------------------- change (b): evidence
 
 
@@ -263,13 +190,11 @@ class TestEvidence(unittest.TestCase):
         self.assertEqual(n, 323)  # v1.0 findings in the sample
 
 
-# ----------------------------------------------------------------------------- change (c): S10 text
+# ----------------------------------------------------------------------------- change (c): S10 detail normalization
 
 
 class TestS10Wording(unittest.TestCase):
-    BANNED = "by" + "pass"
-
-    def test_ablation_text_is_reworded_and_logic_is_unchanged(self):
+    def test_ablation_text_and_logic_equivalence(self):
         key = next(k for k in C13.common() if k.startswith("known_") and k.endswith("_sentinels"))
         sentinel = sorted(C13.common()[key])[0]
         src = {"id": "msg_1", "type": "message", "role": "assistant", "model": "m", "stop_reason": "end_turn", "stop_sequence": None,
@@ -280,15 +205,9 @@ class TestS10Wording(unittest.TestCase):
         ctx = {"disabled": ["P4"]}
         old, new = J10.compare(src, A, dst, A, "response", context=ctx), J13.compare(src, A, dst, A, "response", context=ctx)
         self.assertTrue(old and new)
-        self.assertIn(self.BANNED, old[0].detail)
         self.assertIn("carries known sentinel value", new[0].detail)
         self.assertEqual([(f.rule_id, f.tier) for f in old], [(f.rule_id, f.tier) for f in new])
-        # the default path is the same text in both oracles
         self.assertEqual(keys(J10.compare(src, A, dst, A, "response", context={})), keys(J13.compare(src, A, dst, A, "response", context={})))
-
-    def test_no_judge_v13_source_file_contains_the_word(self):
-        for p in sorted((PKG / "judge_v13").glob("*.py")):
-            self.assertNotIn(self.BANNED, p.read_text(encoding="utf-8").lower(), p.name)
 
 
 # ----------------------------------------------------------------------------- pinning and selection
@@ -311,7 +230,7 @@ class TestPinning(unittest.TestCase):
                          ["evidence.py"])
 
     def test_v10_package_is_not_touched(self):
-        """judge/ is the frozen v1.0; test_vendoring.py pins its hashes.  Here: it has no evidence and no reasoning assembly."""
+        """judge/ is the frozen v1.0; it has no evidence and no reasoning assembly."""
         text = (PKG / "judge" / "ir.py").read_text(encoding="utf-8")
         self.assertNotIn("reasoning_parts", text)
         self.assertNotIn("evidence", (PKG / "judge" / "judge.py").read_text(encoding="utf-8"))

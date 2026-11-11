@@ -437,12 +437,11 @@ def _cmd_dialects(_args):
 
 
 def _cmd_version(_args):
-    oracle_commit = ORACLE_VERSION.split("frozen at ")[1].split(",")[0]
     d = default_oracle()
     sha = _get_carriers_sha()
-    print(f"convpreserve {__version__} / oracle v1.0 ({oracle_commit}, frozen)" + (" [default]" if d == "v1.0" else "")
-          + f" / carriers.json sha256 {sha}")
-    print(f"convpreserve {__version__} / oracle v1.3 (v1.0 {oracle_commit} plus the changes in CHANGELOG.md)"
+    print(f"convpreserve {__version__} / oracle v1.0 (frozen paper baseline)"
+          + (" [default]" if d == "v1.0" else "") + f" / carriers.json sha256 {sha}")
+    print(f"convpreserve {__version__} / oracle v1.3 (stream reasoning + JSON Pointer evidence)"
           + (" [default]" if d == "v1.3" else "") + f" / carriers.json sha256 {sha}")
     return 0
 
