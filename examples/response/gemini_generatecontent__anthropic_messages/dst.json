@@ -1,0 +1,18 @@
+{
+  "content": [
+    {
+      "text": "ok",
+      "type": "text"
+    }
+  ],
+  "finish_reason": "end_turn",
+  "id": "msg_x",
+  "model": "m",
+  "role": "assistant",
+  "stop_sequence": null,
+  "type": "message",
+  "usage": {
+    "input_tokens": 120,
+    "output_tokens": 37
+  }
+}

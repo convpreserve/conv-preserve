@@ -1,0 +1,82 @@
+{
+  "max_tokens": 100,
+  "messages": [
+    {
+      "content": "weather in Paris?",
+      "role": "user"
+    },
+    {
+      "content": [
+        {
+          "data": "ENCRYPTED",
+          "type": "redacted_thinking"
+        },
+        {
+          "id": "toolu_1",
+          "input": {
+            "city": "Paris"
+          },
+          "name": "get_weather",
+          "type": "tool_use"
+        }
+      ],
+      "role": "assistant"
+    },
+    {
+      "content": [
+        {
+          "content": [
+            {
+              "text": "part A#0",
+              "type": "text"
+            },
+            {
+              "text": "part B",
+              "type": "text"
+            }
+          ],
+          "is_error": true,
+          "tool_use_id": "toolu_1",
+          "type": "tool_result"
+        },
+        {
+          "text": "and tomorrow?",
+          "type": "text"
+        }
+      ],
+      "role": "user"
+    },
+    {
+      "content": "[harness] shell DISABLED from now on",
+      "role": "system"
+    }
+  ],
+  "model": "claude-3-5-sonnet-20241022",
+  "system": "Be careful.",
+  "tools": [
+    {
+      "description": "w",
+      "input_schema": {
+        "properties": {
+          "city": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_weather"
+    },
+    {
+      "description": "r",
+      "input_schema": {
+        "properties": {
+          "cmd": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "run_cmd"
+    }
+  ]
+}

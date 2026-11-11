@@ -1,0 +1,17 @@
+# Hook definitions for https://pre-commit.com. Reference them from a .pre-commit-config.yaml; see
+# examples/ci/pre-commit-config.yaml.
+- id: convpreserve-batch
+  name: convpreserve batch
+  description: Run `convpreserve batch` on each changed pair manifest (JSONL) and fail on T1 findings.
+  entry: bash -c 'rc=0; for f in "$@"; do convpreserve batch "$f" --fail-on T1 || rc=1; done; exit $rc' --
+  language: python
+  files: 'convpreserve.*\.jsonl$'
+  types: [file]
+
+- id: convpreserve-selftest
+  name: convpreserve selftest
+  description: Replay the bundled self-test sample for both oracles; fails if the installed judge does not reproduce it.
+  entry: bash -c 'convpreserve selftest --oracle v1.0 && convpreserve selftest --oracle v1.3'
+  language: python
+  pass_filenames: false
+  always_run: true

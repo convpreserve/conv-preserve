@@ -1,0 +1,23 @@
+{
+  "choices": [
+    {
+      "finish_reason": "length",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "The quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog. The quick ",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1700000000,
+  "id": "chatcmpl-abc",
+  "model": "m",
+  "object": "chat.completion",
+  "system_fingerprint": "fp_1",
+  "usage": {
+    "completion_tokens": 37,
+    "prompt_tokens": 120,
+    "total_tokens": 157
+  }
+}

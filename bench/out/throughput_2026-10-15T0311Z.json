@@ -1,0 +1,40 @@
+{
+  "convpreserve": "0.1.0",
+  "pairs": 400,
+  "runs": 5,
+  "seconds_per_run": [
+    0.0784356240183115,
+    0.08620820799842477,
+    0.0819474239833653,
+    0.07968104188330472,
+    0.07872303295880556
+  ],
+  "pairs_per_s_per_run": [
+    5099.723563193893,
+    4639.929413766598,
+    4881.1784502365435,
+    5020.0146803528505,
+    5081.105045956668
+  ],
+  "median_pairs_per_s": 5020.0146803528505,
+  "median_seconds_per_run": 0.07968104188330472,
+  "by_side": {
+    "request": {
+      "pairs": 112,
+      "median_pairs_per_s": 3548.7776140955
+    },
+    "response": {
+      "pairs": 129,
+      "median_pairs_per_s": 12101.464343573205
+    },
+    "stream": {
+      "pairs": 159,
+      "median_pairs_per_s": 4942.137067856069
+    }
+  },
+  "sample_sha256": "27460b7d824b7839d07e5b916ed224742719d5f0024cd5174877181058405809",
+  "python": "3.12.14",
+  "platform": "Linux-7.1.6-1rodete1-amd64-x86_64-with-glibc2.43",
+  "cpu": "Intel(R) Xeon(R) CPU @ 2.60GHz",
+  "timestamp_utc": "2026-10-15T03:11Z"
+}

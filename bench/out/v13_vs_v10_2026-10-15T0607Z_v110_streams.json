@@ -1,0 +1,35 @@
+{
+ "masked_words_in_payload_text": 0,
+ "scopes": {
+  "v110_streams": {
+   "calls_with_openai_chat_stream_side": 15154,
+   "cells": 16677,
+   "cells_with_different_findings": 0,
+   "cells_with_exception_v10_or_v13": 0,
+   "changed_calls_with_openai_chat_stream_side": 0,
+   "changed_cells": [],
+   "exit": null,
+   "findings_added_by_rule": {},
+   "findings_removed_by_rule": {},
+   "runner": "artifacts/g4/oracle_v110_study/captures/src/eval_stream_captures.py",
+   "runner_outputs_difference_detail": {},
+   "runner_outputs_equal_committed": {
+    "artifacts/g4/oracle_v110_study/captures/out/stream_captures_v100_v110.json": true
+   },
+   "tier_counts_v10": {
+    "T1": 5990,
+    "T2": 8477,
+    "T3": 1990,
+    "none": 220
+   },
+   "tier_counts_v13": {
+    "T1": 5990,
+    "T2": 8477,
+    "T3": 1990,
+    "none": 220
+   },
+   "tier_transitions": {},
+   "wall_time_sec": 15.5
+  }
+ }
+}

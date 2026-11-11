@@ -1,0 +1,936 @@
+{
+ "correction_layer": {
+  "aggregate_turns_t1v10_t1v13": {
+   "Continue-CLI": [
+    12,
+    7,
+    3
+   ],
+   "Goose": [
+    15,
+    10,
+    6
+   ],
+   "OpenCode": [
+    12,
+    7,
+    3
+   ],
+   "cliproxyapi": [
+    18,
+    6,
+    0
+   ],
+   "cliproxyapi/gemini_generatecontent": [
+    9,
+    0,
+    0
+   ],
+   "cliproxyapi/openai_chat": [
+    9,
+    6,
+    0
+   ],
+   "gemini_generatecontent": [
+    21,
+    12,
+    12
+   ],
+   "openai_chat": [
+    18,
+    12,
+    0
+   ],
+   "rosetta": [
+    21,
+    18,
+    12
+   ],
+   "rosetta/gemini_generatecontent": [
+    12,
+    12,
+    12
+   ],
+   "rosetta/openai_chat": [
+    9,
+    6,
+    0
+   ]
+  },
+  "changed_hop_a_cells": 0,
+  "changed_hop_b_cells": 12,
+  "changed_hop_cells": [
+   {
+    "agent": "Goose",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ],
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ]
+    ],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "T2",
+    "translator": "rosetta",
+    "turn": 1,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Goose",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ],
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ]
+    ],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "T2",
+    "translator": "rosetta",
+    "turn": 2,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Goose",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "CLEAN",
+    "translator": "cliproxyapi",
+    "turn": 1,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Goose",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "CLEAN",
+    "translator": "cliproxyapi",
+    "turn": 2,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Continue-CLI",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ],
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ]
+    ],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "T2",
+    "translator": "rosetta",
+    "turn": 1,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Continue-CLI",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ],
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ]
+    ],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "T2",
+    "translator": "rosetta",
+    "turn": 2,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Continue-CLI",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "CLEAN",
+    "translator": "cliproxyapi",
+    "turn": 1,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "Continue-CLI",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "CLEAN",
+    "translator": "cliproxyapi",
+    "turn": 2,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "OpenCode",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ],
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ]
+    ],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "T2",
+    "translator": "rosetta",
+    "turn": 1,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "OpenCode",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ],
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [
+     [
+      [
+       "D04",
+       "T2"
+      ],
+      1
+     ],
+     [
+      [
+       "R08",
+       "T3"
+      ],
+      1
+     ]
+    ],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "T2",
+    "translator": "rosetta",
+    "turn": 2,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "OpenCode",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "CLEAN",
+    "translator": "cliproxyapi",
+    "turn": 1,
+    "upstream": "openai_chat"
+   },
+   {
+    "agent": "OpenCode",
+    "exception_v13": null,
+    "findings_v10": [
+     [
+      [
+       "S05",
+       "T1"
+      ],
+      1
+     ]
+    ],
+    "findings_v13": [],
+    "hop": "hop_b_return",
+    "t1_count_v10": 1,
+    "t1_count_v13": 0,
+    "tier_v10": "T1",
+    "tier_v13": "CLEAN",
+    "translator": "cliproxyapi",
+    "turn": 2,
+    "upstream": "openai_chat"
+   }
+  ],
+  "distribution_translator_x_upstream_x_agent": {
+   "cliproxyapi x gemini_generatecontent x Continue-CLI": {
+    "hop_b_t1_counts_per_turn_v10": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 0,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "cliproxyapi x gemini_generatecontent x Goose": {
+    "hop_b_t1_counts_per_turn_v10": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 0,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "cliproxyapi x gemini_generatecontent x OpenCode": {
+    "hop_b_t1_counts_per_turn_v10": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 0,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "cliproxyapi x openai_chat x Continue-CLI": {
+    "hop_b_t1_counts_per_turn_v10": [
+     1,
+     1,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [
+     "S05"
+    ],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 2,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "cliproxyapi x openai_chat x Goose": {
+    "hop_b_t1_counts_per_turn_v10": [
+     1,
+     1,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [
+     "S05"
+    ],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 2,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "cliproxyapi x openai_chat x OpenCode": {
+    "hop_b_t1_counts_per_turn_v10": [
+     1,
+     1,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [
+     "S05"
+    ],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 2,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "rosetta x gemini_generatecontent x Continue-CLI": {
+    "hop_b_t1_counts_per_turn_v10": [
+     2,
+     2,
+     1
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     2,
+     2,
+     1
+    ],
+    "hop_b_t1_rules_v10": [
+     "S03",
+     "S05",
+     "S12"
+    ],
+    "hop_b_t1_rules_v13": [
+     "S03",
+     "S05",
+     "S12"
+    ],
+    "hop_b_t1_turns_v10": 3,
+    "hop_b_t1_turns_v13": 3,
+    "turns": 3
+   },
+   "rosetta x gemini_generatecontent x Goose": {
+    "hop_b_t1_counts_per_turn_v10": [
+     2,
+     2,
+     1,
+     1,
+     1,
+     1
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     2,
+     2,
+     1,
+     1,
+     1,
+     1
+    ],
+    "hop_b_t1_rules_v10": [
+     "S03",
+     "S05",
+     "S12"
+    ],
+    "hop_b_t1_rules_v13": [
+     "S03",
+     "S05",
+     "S12"
+    ],
+    "hop_b_t1_turns_v10": 6,
+    "hop_b_t1_turns_v13": 6,
+    "turns": 6
+   },
+   "rosetta x gemini_generatecontent x OpenCode": {
+    "hop_b_t1_counts_per_turn_v10": [
+     2,
+     2,
+     1
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     2,
+     2,
+     1
+    ],
+    "hop_b_t1_rules_v10": [
+     "S03",
+     "S05",
+     "S12"
+    ],
+    "hop_b_t1_rules_v13": [
+     "S03",
+     "S05",
+     "S12"
+    ],
+    "hop_b_t1_turns_v10": 3,
+    "hop_b_t1_turns_v13": 3,
+    "turns": 3
+   },
+   "rosetta x openai_chat x Continue-CLI": {
+    "hop_b_t1_counts_per_turn_v10": [
+     1,
+     1,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [
+     "S05"
+    ],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 2,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "rosetta x openai_chat x Goose": {
+    "hop_b_t1_counts_per_turn_v10": [
+     1,
+     1,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [
+     "S05"
+    ],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 2,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   },
+   "rosetta x openai_chat x OpenCode": {
+    "hop_b_t1_counts_per_turn_v10": [
+     1,
+     1,
+     0
+    ],
+    "hop_b_t1_counts_per_turn_v13": [
+     0,
+     0,
+     0
+    ],
+    "hop_b_t1_rules_v10": [
+     "S05"
+    ],
+    "hop_b_t1_rules_v13": [],
+    "hop_b_t1_turns_v10": 2,
+    "hop_b_t1_turns_v13": 0,
+    "turns": 3
+   }
+  },
+  "findings_added_by_rule_tier": {},
+  "findings_removed_by_rule_tier": {
+   "S05:T1": 12
+  },
+  "hop_b_t1_turns_v10_to_v13": "24/39 -> 12/39",
+  "sessions_without_t1_v10": [],
+  "sessions_without_t1_v13": [
+   [
+    "Goose",
+    "cliproxyapi",
+    "openai_chat"
+   ],
+   [
+    "Continue-CLI",
+    "rosetta",
+    "openai_chat"
+   ],
+   [
+    "Continue-CLI",
+    "cliproxyapi",
+    "openai_chat"
+   ]
+  ],
+  "summary_v10_same_run": {
+   "completed_3turn": 12,
+   "completed_with_t1": 12,
+   "completed_with_t1_pct": 100.0,
+   "hop_a": {
+    "turn1_mean_t1": 1.833,
+    "turn1_n": 12,
+    "turn2plus_mean_t1": 3.148,
+    "turn2plus_n": 27
+   },
+   "hop_b": {
+    "judged_turns": 39,
+    "t1_pct": 61.54,
+    "t1_turns": 24
+   },
+   "main_turns": 39,
+   "predictions": {
+    "P-EXPC-1": {
+     "observed": "12/12",
+     "verdict": "PASS"
+    },
+    "P-EXPC-2": {
+     "observed": "T1 mean 1.833 (n=12) vs T>=2 mean 3.148 (n=27)",
+     "verdict": "PASS"
+    },
+    "P-EXPC-3": {
+     "observed": "24/39 (61.54%)",
+     "verdict": "PASS"
+    },
+    "P-EXPC-4": {
+     "observed": "12/12 (100.00%)",
+     "verdict": "PASS"
+    }
+   },
+   "sessions": 12,
+   "sessions_reaching_turn3": 12,
+   "sessions_with_turn1_capture": 12
+  },
+  "summary_v13": {
+   "completed_3turn": 12,
+   "completed_with_t1": 9,
+   "completed_with_t1_pct": 75.0,
+   "hop_a": {
+    "turn1_mean_t1": 1.833,
+    "turn1_n": 12,
+    "turn2plus_mean_t1": 3.148,
+    "turn2plus_n": 27
+   },
+   "hop_b": {
+    "judged_turns": 39,
+    "t1_pct": 30.77,
+    "t1_turns": 12
+   },
+   "main_turns": 39,
+   "predictions": {
+    "P-EXPC-1": {
+     "observed": "12/12",
+     "verdict": "PASS"
+    },
+    "P-EXPC-2": {
+     "observed": "T1 mean 1.833 (n=12) vs T>=2 mean 3.148 (n=27)",
+     "verdict": "PASS"
+    },
+    "P-EXPC-3": {
+     "observed": "12/39 (30.77%)",
+     "verdict": "PASS"
+    },
+    "P-EXPC-4": {
+     "observed": "9/12 (75.00%)",
+     "verdict": "PASS"
+    }
+   },
+   "sessions": 12,
+   "sessions_reaching_turn3": 12,
+   "sessions_with_turn1_capture": 12
+  }
+ },
+ "differing_cells_rules_or_tier": [],
+ "elapsed_s_rerun": 32.57,
+ "environment": {
+  "agents": {
+   "Continue-CLI": "1.5.47",
+   "Goose": "1.54.0",
+   "OpenCode": "1.19.0"
+  },
+  "cliproxyapi_sha256": "f02b3a49e125d131aab79eefe02a406a5c9bfcf9bafa2e9fdf606f7a71f1147e",
+  "cliproxyapi_vcs_revision": "a4acc9f752bd46571f737a10c04bf413656ab06b",
+  "goose_sha256": "2419b124b0b1eb4e02b19cbc2373a91e8927010c8ed2902680c7a2864a49785f",
+  "llm_rosetta": "0.13.0"
+ },
+ "reproduction_layer": {
+  "cells_same_findings_incl_detail_ids_normalised": 78,
+  "cells_same_findings_incl_detail_raw": 67,
+  "cells_same_rules_and_tier": 78,
+  "cells_same_t1_count": 78,
+  "cells_total": 78,
+  "committed_summary_sha_source": "artifacts/g4/coding_agent_roundtrip/out/summary_exp_c.json",
+  "hop_a_cells_same_rules_and_tier": 39,
+  "hop_a_cells_total": 39,
+  "hop_b_cells_same_rules_and_tier": 39,
+  "hop_b_cells_total": 39,
+  "sessions_turn_count_differs": [],
+  "summary_committed": {
+   "completed_sessions_silent_drift": {
+    "completed_3turn": 12,
+    "completed_with_t1": 12,
+    "completed_with_t1_pct": 100.0
+   },
+   "hop_a_request_degradation": {
+    "turn1_count": 12,
+    "turn1_mean_t1_findings": 1.833,
+    "turn2plus_count": 27,
+    "turn2plus_mean_t1_findings": 3.148
+   },
+   "hop_b_return_stream": {
+    "t1_pct": 61.54,
+    "t1_turns": 24,
+    "total_judged_turns": 39
+   },
+   "total_main_turns_captured": 39
+  },
+  "summary_rerun_v10": {
+   "completed_3turn": 12,
+   "completed_with_t1": 12,
+   "completed_with_t1_pct": 100.0,
+   "hop_a": {
+    "turn1_mean_t1": 1.833,
+    "turn1_n": 12,
+    "turn2plus_mean_t1": 3.148,
+    "turn2plus_n": 27
+   },
+   "hop_b": {
+    "judged_turns": 39,
+    "t1_pct": 61.54,
+    "t1_turns": 24
+   },
+   "main_turns": 39,
+   "predictions": {
+    "P-EXPC-1": {
+     "observed": "12/12",
+     "verdict": "PASS"
+    },
+    "P-EXPC-2": {
+     "observed": "T1 mean 1.833 (n=12) vs T>=2 mean 3.148 (n=27)",
+     "verdict": "PASS"
+    },
+    "P-EXPC-3": {
+     "observed": "24/39 (61.54%)",
+     "verdict": "PASS"
+    },
+    "P-EXPC-4": {
+     "observed": "12/12 (100.00%)",
+     "verdict": "PASS"
+    }
+   },
+   "sessions": 12,
+   "sessions_reaching_turn3": 12,
+   "sessions_with_turn1_capture": 12
+  }
+ },
+ "rerun_dir": "artifacts/g4/coding_agent_roundtrip/out/rerun_v13_2026-10-15T0600Z",
+ "scope": "expc_rerun",
+ "spend_usd": 0.0
+}

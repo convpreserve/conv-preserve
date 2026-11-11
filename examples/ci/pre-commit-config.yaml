@@ -1,0 +1,9 @@
+# Copy into .pre-commit-config.yaml. Pin rev to a release tag or commit.
+repos:
+  - repo: https://github.com/convpreserve/conv-preserve
+    rev: main
+    hooks:
+      # Runs on changed *.jsonl files whose name contains "convpreserve"; override `files:` for another naming scheme.
+      - id: convpreserve-batch
+      # Optional: confirms the installed judge reproduces its bundled sample.
+      - id: convpreserve-selftest

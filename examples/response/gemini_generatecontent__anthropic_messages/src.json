@@ -1,0 +1,22 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "text": "ok"
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "modelVersion": "m",
+  "usageMetadata": {
+    "candidatesTokenCount": 37,
+    "promptTokenCount": 120,
+    "totalTokenCount": 157
+  }
+}

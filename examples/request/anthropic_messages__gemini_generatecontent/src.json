@@ -1,0 +1,64 @@
+{
+  "max_tokens": 100,
+  "messages": [
+    {
+      "content": "weather in Paris?",
+      "role": "user"
+    },
+    {
+      "content": [
+        {
+          "signature": "sig_abc",
+          "thinking": "let me check",
+          "type": "thinking"
+        },
+        {
+          "text": "It is sunny.",
+          "type": "text"
+        }
+      ],
+      "role": "assistant"
+    },
+    {
+      "content": "continue",
+      "role": "user"
+    }
+  ],
+  "model": "claude-3-5-sonnet-20241022",
+  "system": "Be careful.",
+  "temperature": 0.2,
+  "thinking": {
+    "budget_tokens": 1024,
+    "type": "enabled"
+  },
+  "tool_choice": {
+    "name": "get_weather",
+    "type": "tool"
+  },
+  "tools": [
+    {
+      "description": "w",
+      "input_schema": {
+        "properties": {
+          "city": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "get_weather"
+    },
+    {
+      "description": "r",
+      "input_schema": {
+        "properties": {
+          "cmd": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "name": "run_cmd"
+    }
+  ]
+}

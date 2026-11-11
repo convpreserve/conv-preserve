@@ -1,0 +1,859 @@
+{
+ "census_request": {
+  "cell_level_identical": true,
+  "gate_a_v10": {
+   "judged": 685,
+   "refused": 29,
+   "sent": 714,
+   "t1_cells": 489
+  },
+  "gate_a_v13": {
+   "judged": 685,
+   "refused": 29,
+   "sent": 714,
+   "t1_cells": 489
+  }
+ },
+ "oracles": [
+  "v1.0",
+  "v1.3"
+ ],
+ "reverse_response_census": {
+  "cells_with_different_findings": 41,
+  "changed_cells": [
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "bifrost/anthropic_messages/stream/RA17",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingtheEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "bifrost/anthropic_messages/stream/RA18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsthecurrentweatherinRome.Ishouldcallget_weatherwi'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "bifrost/anthropic_messages/stream/RA20",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Firstletusverifythepublicparametersbeforetheredactedstep.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "bifrost/anthropic_messages/stream/RA30",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Checkingcachedreferencetablesandcomputingresult.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "cliproxyapi/anthropic_messages/stream/RA17",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingtheEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "cliproxyapi/anthropic_messages/stream/RA18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsthecurrentweatherinRome.Ishouldcallget_weatherwi'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "cliproxyapi/anthropic_messages/stream/RA20",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Firstletusverifythepublicparametersbeforetheredactedstep.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "cliproxyapi/anthropic_messages/stream/RA30",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Checkingcachedreferencetablesandcomputingresult.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "cliproxyapi/gemini_generatecontent/stream/RG14",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7*21'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "cliproxyapi/gemini_generatecontent/stream/RG15",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsRomeweather;invokingget_weather.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "cliproxyapi/gemini_generatecontent/stream/RG18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Evaluatingboundaryconditionsforn=12.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "cliproxyapi/gemini_generatecontent/stream/RG28",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Thinkingthroughthecombinatorics...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "cliproxyapi/gemini_generatecontent/stream/RG29",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Cross-checkingcachedtables...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "litellm/anthropic_messages/stream/RA17",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingtheEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "litellm/anthropic_messages/stream/RA18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsthecurrentweatherinRome.Ishouldcallget_weatherwi'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "litellm/anthropic_messages/stream/RA20",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Firstletusverifythepublicparametersbeforetheredactedstep.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "litellm/anthropic_messages/stream/RA30",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Checkingcachedreferencetablesandcomputingresult.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "litellm/gemini_generatecontent/stream/RG14",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7*21'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "litellm/gemini_generatecontent/stream/RG15",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsRomeweather;invokingget_weather.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "litellm/gemini_generatecontent/stream/RG18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Evaluatingboundaryconditionsforn=12.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "litellm/gemini_generatecontent/stream/RG28",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Thinkingthroughthecombinatorics...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "litellm/gemini_generatecontent/stream/RG29",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Cross-checkingcachedtables...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "newapi/anthropic_messages/stream/RA17",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingtheEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "newapi/anthropic_messages/stream/RA18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsthecurrentweatherinRome.Ishouldcallget_weatherwi'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "newapi/anthropic_messages/stream/RA20",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Firstletusverifythepublicparametersbeforetheredactedstep.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "newapi/anthropic_messages/stream/RA21",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking ''"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "newapi/anthropic_messages/stream/RA30",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Checkingcachedreferencetablesandcomputingresult.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "newapi/gemini_generatecontent/stream/RG14",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7*21'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "newapi/gemini_generatecontent/stream/RG15",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsRomeweather;invokingget_weather.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "newapi/gemini_generatecontent/stream/RG18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Evaluatingboundaryconditionsforn=12.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "newapi/gemini_generatecontent/stream/RG28",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Thinkingthroughthecombinatorics...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "newapi/gemini_generatecontent/stream/RG29",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Cross-checkingcachedtables...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "rosetta/anthropic_messages/stream/RA17",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingtheEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "rosetta/anthropic_messages/stream/RA18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsthecurrentweatherinRome.Ishouldcallget_weatherwi'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "rosetta/anthropic_messages/stream/RA20",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Firstletusverifythepublicparametersbeforetheredactedstep.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "rosetta/anthropic_messages/stream/RA30",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Checkingcachedreferencetablesandcomputingresult.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "rosetta/gemini_generatecontent/stream/RG14",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'UsingEuclideanalgorithm:1071=2*462+147;462=3*147+21;147=7*21'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "none"
+   },
+   {
+    "added": [],
+    "cell": "rosetta/gemini_generatecontent/stream/RG15",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'TheuserwantsRomeweather;invokingget_weather.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [
+     [
+      "S03",
+      "T1",
+      "signature carrier lost in assistant turn 0 on surviving ['thinking']"
+     ]
+    ],
+    "cell": "rosetta/gemini_generatecontent/stream/RG18",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Evaluatingboundaryconditionsforn=12.'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "rosetta/gemini_generatecontent/stream/RG28",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Thinkingthroughthecombinatorics...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   },
+   {
+    "added": [],
+    "cell": "rosetta/gemini_generatecontent/stream/RG29",
+    "removed": [
+     [
+      "S05",
+      "T1",
+      "lost assistant thinking 'Cross-checkingcachedtables...'"
+     ]
+    ],
+    "side": "stream",
+    "tier_v10": "T1",
+    "tier_v13": "T1"
+   }
+  ],
+  "findings_added_by_rule": {
+   "S03": 25
+  },
+  "findings_removed_by_rule": {
+   "S05": 41
+  },
+  "judged_cells": 1115,
+  "tier_counts": {
+   "response_T1_v10": 179,
+   "response_T1_v13": 179,
+   "response_T2_v10": 19,
+   "response_T2_v13": 19,
+   "response_T3_v10": 115,
+   "response_T3_v13": 115,
+   "response_none_v10": 244,
+   "response_none_v13": 244,
+   "stream_T1_v10": 223,
+   "stream_T1_v13": 212,
+   "stream_T2_v10": 101,
+   "stream_T2_v13": 101,
+   "stream_T3_v10": 121,
+   "stream_T3_v13": 121,
+   "stream_none_v10": 113,
+   "stream_none_v13": 124
+  },
+  "tier_transitions": {
+   "T1->T1": 30,
+   "T1->none": 11
+  }
+ },
+ "sample": {
+  "evidence_precision_by_rule": {
+   "D02": {
+    "exact": 2
+   },
+   "D03": {
+    "exact": 9
+   },
+   "D04": {
+    "container": 1,
+    "exact": 2,
+    "payload": 9
+   },
+   "D05": {
+    "exact": 4
+   },
+   "R01": {
+    "container": 3
+   },
+   "R03": {
+    "container": 11,
+    "payload": 1
+   },
+   "R04": {
+    "exact": 8
+   },
+   "R05": {
+    "exact": 1
+   },
+   "R08": {
+    "exact": 54
+   },
+   "S02": {
+    "exact": 3
+   },
+   "S03": {
+    "container": 1,
+    "exact": 4
+   },
+   "S04": {
+    "exact": 1,
+    "payload": 9
+   },
+   "S05": {
+    "container": 8,
+    "exact": 12,
+    "payload": 10
+   },
+   "S06": {
+    "exact": 8,
+    "payload": 4
+   },
+   "S07": {
+    "exact": 1
+   },
+   "S08": {
+    "exact": 2
+   },
+   "S09": {
+    "container": 3,
+    "exact": 1
+   },
+   "S10": {
+    "exact": 8
+   },
+   "S12": {
+    "exact": 46,
+    "payload": 2
+   },
+   "S13": {
+    "exact": 74,
+    "payload": 21
+   }
+  },
+  "findings_v13": 323,
+  "records": 400,
+  "records_with_different_verdicts": 0,
+  "unresolvable": [],
+  "unresolvable_evidence_pointers": 0
+ }
+}

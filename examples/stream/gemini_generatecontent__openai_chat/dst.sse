@@ -1,0 +1,42 @@
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"role": "assistant"}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "id": "call_1", "type": "function", "function": {"name": "mcp__github__list_pull_requests_for_repository_with_filters_v2", "arguments": ""}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": ""}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "\"C:\\\\tmp"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "\\\\\u0444\u0430\u0439\u043b.t"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "xt\",\"tex"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "t\":\"\u5317\u4eac\u4eca\u5929"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "\u5929\u6c14 \u2600\ufe0f 24"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "\u00b0C \u2014 na\u00ef"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "ve caf\u00e9 "}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {"tool_calls": [{"index": 0, "function": {"arguments": "\ud83d\ude80\"}"}}]}, "finish_reason": null}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [{"index": 0, "delta": {}, "finish_reason": "tool_calls"}]}
+
+event: message
+data: {"id": "chatcmpl-ref", "object": "chat.completion.chunk", "created": 1700000000, "model": "m", "choices": [], "usage": {"prompt_tokens": 120, "completion_tokens": 37, "total_tokens": 157}}
+
+event: done
+data: [DONE]
+

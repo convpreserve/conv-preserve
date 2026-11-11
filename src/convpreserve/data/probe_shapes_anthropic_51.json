@@ -1,0 +1,4167 @@
+{
+ "description": "S-strict-R9: 51 shapes derived by tooling/leaderboard/shapes51.py; bundled copy of tooling/leaderboard/shapes51.json for `convpreserve probe` (ids and shapes unchanged, Anthropic Messages request shapes)",
+ "source_shapes_sha256": "af6a4d7597846287e9bfcae12c1ea04362f1e865f9260cc1f4000cdd19ae0678",
+ "source_validity_sha256": "860f36cd9e27a4679cac5245e8f3ce8ea657ee2d5cbd9116d8063e8af80fa4f2",
+ "ids": [
+  "G005",
+  "G012",
+  "G041",
+  "G044",
+  "G047",
+  "G048",
+  "G052",
+  "G060",
+  "G080",
+  "G085",
+  "G088",
+  "G093",
+  "G098",
+  "G103",
+  "G106",
+  "G126",
+  "G134",
+  "G137",
+  "G138",
+  "G144",
+  "G165",
+  "G172",
+  "G174",
+  "G175",
+  "G183",
+  "G190",
+  "G192",
+  "G194",
+  "G196",
+  "G214",
+  "G216",
+  "G221",
+  "G224",
+  "G229",
+  "G234",
+  "G237",
+  "G247",
+  "G259",
+  "G272",
+  "G284",
+  "G289",
+  "G290",
+  "G291",
+  "G295",
+  "G303",
+  "G317",
+  "G325",
+  "G339",
+  "G350",
+  "G351",
+  "G353"
+ ],
+ "shapes": {
+  "G005": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "",
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G012": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "{\"output\": \"sunny#1\", \"error\": \"none\"}",
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   },
+   "temperature": 0.2
+  },
+  "G041": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "sunny#1"
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G044": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2
+  },
+  "G047": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   }
+  },
+  "G048": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#1"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ]
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather"
+   }
+  },
+  "G052": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ],
+   "temperature": 0.2
+  },
+  "G060": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "disable_parallel_tool_use": true
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G080": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "sunny#1",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0",
+       "is_error": true
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ],
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G085": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "",
+       "is_error": true
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather",
+    "disable_parallel_tool_use": true
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G088": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather"
+   }
+  },
+  "G093": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2
+  },
+  "G098": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "sunny#1"
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   }
+  },
+  "G103": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G106": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ]
+  },
+  "G126": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "sunny#1",
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   }
+  },
+  "G134": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "",
+       "is_error": true
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   }
+  },
+  "G137": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}"
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "disable_parallel_tool_use": true
+   }
+  },
+  "G138": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2
+  },
+  "G144": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "temperature": 0.2
+  },
+  "G165": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0",
+       "is_error": true
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G172": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "{\"output\": \"sunny#1\", \"error\": \"none\"}",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}",
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G174": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": ""
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": ""
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G175": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   }
+  },
+  "G183": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+   },
+   "temperature": 0.2
+  },
+  "G190": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0",
+       "is_error": true
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ]
+  },
+  "G192": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#1"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ],
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ],
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G194": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "disable_parallel_tool_use": true
+   }
+  },
+  "G196": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": ""
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G214": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G216": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather",
+    "disable_parallel_tool_use": true
+   }
+  },
+  "G221": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "{\"output\": \"sunny#1\", \"error\": \"none\"}",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}",
+       "is_error": true
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2
+  },
+  "G224": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "temperature": 0.2
+  },
+  "G229": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}"
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "{\"output\": \"sunny#1\", \"error\": \"none\"}"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather"
+   }
+  },
+  "G234": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "",
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "",
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "disable_parallel_tool_use": true
+   },
+   "temperature": 0.2
+  },
+  "G237": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather",
+    "disable_parallel_tool_use": true
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G247": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0",
+       "is_error": true
+      }
+     ]
+    }
+   ]
+  },
+  "G259": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0"
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "sunny#1"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G272": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G284": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": ""
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "temperature": 0.2
+  },
+  "G289": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "It is sunny."
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "disable_parallel_tool_use": true
+   },
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G290": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ],
+       "is_error": true
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather",
+    "disable_parallel_tool_use": true
+   },
+   "temperature": 0.2
+  },
+  "G291": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "{\"output\": \"sunny#0\", \"error\": \"none\"}",
+       "is_error": true
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "temperature": 0.2,
+   "top_p": 0.9,
+   "top_k": 5,
+   "stop_sequences": [
+    "END"
+   ],
+   "metadata": {
+    "user_id": "u1"
+   }
+  },
+  "G295": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ],
+       "is_error": true
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#1"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ],
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   }
+  },
+  "G303": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "text",
+       "text": "Let me check."
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0",
+       "is_error": true
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "tool",
+    "name": "get_weather"
+   }
+  },
+  "G317": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#1"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ]
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   }
+  },
+  "G325": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": "sunny#1"
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2
+  },
+  "G339": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": ""
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "auto"
+   },
+   "temperature": 0.2
+  },
+  "G350": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": [
+    {
+     "type": "text",
+     "text": "Be careful.",
+     "cache_control": {
+      "type": "ephemeral"
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": "sunny#0"
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   }
+  },
+  "G351": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "get_weather",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "get_weather",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "text",
+       "text": "(after)"
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": [
+        {
+         "type": "text",
+         "text": "part A#0"
+        },
+        {
+         "type": "text",
+         "text": "part B"
+        }
+       ],
+       "is_error": true
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": "continue"
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   }
+  },
+  "G353": {
+   "model": "claude-3-5-sonnet-20241022",
+   "max_tokens": 100,
+   "tools": [
+    {
+     "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+     "description": "w",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "city": {
+        "type": "string"
+       }
+      }
+     }
+    },
+    {
+     "name": "run_cmd",
+     "description": "r",
+     "input_schema": {
+      "type": "object",
+      "properties": {
+       "cmd": {
+        "type": "string"
+       }
+      }
+     }
+    }
+   ],
+   "system": "Be careful.",
+   "messages": [
+    {
+     "role": "user",
+     "content": "weather in Paris?"
+    },
+    {
+     "role": "assistant",
+     "content": [
+      {
+       "type": "redacted_thinking",
+       "data": "ENCRYPTED"
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_1",
+       "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+       "input": {
+        "city": "Paris"
+       }
+      },
+      {
+       "type": "tool_use",
+       "id": "toolu_2",
+       "name": "run_cmd",
+       "input": {
+        "cmd": "ls"
+       }
+      }
+     ]
+    },
+    {
+     "role": "user",
+     "content": [
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_2",
+       "content": ""
+      },
+      {
+       "type": "tool_result",
+       "tool_use_id": "toolu_1",
+       "content": ""
+      },
+      {
+       "type": "text",
+       "text": "and tomorrow?"
+      }
+     ]
+    }
+   ],
+   "tool_choice": {
+    "type": "any"
+   },
+   "temperature": 0.2
+  }
+ }
+}

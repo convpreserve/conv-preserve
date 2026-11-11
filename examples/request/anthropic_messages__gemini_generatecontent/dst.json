@@ -1,0 +1,82 @@
+{
+  "contents": [
+    {
+      "parts": [
+        {
+          "text": "weather in Paris?"
+        }
+      ],
+      "role": "user"
+    },
+    {
+      "parts": [
+        {
+          "text": "let me check",
+          "thought": true,
+          "thoughtSignature": "sig_abc"
+        },
+        {
+          "text": "It is sunny."
+        }
+      ],
+      "role": "model"
+    },
+    {
+      "parts": [
+        {
+          "text": "continue"
+        }
+      ],
+      "role": "user"
+    }
+  ],
+  "generationConfig": {
+    "maxOutputTokens": 100,
+    "temperature": 0.2
+  },
+  "systemInstruction": {
+    "blocks": [
+      {
+        "text": "Be careful."
+      }
+    ]
+  },
+  "toolConfig": {
+    "functionCallingConfig": {
+      "allowedFunctionNames": [
+        "get_weather"
+      ],
+      "mode": "ANY"
+    }
+  },
+  "tools": [
+    {
+      "functionDeclarations": [
+        {
+          "description": "w",
+          "name": "get_weather",
+          "parameters": {
+            "properties": {
+              "city": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        },
+        {
+          "description": "r",
+          "name": "run_cmd",
+          "parameters": {
+            "properties": {
+              "cmd": {
+                "type": "string"
+              }
+            },
+            "type": "object"
+          }
+        }
+      ]
+    }
+  ]
+}

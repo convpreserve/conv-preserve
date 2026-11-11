@@ -1,0 +1,118 @@
+name: "convpreserve"
+description: >-
+  Compare API payload pairs (source request/response/stream and what a translation layer produced) with the
+  convpreserve judge, append a GitHub-flavoured summary to the job summary, and fail the step according to --fail-on.
+author: "convpreserve authors"
+branding:
+  icon: "check-circle"
+  color: "gray-dark"
+
+inputs:
+  mode:
+    description: "check (one source/destination pair) or batch (a JSONL manifest of pairs)."
+    required: false
+    default: "check"
+  src:
+    description: "mode=check: path of the source payload file."
+    required: false
+    default: ""
+  dst:
+    description: "mode=check: path of the destination payload file (what the translation layer produced)."
+    required: false
+    default: ""
+  side:
+    description: "mode=check: request, response or stream."
+    required: false
+    default: "request"
+  src-dialect:
+    description: "mode=check: source dialect (see `convpreserve dialects`)."
+    required: false
+    default: ""
+  dst-dialect:
+    description: "mode=check: destination dialect (see `convpreserve dialects`)."
+    required: false
+    default: ""
+  manifest:
+    description: "mode=batch: path of the JSONL manifest."
+    required: false
+    default: ""
+  oracle:
+    description: "Oracle version (v1.0 or v1.3). Empty = the convpreserve default."
+    required: false
+    default: ""
+  fail-on:
+    description: "Lowest tier that makes the step fail: T1, T2, T3 or none."
+    required: false
+    default: "T1"
+
+outputs:
+  exit-code:
+    description: "Exit code of convpreserve: 0 no finding at or above --fail-on, 1 at least one such finding, 2 usage or input error."
+    value: ${{ steps.run.outputs.exit-code }}
+  t1:
+    description: "Number of T1 findings."
+    value: ${{ steps.run.outputs.t1 }}
+  t2:
+    description: "Number of T2 findings."
+    value: ${{ steps.run.outputs.t2 }}
+  t3:
+    description: "Number of T3 findings."
+    value: ${{ steps.run.outputs.t3 }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install convpreserve
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        python3 -m pip install --quiet "$ACTION_PATH"
+
+    - name: Run convpreserve
+      id: run
+      shell: bash
+      env:
+        INPUT_MODE: ${{ inputs.mode }}
+        INPUT_SRC: ${{ inputs.src }}
+        INPUT_DST: ${{ inputs.dst }}
+        INPUT_SIDE: ${{ inputs.side }}
+        INPUT_SRC_DIALECT: ${{ inputs.src-dialect }}
+        INPUT_DST_DIALECT: ${{ inputs.dst-dialect }}
+        INPUT_MANIFEST: ${{ inputs.manifest }}
+        INPUT_ORACLE: ${{ inputs.oracle }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+      run: |
+        fail() { echo "::error::$1"; echo "exit-code=2" >> "$GITHUB_OUTPUT"; exit 2; }
+        case "$INPUT_MODE" in
+          check)
+            [ -n "$INPUT_SRC" ] && [ -n "$INPUT_DST" ] || fail "mode=check needs the inputs src and dst"
+            [ -n "$INPUT_SRC_DIALECT" ] && [ -n "$INPUT_DST_DIALECT" ] || fail "mode=check needs the inputs src-dialect and dst-dialect"
+            args=(check --side "$INPUT_SIDE" --src-dialect "$INPUT_SRC_DIALECT" --dst-dialect "$INPUT_DST_DIALECT" "$INPUT_SRC" "$INPUT_DST")
+            ;;
+          batch)
+            [ -n "$INPUT_MANIFEST" ] || fail "mode=batch needs the input manifest"
+            args=(batch "$INPUT_MANIFEST")
+            ;;
+          *)
+            fail "mode must be check or batch (got '$INPUT_MODE')"
+            ;;
+        esac
+        [ -z "$INPUT_ORACLE" ] || args+=(--oracle "$INPUT_ORACLE")
+        args+=(--fail-on "$INPUT_FAIL_ON")
+        json="$(mktemp)"
+        rc=0
+        convpreserve "${args[@]}" --format json > "$json" || rc=$?
+        if [ "$rc" -ge 2 ]; then
+          echo "::error::convpreserve exited with code $rc (usage or input error); see the step log"
+          echo "exit-code=$rc" >> "$GITHUB_OUTPUT"
+          exit "$rc"
+        fi
+        convpreserve "${args[@]}" --format github >> "${GITHUB_STEP_SUMMARY:-/dev/null}" || true
+        python3 - "$json" >> "$GITHUB_OUTPUT" <<'PY'
+        import json, sys
+        s = json.load(open(sys.argv[1], encoding="utf-8"))["summary"]
+        print("t1=%d\nt2=%d\nt3=%d" % (s["T1"], s["T2"], s["T3"]))
+        PY
+        echo "exit-code=$rc" >> "$GITHUB_OUTPUT"
+        exit "$rc"

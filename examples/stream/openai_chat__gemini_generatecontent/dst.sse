@@ -1,0 +1,3 @@
+event: message
+data: {"candidates": [{"index": 0, "content": {"role": "model", "parts": [{"text": "Need weather first.", "thought": true}]}}], "modelVersion": "m"}
+

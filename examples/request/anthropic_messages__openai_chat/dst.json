@@ -1,0 +1,89 @@
+{
+  "max_tokens": 100,
+  "messages": [
+    {
+      "content": "Be careful.",
+      "role": "system"
+    },
+    {
+      "content": "weather in Paris?",
+      "role": "user"
+    },
+    {
+      "content": [
+        {
+          "text": "Let me check.",
+          "type": "text"
+        }
+      ],
+      "role": "assistant",
+      "thinking_blocks": [
+        {
+          "signature": "sig_abc",
+          "thinking": "let me check",
+          "type": "thinking"
+        }
+      ],
+      "tool_calls": [
+        {
+          "function": {
+            "arguments": "{\"city\": \"Paris\"}",
+            "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+          },
+          "id": "toolu_1",
+          "type": "function"
+        }
+      ]
+    },
+    {
+      "content": "sunny#0",
+      "role": "tool",
+      "tool_call_id": "toolu_1"
+    },
+    {
+      "content": "continue",
+      "role": "user"
+    }
+  ],
+  "model": "gpt-4o",
+  "parallel_tool_calls": false,
+  "temperature": 0.2,
+  "tool_choice": {
+    "function": {
+      "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    },
+    "type": "function"
+  },
+  "tools": [
+    {
+      "function": {
+        "description": "w",
+        "name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+        "parameters": {
+          "properties": {
+            "city": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "function"
+    },
+    {
+      "function": {
+        "description": "r",
+        "name": "run_cmd",
+        "parameters": {
+          "properties": {
+            "cmd": {
+              "type": "string"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "function"
+    }
+  ]
+}

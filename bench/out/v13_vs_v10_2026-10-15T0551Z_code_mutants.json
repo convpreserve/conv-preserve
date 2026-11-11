@@ -1,0 +1,33 @@
+{
+ "scopes": {
+  "code_mutants": {
+   "calls_with_openai_chat_stream_side": 1984,
+   "cells": 13894,
+   "cells_with_different_findings": 0,
+   "cells_with_exception_v10_or_v13": 0,
+   "changed_calls_with_openai_chat_stream_side": 0,
+   "changed_cells": [],
+   "exit": null,
+   "findings_added_by_rule": {},
+   "findings_removed_by_rule": {},
+   "runner": "artifacts/g4/oracle_v100/src/run_code_mutants_v100.py",
+   "runner_outputs_equal_committed": {
+    "artifacts/g4/oracle_v100/out/code_mutants_v100.json": true
+   },
+   "tier_counts_v10": {
+    "T1": 9674,
+    "T2": 798,
+    "T3": 2473,
+    "none": 949
+   },
+   "tier_counts_v13": {
+    "T1": 9674,
+    "T2": 798,
+    "T3": 2473,
+    "none": 949
+   },
+   "tier_transitions": {},
+   "wall_time_sec": 14.9
+  }
+ }
+}

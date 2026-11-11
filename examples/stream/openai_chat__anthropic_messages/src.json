@@ -1,0 +1,26 @@
+{
+  "choices": [
+    {
+      "finish_reason": "stop",
+      "index": 0,
+      "logprobs": null,
+      "message": {
+        "content": "ok",
+        "role": "assistant"
+      }
+    }
+  ],
+  "created": 1700000000,
+  "id": "chatcmpl-abc",
+  "model": "m",
+  "object": "chat.completion",
+  "system_fingerprint": "fp_1",
+  "usage": {
+    "completion_tokens": 37,
+    "completion_tokens_details": {
+      "reasoning_tokens": 20
+    },
+    "prompt_tokens": 120,
+    "total_tokens": 157
+  }
+}

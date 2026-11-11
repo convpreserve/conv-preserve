@@ -1,0 +1,29 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "functionCall": {
+              "args": {
+                "city": "Paris"
+              },
+              "id": "call_01",
+              "name": "get_weather"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "modelVersion": "m",
+  "usageMetadata": {
+    "candidatesTokenCount": 37,
+    "promptTokenCount": 120,
+    "totalTokenCount": 157
+  },
+  "x_gem_resp4": "4"
+}

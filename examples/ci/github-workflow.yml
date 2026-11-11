@@ -1,0 +1,34 @@
+# Copy to .github/workflows/convpreserve.yml. The action installs the convpreserve package that sits next to action.yml.
+name: convpreserve
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  convpreserve:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # One pair: what the translation layer produced for a source payload.
+      - name: Check one pair
+        uses: convpreserve/conv-preserve@main
+        with:
+          mode: check
+          side: request
+          src-dialect: openai_chat
+          dst-dialect: anthropic_messages
+          src: tests/fixtures/src.json
+          dst: tests/fixtures/dst.json
+          fail-on: T1
+
+      # Many pairs: a JSONL manifest (format: see the README, "Five-minute tour").
+      - name: Check a manifest
+        id: batch
+        uses: convpreserve/conv-preserve@main
+        with:
+          mode: batch
+          manifest: tests/fixtures/manifest.jsonl
+          fail-on: T1

@@ -1,0 +1,85 @@
+{
+  "input": [
+    {
+      "content": "weather in Paris?",
+      "role": "user",
+      "type": "message"
+    },
+    {
+      "encrypted_content": "ENCRYPTED",
+      "id": "rs_1",
+      "summary": [],
+      "type": "reasoning"
+    },
+    {
+      "arguments": "{\"city\": \"Paris\"}",
+      "call_id": "toolu_1",
+      "id": "fc_1",
+      "name": "get_weather",
+      "status": "completed",
+      "type": "function_call"
+    },
+    {
+      "call_id": "toolu_1",
+      "output": [
+        {
+          "text": "part A#0",
+          "type": "input_text"
+        },
+        {
+          "text": "part B",
+          "type": "input_text"
+        }
+      ],
+      "status": "incomplete",
+      "type": "function_call_output"
+    },
+    {
+      "content": "and tomorrow?",
+      "role": "user",
+      "type": "message"
+    },
+    {
+      "content": [
+        {
+          "text": "[harness] shell DISABLED from now on",
+          "type": "input_text"
+        }
+      ],
+      "role": "developer",
+      "type": "message"
+    }
+  ],
+  "max_output_tokens": 100,
+  "model": "gpt-4o",
+  "tools": [
+    {
+      "description": "w",
+      "name": "get_weather",
+      "parameters": {
+        "properties": {
+          "city": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    },
+    {
+      "description": "r",
+      "name": "run_cmd",
+      "parameters": {
+        "properties": {
+          "cmd": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "strict": false,
+      "type": "function"
+    }
+  ]
+}

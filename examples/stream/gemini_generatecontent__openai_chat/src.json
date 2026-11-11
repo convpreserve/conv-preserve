@@ -1,0 +1,28 @@
+{
+  "candidates": [
+    {
+      "content": {
+        "parts": [
+          {
+            "functionCall": {
+              "args": {
+                "path": "C:\\tmp\\файл.txt",
+                "text": "北京今天天气 ☀️ 24°C — naïve café 🚀"
+              },
+              "name": "mcp__github__list_pull_requests_for_repository_with_filters_v2"
+            }
+          }
+        ],
+        "role": "model"
+      },
+      "finishReason": "STOP",
+      "index": 0
+    }
+  ],
+  "modelVersion": "m",
+  "usageMetadata": {
+    "candidatesTokenCount": 37,
+    "promptTokenCount": 120,
+    "totalTokenCount": 157
+  }
+}

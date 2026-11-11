@@ -1,0 +1,4048 @@
+{
+  "metadata": {
+    "task": "Task AX (B2: carriers.json + CARRIERS.md) Read-Only Research Inventory",
+    "source_pack": "redacted-for-review",
+    "generated_at": "2026-10-10T06:54:00Z",
+    "dialects": [
+      "openai_chat",
+      "openai_responses",
+      "anthropic_messages",
+      "gemini_generatecontent"
+    ],
+    "phases": [
+      "request",
+      "response",
+      "stream"
+    ],
+    "categories": [
+      "error_carriers",
+      "integrity_tokens",
+      "stop_finish_reasons",
+      "usage_fields",
+      "controls",
+      "empty_content_rules",
+      "responses_item_types",
+      "stream_event_types"
+    ],
+    "verification_policy": {
+      "LIVE": "Directly probed against a live vendor HTTP endpoint in the pack (specifically GEMINI_API_KEY against generativelanguage.googleapis.com /v1beta/models/*:generateContent, :streamGenerateContent?alt=sse, and /v1beta/openai/chat/completions).",
+      "UNVERIFIED": "Grounded in official vendor OpenAPI/Discovery snapshots and/or official vendor documentation in the pack, and optionally exercised in offline SDK/mock/gateway harnesses (anthropic==1.9.0, openai==1.82.0, AI SDK 4.0.89 / @ai-sdk/google 7.0.126, Bifrost, CLIProxyAPI, Rosetta), but not probed against a live vendor HTTP endpoint in the pack.",
+      "UNKNOWN": "Behavior or field semantics not specified in vendor docs/schemas and not probed live in the pack."
+    },
+    "vendor_snapshots": {
+      "openai_openapi": {
+        "pack_path": "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml",
+        "version": "2.3.0",
+        "fetched_at": "2026-10-01T00:18Z",
+        "source_url": "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml",
+        "fetch_log_ref": "artifacts/g1/m1/specgaps/docs/README_fetch_log.md:L6"
+      },
+      "anthropic_openapi": {
+        "pack_path": "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml",
+        "version": "sdk-v1.3.0",
+        "fetched_at": "2026-10-01T00:18Z",
+        "source_url": "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+        "fetch_log_ref": "artifacts/g1/m1/specgaps/docs/README_fetch_log.md:L5"
+      },
+      "gemini_discovery": {
+        "pack_path": "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json",
+        "version": "v1beta (revision 20260929)",
+        "fetched_at": "2026-10-01T00:18Z",
+        "source_url": "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta",
+        "fetch_log_ref": "artifacts/g1/m1/specgaps/docs/README_fetch_log.md:L7"
+      }
+    }
+  },
+  "error_carriers": {
+    "anthropic_messages": {
+      "request": [
+        {
+          "field_path": "messages[].content[type=\"tool_result\"].is_error",
+          "schema_name": "RequestToolResultBlock.is_error",
+          "type": "boolean (optional, defaults to false when omitted)",
+          "semantics": "First-class request-side tool execution failure flag on tool_result content blocks. Signals to Claude that the tool execution returned an error.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45171",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L169-172",
+              "artifacts/g4/is_error_carrier/PREREG.md:L1-40",
+              "artifacts/g4/is_error_carrier/RESULTS.md:L1-60",
+              "artifacts/g4/is_error_carrier/src/carrier_table.py:L1-60"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "stop_reason == \"refusal\" + stop_details",
+          "schema_name": "Message.stop_reason / Message.stop_details (RefusalStopDetails)",
+          "type": "stop_reason: \"refusal\"; stop_details: {type: \"refusal\", category: \"cyber\" | \"bio\" | null, explanation: string | null} | null",
+          "semantics": "Structured refusal carrier on HTTP 200 Message responses when the model refuses to generate content for safety/policy reasons.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43775",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43786",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L44321",
+              "artifacts/g4/same_vendor_response/out/RESULTS.md:L25-40"
+            ]
+          }
+        },
+        {
+          "field_path": "error (HTTP non-2xx ErrorResponse)",
+          "schema_name": "ErrorResponse",
+          "type": "{type: \"error\", error: {type: enum, message: string}, request_id: string | null}",
+          "enum_values": [
+            "invalid_request_error",
+            "authentication_error",
+            "billing_error",
+            "permission_error",
+            "not_found_error",
+            "rate_limit_error",
+            "timeout_error",
+            "api_error",
+            "overloaded_error"
+          ],
+          "semantics": "Top-level HTTP error envelope (400, 401, 403, 404, 413, 429, 500, 529 overloaded_error).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+              "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43309",
+              "artifacts/g4/same_vendor_response/out/ADDENDUM_C_RESULTS.md:L5-35"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "event: error",
+          "schema_name": "SSE error event",
+          "type": "event: error\\ndata: {\"type\": \"error\", \"error\": {\"type\": \"overloaded_error\" | \"api_error\" | ..., \"message\": string}}",
+          "semantics": "Mid-stream SSE error frame emitted after HTTP 200 stream establishment (e.g. overloaded_error). Documented in Anthropic streaming guide; absent from the RawMessageStreamEvent union in anthropic_openapi_sdk-v1.3.0.yaml.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anth_streaming_guide_2026-10-06.md:L180-235",
+              "artifacts/g2/resp/anth_sse.py:L77-78",
+              "artifacts/g4/same_vendor_response/out/ADDENDUM_C_RESULTS.md:L40-50",
+              "artifacts/g4/stream_ee/RESULTS.md:L1-40"
+            ]
+          }
+        },
+        {
+          "field_path": "event: message_delta (delta.stop_reason == \"refusal\", delta.stop_details)",
+          "schema_name": "RawMessageDeltaEvent.delta",
+          "type": "{stop_reason: \"refusal\", stop_details: RefusalStopDetails | null, stop_sequence: string | null}",
+          "semantics": "Streamed terminal refusal carrier delivered on message_delta.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43961-43966",
+              "artifacts/g4/refusal_stream_probe/NOTE.md:L1-26"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_chat": {
+      "request": [
+        {
+          "field_path": "messages[role=\"tool\"] (NO native is_error field)",
+          "schema_name": "ChatCompletionRequestToolMessage",
+          "type": "{role: \"tool\", content: string | ChatCompletionRequestToolMessageContentPart[], tool_call_id: string}",
+          "semantics": "No structured error carrier on tool-result messages in Chat Completions. Only role, content, and tool_call_id exist. Translators must either drop is_error or serialize an error wrapper into content (e.g. AI SDK 4.0.89 JSON-stringifies {\"error\": ...} into content).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41543",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L175-184",
+              "artifacts/g4/is_error_carrier/RESULTS.md:L1-60",
+              "artifacts/g4/two_exits_aisdk/README.md:L16"
+            ]
+          }
+        },
+        {
+          "field_path": "messages[role=\"assistant\"].refusal",
+          "schema_name": "ChatCompletionRequestAssistantMessage.refusal",
+          "type": "string | null (optional)",
+          "semantics": "Echoed assistant refusal message on multi-turn history replay.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41196",
+              "artifacts/g4/same_vendor_openai_req/out/RESULTS.md:L1-50"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "choices[].message.refusal",
+          "schema_name": "ChatCompletionResponseMessage.refusal",
+          "type": "string | null (required property, nullable)",
+          "semantics": "Structured refusal text generated by the model when refusing a request (typically accompanied by content: null and finish_reason: \"stop\").",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41619",
+              "artifacts/g2/resp/respir.py:L63",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L21-26"
+            ]
+          }
+        },
+        {
+          "field_path": "choices[].finish_reason == \"content_filter\"",
+          "schema_name": "CreateChatCompletionResponse.choices[].finish_reason",
+          "type": "\"content_filter\"",
+          "semantics": "Indicates output was omitted due to a flag from OpenAI content filters.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43453",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L15-30"
+            ]
+          }
+        },
+        {
+          "field_path": "error (HTTP non-2xx ErrorResponse)",
+          "schema_name": "ErrorResponse / Error",
+          "type": "{error: {message: string, type: string, param: string | null, code: string | null}}",
+          "semantics": "Standard OpenAI HTTP error envelope.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L48245-48292"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "choices[].delta.refusal",
+          "schema_name": "ChatCompletionStreamResponseDelta.refusal",
+          "type": "string | null (optional)",
+          "semantics": "Streamed refusal text delta on chat.completion.chunk frames.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41808",
+              "artifacts/g4/refusal_stream_probe/NOTE.md:L1-26"
+            ]
+          }
+        },
+        {
+          "field_path": "choices[].finish_reason == \"content_filter\"",
+          "schema_name": "CreateChatCompletionStreamResponse.choices[].finish_reason",
+          "type": "\"content_filter\" | null",
+          "semantics": "Terminal stream chunk finish_reason when content filter stops generation.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43641"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_responses": {
+      "request": [
+        {
+          "field_path": "input[type=\"function_call_output\"].status",
+          "schema_name": "FunctionCallOutputItemParam.status / FunctionToolCallOutput.status (FunctionCallItemStatus)",
+          "type": "\"in_progress\" | \"completed\" | \"incomplete\" | null (optional)",
+          "enum_values": [
+            "in_progress",
+            "completed",
+            "incomplete"
+          ],
+          "semantics": "Item lifecycle status on function_call_output items. No boolean is_error exists; gateways (e.g. Bifrost) map is_error:true -> status:\"incomplete\" or wrap error text in output.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L50802",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82306",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82473",
+              "artifacts/g4/two_exits_bifrost/PREREG_VERIFY_8209.md:L8-9",
+              "artifacts/g4/is_error_carrier/RESULTS.md:L1-60"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "status == \"failed\" + error",
+          "schema_name": "Response.status / Response.error (ResponseError / ResponseErrorCode)",
+          "type": "status: \"failed\"; error: {code: ResponseErrorCode, message: string} | null",
+          "enum_values": [
+            "server_error",
+            "rate_limit_exceeded",
+            "invalid_prompt",
+            "vector_store_timeout",
+            "invalid_image",
+            "invalid_image_format",
+            "invalid_base64_image",
+            "invalid_image_url",
+            "image_too_large",
+            "image_too_small",
+            "image_parse_error",
+            "image_content_policy_violation",
+            "invalid_image_mode",
+            "image_file_too_large",
+            "unsupported_image_media_type",
+            "empty_image_file",
+            "failed_to_download_image",
+            "image_file_not_found"
+          ],
+          "semantics": "In-object failure state and structured error payload on a Response resource.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68235",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68268",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69194",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69212",
+              "artifacts/g4/responses_route/src/responses_props.py:L21-50"
+            ]
+          }
+        },
+        {
+          "field_path": "status == \"incomplete\" + incomplete_details.reason",
+          "schema_name": "Response.incomplete_details",
+          "type": "{reason: \"max_output_tokens\" | \"max_messages\" | \"content_filter\" | \"steered\"} | null",
+          "enum_values": [
+            "max_output_tokens",
+            "max_messages",
+            "content_filter",
+            "steered"
+          ],
+          "semantics": "Structured truncation / content-filter / steering carrier when status == \"incomplete\".",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68270",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L15-30"
+            ]
+          }
+        },
+        {
+          "field_path": "output[type=\"message\"].content[type=\"refusal\"].refusal",
+          "schema_name": "RefusalContent",
+          "type": "{type: \"refusal\", refusal: string}",
+          "semantics": "Typed refusal content part inside an OutputMessage item.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L80197",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L21-26"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "type == \"error\"",
+          "schema_name": "ResponseErrorEvent",
+          "type": "{type: \"error\", code: string | null, message: string, param: string | null, sequence_number: integer}",
+          "semantics": "Stream-level error event in ResponseStreamEvent union.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69238",
+              "artifacts/g4/stream_ee/RESULTS.md:L1-40"
+            ]
+          }
+        },
+        {
+          "field_path": "type == \"response.failed\" | \"response.incomplete\"",
+          "schema_name": "ResponseFailedEvent / ResponseIncompleteEvent",
+          "type": "{type: \"response.failed\" | \"response.incomplete\", response: Response, sequence_number: integer}",
+          "semantics": "Terminal lifecycle failure/incomplete events carrying the full Response object with response.error or response.incomplete_details.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69285",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69915"
+            ]
+          }
+        },
+        {
+          "field_path": "type == \"response.refusal.delta\" | \"response.refusal.done\"",
+          "schema_name": "ResponseRefusalDeltaEvent / ResponseRefusalDoneEvent",
+          "type": "delta: string (on .delta); refusal: string (on .done)",
+          "semantics": "Streamed refusal content part events.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L71036",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L71086",
+              "artifacts/g4/refusal_stream_probe/NOTE.md:L1-26"
+            ]
+          }
+        }
+      ]
+    },
+    "gemini_generatecontent": {
+      "request": [
+        {
+          "field_path": "contents[].parts[].functionResponse.response.error",
+          "schema_name": "FunctionResponse.response (Struct convention)",
+          "type": "object (google.protobuf.Struct; e.g. {\"error\": \"...\"})",
+          "semantics": "FunctionResponse has no dedicated boolean is_error field; its response field is an unstructured JSON object (Struct). Passing {\"error\": \"...\"} inside response was probed live on gemini-3.5-flash-lite and accepted with HTTP 200.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L763",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L173-174",
+              "artifacts/g1/m1/out/probe.json:L1",
+              "artifacts/g1/m1/out/M1_probe_report.md:L31",
+              "artifacts/g4/is_error_carrier/RESULTS.md:L1-60"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "candidates[].finishReason + candidates[].finishMessage",
+          "schema_name": "Candidate.finishReason / Candidate.finishMessage",
+          "type": "finishReason: string enum; finishMessage: string (optional)",
+          "enum_values": [
+            "SAFETY",
+            "RECITATION",
+            "LANGUAGE",
+            "BLOCKLIST",
+            "PROHIBITED_CONTENT",
+            "SPII",
+            "MALFORMED_FUNCTION_CALL",
+            "IMAGE_SAFETY",
+            "IMAGE_PROHIBITED_CONTENT",
+            "IMAGE_OTHER",
+            "NO_IMAGE",
+            "IMAGE_RECITATION",
+            "UNEXPECTED_TOOL_CALL",
+            "TOO_MANY_TOOL_CALLS",
+            "MISSING_THOUGHT_SIGNATURE",
+            "MALFORMED_RESPONSE",
+            "ESCALATION",
+            "PUP_LIMITED_DISABLED"
+          ],
+          "semantics": "Candidate-level abnormal/error/safety termination reason and optional human-readable detail message.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L2630",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L2667",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L122-145"
+            ]
+          }
+        },
+        {
+          "field_path": "promptFeedback.blockReason + promptFeedback.blockReasonMessage",
+          "schema_name": "PromptFeedback.blockReason / PromptFeedback.blockReasonMessage",
+          "type": "blockReason: string enum; blockReasonMessage: string",
+          "enum_values": [
+            "BLOCK_REASON_UNSPECIFIED",
+            "SAFETY",
+            "OTHER",
+            "BLOCKLIST",
+            "PROHIBITED_CONTENT",
+            "IMAGE_SAFETY"
+          ],
+          "semantics": "Prompt-level block carrier when input is rejected by safety/policy filters (candidates may be omitted or empty).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L157-177",
+              "artifacts/g4/stream_ee/RESULTS.md:L40-45"
+            ]
+          }
+        },
+        {
+          "field_path": "error (HTTP 400 Google REST Error / compat array wrapper)",
+          "schema_name": "google.rpc.Status HTTP error envelope",
+          "type": "{error: {code: integer, message: string, status: string, details?: array}} (on native REST); [{\"error\": ...}] 1-element JSON array on /v1beta/openai/chat/completions",
+          "semantics": "HTTP 400 INVALID_ARGUMENT returned live on native generateContent for missing/corrupted thoughtSignature, invalid tool names, or empty contents; on Gemini's OpenAI-compat endpoint (/v1beta/openai/chat/completions), HTTP 400 is wrapped in a 1-element JSON array [{\"error\": ...}].",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/out/probe.json:L1",
+              "artifacts/g1/m1/out/M1_probe_report.md:L10-35",
+              "artifacts/g4/compat_channel_ej/RESULTS.md:L17"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "data: <GenerateContentResponse> with candidates[].finishReason or promptFeedback.blockReason",
+          "schema_name": "GenerateContentResponse SSE chunk",
+          "type": "GenerateContentResponse JSON on unnamed data: SSE frame",
+          "semantics": "Gemini ?alt=sse uses unnamed data: frames with GenerateContentResponse JSON; safety blocks or abnormal stops appear in-band on candidates[].finishReason or promptFeedback.blockReason (no separate event: error header).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g2/resp/sse_gemini.json:L1",
+              "artifacts/g4/stream_ee/RESULTS.md:L40-45"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "integrity_tokens": {
+    "anthropic_messages": {
+      "request": [
+        {
+          "field_path": "messages[role=\"assistant\"].content[type=\"thinking\"].signature",
+          "schema_name": "RequestThinkingBlock.signature",
+          "type": "string (required on RequestThinkingBlock)",
+          "semantics": "Cryptographic integrity token verifying thinking block authenticity when replaying assistant turns (mandatory during tool-use loops with thinking enabled). Verified via prefix-check and model-bound to the originating family.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+              "https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45121",
+              "artifacts/g1/m1/specgaps/docs/anth_preserved-thinking_2026-10-06.md:L1-120",
+              "artifacts/g1/m1/specgaps/docs/anth_thinking-tool-workflows_2026-10-06.md:L1-120",
+              "artifacts/g1/m1/procheck/v16rules.py:L1-180"
+            ]
+          }
+        },
+        {
+          "field_path": "messages[role=\"assistant\"].content[type=\"redacted_thinking\"].data",
+          "schema_name": "RequestRedactedThinkingBlock.data",
+          "type": "string (required)",
+          "semantics": "Opaque encrypted payload for safety-redacted thinking blocks; must be replayed verbatim without modification.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L44835",
+              "artifacts/g1/m1/specgaps/docs/anth_preserved-thinking_2026-10-06.md:L40-90"
+            ]
+          }
+        },
+        {
+          "field_path": "messages[role=\"assistant\"].content[type=\"tool_use\"].id & messages[role=\"user\"].content[type=\"tool_result\"].tool_use_id",
+          "schema_name": "RequestToolUseBlock.id / RequestToolResultBlock.tool_use_id",
+          "type": "string matching ^[a-zA-Z0-9_-]+$ (max 64 chars enforced in procheck)",
+          "semantics": "Bijective call/result pairing token required between assistant tool_use blocks and immediately following user tool_result blocks.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45171",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45296",
+              "artifacts/g1/m1/procheck/proc.py:L14",
+              "artifacts/g4/oracle_v16/PREREG.md:L10-25"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "content[type=\"thinking\"].signature",
+          "schema_name": "ResponseThinkingBlock.signature",
+          "type": "string (required)",
+          "semantics": "Cryptographic signature emitted on thinking blocks (present even when thinking.display == \"omitted\" yields thinking == \"\").",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46125"
+            ]
+          }
+        },
+        {
+          "field_path": "content[type=\"redacted_thinking\"].data",
+          "schema_name": "ResponseRedactedThinkingBlock.data",
+          "type": "string (required)",
+          "semantics": "Opaque encrypted payload emitted when thinking is flagged by safety systems.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45853"
+            ]
+          }
+        },
+        {
+          "field_path": "content[type=\"tool_use\"].id",
+          "schema_name": "ResponseToolUseBlock.id",
+          "type": "string (required, e.g. toolu_...)",
+          "semantics": "Unique identifier for a tool call emitted by Claude.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46221"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "event: content_block_delta (delta.type == \"signature_delta\", delta.signature)",
+          "schema_name": "SignatureContentBlockDelta",
+          "type": "{type: \"signature_delta\", signature: string}",
+          "semantics": "Streamed thinking signature delta emitted just before content_block_stop on a thinking block.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+              "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46477",
+              "artifacts/g1/m1/specgaps/docs/anth_streaming_guide_2026-10-06.md:L100-150",
+              "artifacts/g2/resp/anth_sse.py:L55-75"
+            ]
+          }
+        },
+        {
+          "field_path": "event: content_block_start (content_block.type == \"redacted_thinking\", content_block.data)",
+          "schema_name": "RawContentBlockStartEvent (ResponseRedactedThinkingBlock)",
+          "type": "{type: \"redacted_thinking\", data: string}",
+          "semantics": "Streamed opaque redacted_thinking payload delivered in content_block_start.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L42807",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45853"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_chat": {
+      "request": [
+        {
+          "field_path": "(NO native reasoning integrity token in openai_chat)",
+          "schema_name": "ChatCompletionRequestAssistantMessage",
+          "type": "N/A",
+          "semantics": "Chat Completions has no native reasoning text or signature/encrypted_content field on assistant messages.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41196",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L196-197"
+            ]
+          }
+        },
+        {
+          "field_path": "messages[role=\"assistant\"].tool_calls[].id & messages[role=\"tool\"].tool_call_id",
+          "schema_name": "ChatCompletionMessageToolCall.id / ChatCompletionRequestToolMessage.tool_call_id",
+          "type": "string (required; max 40 chars enforced in OpenAI Chat validator proc.py:L14)",
+          "semantics": "Pairing identifier linking each role:\"tool\" message to a preceding assistant tool_calls[] entry.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41196",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41543",
+              "artifacts/g1/m1/procheck/proc.py:L14"
+            ]
+          }
+        },
+        {
+          "field_path": "messages[role=\"assistant\"].tool_calls[].extra_content.google.thought_signature (Gemini OpenAI-compat channel only)",
+          "schema_name": "Out-of-band Google extension on ChatCompletionMessageToolCall",
+          "type": "string (base64)",
+          "semantics": "Out-of-band carrier required on Gemini's OpenAI-compatible endpoint (/v1beta/openai/chat/completions) for Gemini 3 tool-call replay. Probed live (5/5): omitting -> HTTP 400 INVALID_ARGUMENT; base64(\"skip_thought_signature_validator\") -> HTTP 200.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thought-signatures"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/vertex_thought_signatures.txt:L3",
+              "artifacts/g4/compat_channel_ej/RESULTS.md:L5-17"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "choices[].message.tool_calls[].id",
+          "schema_name": "ChatCompletionMessageToolCall.id",
+          "type": "string (required)",
+          "semantics": "Tool call identifier emitted on non-streaming assistant message.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41619"
+            ]
+          }
+        },
+        {
+          "field_path": "choices[].message.tool_calls[].extra_content.google.thought_signature (Gemini OpenAI-compat channel only)",
+          "schema_name": "Out-of-band Google extension on ChatCompletionMessageToolCall",
+          "type": "string (base64)",
+          "semantics": "Emitted live by Gemini 3.5-flash-lite on /v1beta/openai/chat/completions on the first tool call of a turn.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thought-signatures"
+            ],
+            "pack_refs": [
+              "artifacts/g4/compat_channel_ej/RESULTS.md:L5-13"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "choices[].delta.tool_calls[].id (paired via choices[].delta.tool_calls[].index)",
+          "schema_name": "ChatCompletionMessageToolCallChunk",
+          "type": "id: string (on opening chunk for index); index: integer",
+          "semantics": "Streamed tool call ID emitted on the first delta chunk for a given tool_calls[].index.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41808",
+              "artifacts/g2/resp/sse_openai.json:L1"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_responses": {
+      "request": [
+        {
+          "field_path": "input[type=\"reasoning\"].encrypted_content & input[type=\"reasoning\"].id",
+          "schema_name": "ReasoningItem.encrypted_content / ReasoningItem.id",
+          "type": "encrypted_content: string | null; id: string",
+          "semantics": "Stateless/ZDR reasoning continuity token. Populated when requested via include: [\"reasoning.encrypted_content\"] and replayed in subsequent turns' input array.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L46261",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68127",
+              "artifacts/g4/responses_route/out/RESULTS.md:L1-60"
+            ]
+          }
+        },
+        {
+          "field_path": "input[type=\"function_call\"].call_id & input[type=\"function_call_output\"].call_id",
+          "schema_name": "FunctionToolCall.call_id / FunctionCallOutputItemParam.call_id",
+          "type": "string (required; minLength: 1, maxLength: 64 on FunctionCallOutputItemParam)",
+          "semantics": "Call pairing token between function_call and function_call_output items (distinct from item id fc_...).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L50743",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82473",
+              "artifacts/g4/responses_route/src/responses_props.py:L50-90"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "output[type=\"reasoning\"].encrypted_content & output[type=\"reasoning\"].id",
+          "schema_name": "ReasoningItem",
+          "type": "{type: \"reasoning\", id: string, encrypted_content?: string | null, summary: SummaryTextContent[], content?: ReasoningTextContent[]}",
+          "semantics": "Reasoning output item carrying encrypted reasoning tokens when include contains \"reasoning.encrypted_content\".",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68127"
+            ]
+          }
+        },
+        {
+          "field_path": "output[type=\"function_call\"].call_id & output[type=\"function_call\"].id",
+          "schema_name": "FunctionToolCall",
+          "type": "{type: \"function_call\", id?: string, call_id: string, name: string, arguments: string, status?: enum}",
+          "semantics": "Function call output item with both item id (fc_...) and call_id (call_...).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L50743"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "type == \"response.output_item.done\" (item.type == \"reasoning\", item.encrypted_content)",
+          "schema_name": "ResponseOutputItemDoneEvent",
+          "type": "{type: \"response.output_item.done\", output_index: integer, item: OutputItem, sequence_number: integer}",
+          "semantics": "OpenAI OpenAPI explicitly notes that encrypted_content may be incomplete on response.output_item.added and clients must read the finalized encrypted_content from response.output_item.done (or response.completed).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68144-68152",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70408",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70461"
+            ]
+          }
+        }
+      ]
+    },
+    "gemini_generatecontent": {
+      "request": [
+        {
+          "field_path": "contents[role=\"model\"].parts[].thoughtSignature (wire accepts thoughtSignature or thought_signature)",
+          "schema_name": "Part.thoughtSignature",
+          "type": "string (byte / base64)",
+          "semantics": "Opaque encrypted thought signature. Probed LIVE on gemini-3.8-flash and gemini-3.5-flash-lite: (1) MANDATORY on Gemini 3 when replaying model functionCall turns (missing -> HTTP 400 INVALID_ARGUMENT); (2) on parallel functionCalls in the same model turn, ONLY the first functionCall part carries/validates thoughtSignature; (3) fabricated base64 -> HTTP 400 \"Corrupted thought signature.\"; (4) documented bypass sentinel base64(\"skip_thought_signature_validator\") == \"c2tpcF90aG91Z2h0X3NpZ25hdHVyZV92YWxpZGF0b3I=\" (and context_engineering_is_the_way_to_go) -> HTTP 200.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta",
+              "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thought-signatures"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3028",
+              "artifacts/g1/m1/specgaps/docs/vertex_thought_signatures.txt:L3",
+              "artifacts/g1/m1/out/probe.json:L1",
+              "artifacts/g1/m1/out/M1_probe_report.md:L10-25",
+              "artifacts/g1/m1/out/aisdk_live_sig_7.0.126.json:L1"
+            ]
+          }
+        },
+        {
+          "field_path": "contents[].parts[].functionCall.id & contents[].parts[].functionResponse.id",
+          "schema_name": "FunctionCall.id / FunctionResponse.id",
+          "type": "string (optional in Discovery schema; FunctionCall.name + FunctionResponse.name are required)",
+          "semantics": "Optional call-ID pairing field alongside required name matching; enforced when present by V17b in v16rules.py.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L759",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3222",
+              "artifacts/g4/oracle_v16/PREREG.md:L18"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "candidates[].content.parts[].thoughtSignature",
+          "schema_name": "Part.thoughtSignature",
+          "type": "string (base64)",
+          "semantics": "Emitted live on the first functionCall part of a model turn (and on text/final parts when thinking is enabled).",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta",
+              "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thought-signatures"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3028",
+              "artifacts/g1/m1/out/probe.json:L1",
+              "artifacts/g1/m1/out/M1_probe_report.md:L10-15"
+            ]
+          }
+        },
+        {
+          "field_path": "candidates[].content.parts[].functionCall.id",
+          "schema_name": "FunctionCall.id",
+          "type": "string (optional)",
+          "semantics": "Unique function call ID populated live by Gemini 3.5-flash-lite in responses.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3222",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "candidates[].content.parts[].thoughtSignature (on functionCall chunk or trailing {\"text\": \"\", \"thoughtSignature\": \"...\"} chunk)",
+          "schema_name": "Part.thoughtSignature in streamed GenerateContentResponse",
+          "type": "string (base64)",
+          "semantics": "Probed LIVE on streamGenerateContent?alt=sse: attached to the first functionCall part on tool turns, or on a trailing part with empty text {\"text\": \"\", \"thoughtSignature\": \"...\"} on text turns.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thought-signatures"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/vertex_thought_signatures.txt:L3",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1",
+              "artifacts/g2/resp/judge_resp.py:L82-86"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "stop_finish_reasons": {
+    "anthropic_messages": {
+      "request": [],
+      "response": [
+        {
+          "field_path": "stop_reason (+ stop_sequence, + stop_details)",
+          "schema_name": "Message.stop_reason (StopReason) / Message.stop_sequence / Message.stop_details",
+          "type": "StopReason | null",
+          "enum_values": [
+            "end_turn",
+            "max_tokens",
+            "stop_sequence",
+            "tool_use",
+            "pause_turn",
+            "refusal",
+            "model_context_window_exceeded"
+          ],
+          "semantics": "Exact 7-value StopReason enum in anthropic_openapi_sdk-v1.3.0.yaml. Accompanied by stop_sequence (string | null) when stop_reason == \"stop_sequence\" and stop_details (RefusalStopDetails | null) when stop_reason == \"refusal\".",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43775-43786",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L51848",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L122-145",
+              "artifacts/g4/same_vendor_response/out/RESULTS.md:L15-40"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "message_start.message.stop_reason (null) -> message_delta.delta.stop_reason",
+          "schema_name": "MessageDelta.stop_reason",
+          "type": "StopReason | null",
+          "enum_values": [
+            "end_turn",
+            "max_tokens",
+            "stop_sequence",
+            "tool_use",
+            "pause_turn",
+            "refusal",
+            "model_context_window_exceeded"
+          ],
+          "semantics": "stop_reason is null in message_start and delivered in message_delta.delta.stop_reason prior to message_stop.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+              "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43961-43971",
+              "artifacts/g2/resp/anth_sse.py:L65-76"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_chat": {
+      "request": [],
+      "response": [
+        {
+          "field_path": "choices[].finish_reason",
+          "schema_name": "CreateChatCompletionResponse.choices[].finish_reason",
+          "type": "string enum (non-nullable in non-streaming schema)",
+          "enum_values": [
+            "stop",
+            "length",
+            "tool_calls",
+            "content_filter",
+            "function_call"
+          ],
+          "semantics": "5-value finish_reason enum per choice (function_call is deprecated in favor of tool_calls). Note: refusals use finish_reason == \"stop\" with message.refusal != null.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43453",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L122-145",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L15-30"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "choices[].finish_reason",
+          "schema_name": "CreateChatCompletionStreamResponse.choices[].finish_reason",
+          "type": "string enum | null",
+          "enum_values": [
+            "stop",
+            "length",
+            "tool_calls",
+            "content_filter",
+            "function_call"
+          ],
+          "semantics": "null on intermediate delta chunks; set to one of the 5 enum values on the final chunk for each choice index (before the choices:[] usage chunk and data: [DONE]).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43641",
+              "artifacts/g2/resp/sse_openai.json:L1"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_responses": {
+      "request": [
+        {
+          "field_path": "input[type=\"function_call\" | \"function_call_output\"].status",
+          "schema_name": "FunctionCallItemStatus",
+          "type": "string enum",
+          "enum_values": [
+            "in_progress",
+            "completed",
+            "incomplete"
+          ],
+          "semantics": "Per-item status enum on input/output items.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82306"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "status + incomplete_details.reason",
+          "schema_name": "Response.status / Response.incomplete_details.reason",
+          "type": "status: enum; incomplete_details.reason: enum | null",
+          "enum_values": {
+            "status": [
+              "completed",
+              "failed",
+              "in_progress",
+              "cancelled",
+              "queued",
+              "incomplete"
+            ],
+            "incomplete_details.reason": [
+              "max_output_tokens",
+              "max_messages",
+              "content_filter",
+              "steered"
+            ]
+          },
+          "semantics": "Two-level response termination state. Unlike Chat Completions, tool-call turns terminate with status == \"completed\" (there is no tool_calls status; tool calls are detected by inspecting output[type == \"function_call\"]).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68235",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68270",
+              "artifacts/g4/responses_route/src/responses_props.py:L21-38",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L15-30"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "type in {\"response.completed\", \"response.incomplete\", \"response.failed\"} -> response.status / response.incomplete_details",
+          "schema_name": "ResponseCompletedEvent / ResponseIncompleteEvent / ResponseFailedEvent",
+          "type": "ResponseStreamEvent terminal lifecycle events",
+          "semantics": "Terminal stream event carries the finalized Response object with status and incomplete_details/error.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68784",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69285",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L69915"
+            ]
+          }
+        }
+      ]
+    },
+    "gemini_generatecontent": {
+      "request": [],
+      "response": [
+        {
+          "field_path": "candidates[].finishReason",
+          "schema_name": "Candidate.finishReason",
+          "type": "string enum (22 values in v1beta Discovery)",
+          "enum_values": [
+            "FINISH_REASON_UNSPECIFIED",
+            "STOP",
+            "MAX_TOKENS",
+            "SAFETY",
+            "RECITATION",
+            "LANGUAGE",
+            "OTHER",
+            "BLOCKLIST",
+            "PROHIBITED_CONTENT",
+            "SPII",
+            "MALFORMED_FUNCTION_CALL",
+            "IMAGE_SAFETY",
+            "IMAGE_PROHIBITED_CONTENT",
+            "IMAGE_OTHER",
+            "NO_IMAGE",
+            "IMAGE_RECITATION",
+            "UNEXPECTED_TOOL_CALL",
+            "TOO_MANY_TOOL_CALLS",
+            "MISSING_THOUGHT_SIGNATURE",
+            "MALFORMED_RESPONSE",
+            "ESCALATION",
+            "PUP_LIMITED_DISABLED"
+          ],
+          "semantics": "Candidate termination reason. Crucially, Gemini has NO TOOL_USE / tool_calls finishReason: normal functionCall turns return finishReason == \"STOP\" (probed LIVE on gemini-3.8-flash and gemini-3.5-flash-lite; MAX_TOKENS also probed LIVE).",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L2667",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L122-145",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1",
+              "artifacts/g2/resp/out/resp_summary.md:L1-40"
+            ]
+          }
+        },
+        {
+          "field_path": "promptFeedback.blockReason",
+          "schema_name": "PromptFeedback.blockReason",
+          "type": "string enum (6 values in v1beta Discovery)",
+          "enum_values": [
+            "BLOCK_REASON_UNSPECIFIED",
+            "SAFETY",
+            "OTHER",
+            "BLOCKLIST",
+            "PROHIBITED_CONTENT",
+            "IMAGE_SAFETY"
+          ],
+          "semantics": "Prompt-level block reason when input is blocked prior to candidate generation.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L174"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "candidates[].finishReason (on terminal SSE chunk; may also appear on intermediate chunks in some models)",
+          "schema_name": "Candidate.finishReason in streamed GenerateContentResponse",
+          "type": "string enum",
+          "semantics": "Probed LIVE on streamGenerateContent?alt=sse (STOP and MAX_TOKENS observed on terminal chunk).",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1",
+              "artifacts/g2/resp/judge_resp.py:L70-95"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "usage_fields": {
+    "anthropic_messages": {
+      "request": [],
+      "response": [
+        {
+          "field_path": "usage",
+          "schema_name": "Usage",
+          "type": "object",
+          "fields": {
+            "input_tokens": "integer (required; NON-cached input tokens only \u2014 additive convention: total_input = input_tokens + cache_creation_input_tokens + cache_read_input_tokens)",
+            "output_tokens": "integer (required)",
+            "cache_creation_input_tokens": "integer | null (required)",
+            "cache_read_input_tokens": "integer | null (required)",
+            "cache_creation": "CacheCreation | null ({ephemeral_5m_input_tokens: integer, ephemeral_1h_input_tokens: integer})",
+            "output_tokens_details": "OutputTokensDetails | null ({thinking_tokens: integer}, L44241)",
+            "server_tool_use": "ServerToolUsage | null ({web_search_requests: integer, web_fetch_requests: integer}, L46449)",
+            "service_tier": "\"standard\" | \"priority\" | \"batch\" | null",
+            "inference_geo": "string | null"
+          },
+          "semantics": "Anthropic Usage is ADDITIVE for cached tokens (input_tokens excludes cache_creation_input_tokens and cache_read_input_tokens), unlike OpenAI/Gemini where prompt/input tokens are inclusive of cached tokens.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L41897",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L44241",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46449",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L47170-47225",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L261-263",
+              "artifacts/g4/same_vendor_response/out/ADDENDUM_B_RESULTS.md:L1-60"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "message_start.message.usage + message_delta.usage",
+          "schema_name": "Usage (on message_start) / MessageDeltaUsage (on message_delta)",
+          "type": "MessageDeltaUsage: {input_tokens: integer | null, output_tokens: integer, cache_creation_input_tokens: integer | null, cache_read_input_tokens: integer | null, output_tokens_details?: OutputTokensDetails | null, server_tool_use: ServerToolUsage | null}",
+          "semantics": "Split across two SSE events: initial input/cache counts in message_start.message.usage; cumulative final counts (specifically output_tokens and optional updated input/cache/server_tool_use counts) in message_delta.usage.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+              "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43996-44035",
+              "artifacts/g1/m1/specgaps/docs/anth_streaming_guide_2026-10-06.md:L50-95",
+              "artifacts/g2/resp/anth_sse.py:L39-76"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_chat": {
+      "request": [
+        {
+          "field_path": "stream_options.include_usage",
+          "schema_name": "ChatCompletionStreamOptions.include_usage",
+          "type": "boolean (optional)",
+          "semantics": "Must be set to true on streaming requests for the server to emit the final usage chunk.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41755",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43362"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "usage",
+          "schema_name": "CompletionUsage",
+          "type": "object",
+          "fields": {
+            "prompt_tokens": "integer (inclusive of cached_tokens)",
+            "completion_tokens": "integer (inclusive of reasoning_tokens)",
+            "total_tokens": "integer (prompt_tokens + completion_tokens)",
+            "prompt_tokens_details": "{cached_tokens?: integer, cache_write_tokens?: integer, audio_tokens?: integer, text_tokens?: integer, image_tokens?: integer}",
+            "completion_tokens_details": "{reasoning_tokens?: integer, audio_tokens?: integer, accepted_prediction_tokens?: integer, rejected_prediction_tokens?: integer, text_tokens?: integer}"
+          },
+          "semantics": "Inclusive accounting: prompt_tokens includes prompt_tokens_details.cached_tokens; completion_tokens includes completion_tokens_details.reasoning_tokens.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L42200-42265",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L255-265",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L30-45"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "usage (on final chunk with choices: [])",
+          "schema_name": "CreateChatCompletionStreamResponse.usage",
+          "type": "CompletionUsage | null",
+          "semantics": "usage is null on all content chunks; when stream_options.include_usage is true, a final chunk with choices: [] and populated usage is emitted right before data: [DONE].",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41755",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43655"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_responses": {
+      "request": [],
+      "response": [
+        {
+          "field_path": "usage",
+          "schema_name": "ResponseUsage",
+          "type": "object | null",
+          "fields": {
+            "input_tokens": "integer (inclusive of cached_tokens)",
+            "input_tokens_details": "{cached_tokens: integer, cache_write_tokens?: integer}",
+            "output_tokens": "integer (inclusive of reasoning_tokens)",
+            "output_tokens_details": "{reasoning_tokens: integer}",
+            "total_tokens": "integer (input_tokens + output_tokens)"
+          },
+          "semantics": "Inclusive accounting matching Chat Completions semantics but renamed to input_tokens / output_tokens.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68360",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L71995-72045",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L30-45"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "response.usage (on response.completed / response.incomplete / response.failed)",
+          "schema_name": "Response.usage inside terminal ResponseStreamEvent",
+          "type": "ResponseUsage | null",
+          "semantics": "usage is null on response.created / response.in_progress and populated on the terminal response.completed / response.incomplete / response.failed event.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68784",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L71995"
+            ]
+          }
+        }
+      ]
+    },
+    "gemini_generatecontent": {
+      "request": [],
+      "response": [
+        {
+          "field_path": "usageMetadata",
+          "schema_name": "UsageMetadata",
+          "type": "object",
+          "fields": {
+            "promptTokenCount": "integer (inclusive of cachedContentTokenCount)",
+            "candidatesTokenCount": "integer (EXCLUDES thoughtsTokenCount)",
+            "thoughtsTokenCount": "integer (separate from candidatesTokenCount)",
+            "totalTokenCount": "integer (promptTokenCount + candidatesTokenCount + thoughtsTokenCount)",
+            "cachedContentTokenCount": "integer",
+            "toolUsePromptTokenCount": "integer",
+            "promptTokensDetails": "ModalityTokenCount[] ({modality, tokenCount})",
+            "candidatesTokensDetails": "ModalityTokenCount[]",
+            "cacheTokensDetails": "ModalityTokenCount[]",
+            "toolUsePromptTokensDetails": "ModalityTokenCount[]",
+            "serviceTier": "\"unspecified\" | \"standard\" | \"flex\" | \"priority\""
+          },
+          "semantics": "Probed LIVE (including 90/90 pairs in compat_channel_ej): totalTokenCount == promptTokenCount + candidatesTokenCount + thoughtsTokenCount. Unlike OpenAI where completion_tokens/output_tokens includes reasoning_tokens, Gemini's candidatesTokenCount EXCLUDES thoughtsTokenCount.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L206-290",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L4875",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L255-265",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1",
+              "artifacts/g4/compat_channel_ej/RESULTS.md:L19-24"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "usageMetadata (on streamed GenerateContentResponse chunks)",
+          "schema_name": "UsageMetadata",
+          "type": "UsageMetadata",
+          "semantics": "Probed LIVE on streamGenerateContent?alt=sse: usageMetadata is emitted on each chunk, with final cumulative promptTokenCount, candidatesTokenCount, thoughtsTokenCount, and totalTokenCount on the terminal chunk.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "controls": {
+    "anthropic_messages": {
+      "request": [
+        {
+          "field_path": "max_tokens, temperature, top_p, top_k, stop_sequences, seed (ABSENT), stream",
+          "schema_name": "CreateMessageParams sampling & length controls",
+          "type": "max_tokens: integer >= 1 (REQUIRED); temperature: number 0..1; top_p: number 0..1; top_k: integer >= 0; stop_sequences: string[]; seed: ABSENT; stream: boolean",
+          "semantics": "max_tokens is required on every Anthropic Messages request. seed is not supported. temperature == 1.0 required when thinking is enabled.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43026-43195",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L210-250"
+            ]
+          }
+        },
+        {
+          "field_path": "tools, tool_choice",
+          "schema_name": "CreateMessageParams.tools (Tool[]) / CreateMessageParams.tool_choice (ToolChoice)",
+          "type": "Tool: {name: ^[a-zA-Z0-9_-]{1,128}$, description?: string, input_schema: InputSchema, strict?: boolean, cache_control?: ...}; ToolChoice: {type: \"auto\" | \"any\" | \"tool\" | \"none\", name?: string (for \"tool\"), disable_parallel_tool_use?: boolean (on auto/any/tool)}",
+          "semantics": "Parallel tool use is controlled via tool_choice.disable_parallel_tool_use (boolean, inverted polarity vs OpenAI parallel_tool_calls). Forced tool choice uses type:\"any\" or type:\"tool\" (not compatible with extended thinking unless auto).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43126-43127",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46909",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46994-47033",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L51550"
+            ]
+          }
+        },
+        {
+          "field_path": "thinking, output_config",
+          "schema_name": "ThinkingConfigParam / OutputConfig",
+          "type": "thinking: {type: \"enabled\", budget_tokens: integer >= 1024 (< max_tokens), display?: \"summarized\" | \"omitted\"} | {type: \"disabled\"} | {type: \"adaptive\", display?: \"summarized\" | \"omitted\"}; output_config: {effort?: \"low\" | \"medium\" | \"high\" | \"xhigh\" | \"max\", format?: {type: \"json_schema\", schema: object}}",
+          "semantics": "Reasoning and structured output controls. Note: json_object mode does not exist in Anthropic; structured outputs use output_config.format.type == \"json_schema\".",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43080",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43125",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43578",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L44225",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L51514"
+            ]
+          }
+        },
+        {
+          "field_path": "system, metadata, service_tier, cache_control, container, inference_geo",
+          "schema_name": "CreateMessageParams operational controls",
+          "type": "system: string | RequestTextBlock[]; metadata: {user_id?: string | null}; service_tier: \"auto\" | \"standard_only\"; cache_control: CacheControlEphemeral | null; container: string | null; inference_geo: string | null",
+          "semantics": "Top-level system prompt (not a message role), user tracking metadata, prompt caching control, code execution container ID, and geographic routing.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43041-43105",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L44089"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "id, model, role, container, stop_reason, stop_sequence, stop_details, usage",
+          "schema_name": "Message",
+          "type": "Message metadata & echoed controls",
+          "semantics": "Echoed model identifier, container state ({id, expires_at}), and generation stop/usage metadata.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43740-43795"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "stream: true",
+          "schema_name": "CreateMessageParams.stream",
+          "type": "boolean",
+          "semantics": "Enables text/event-stream SSE response.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43096"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_chat": {
+      "request": [
+        {
+          "field_path": "max_completion_tokens, max_tokens (deprecated), temperature, top_p, top_k (ABSENT), seed, stop, n, presence_penalty, frequency_penalty, logit_bias, logprobs, top_logprobs",
+          "schema_name": "CreateChatCompletionRequest / ModelResponseProperties sampling controls",
+          "type": "max_completion_tokens: integer | null; max_tokens: integer | null (deprecated, rejected on o-series reasoning models); temperature: 0..2; top_p: 0..1; top_k: ABSENT; seed: integer | null; stop: string | string[] (max 4) | null; n: integer; presence_penalty: -2..2; frequency_penalty: -2..2; logprobs: boolean | null; top_logprobs: 0..20 | null",
+          "semantics": "Sampling, token budget, stop sequences (up to 4), and logprob controls.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43069-43376",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L55444-55535",
+              "artifacts/g4/same_vendor_openai_req/out/RESULTS.md:L1-60"
+            ]
+          }
+        },
+        {
+          "field_path": "tools, tool_choice, parallel_tool_calls",
+          "schema_name": "CreateChatCompletionRequest tool controls",
+          "type": "tools: ChatCompletionTool[] (FunctionObject.name max 64 chars ^[a-zA-Z0-9_-]+$, strict?: boolean | null); tool_choice: \"none\" | \"auto\" | \"required\" | ChatCompletionNamedToolChoice | ChatCompletionAllowedToolsChoice; parallel_tool_calls: boolean (default true)",
+          "semantics": "Tool declarations, selection mode (including allowed_tools subset mode), and parallel_tool_calls toggle.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L40660",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41150",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41927",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43364-43376",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L50703"
+            ]
+          }
+        },
+        {
+          "field_path": "reasoning_effort, response_format, verbosity",
+          "schema_name": "ReasoningEffort / ResponseFormat",
+          "type": "reasoning_effort: \"none\" | \"minimal\" | \"low\" | \"medium\" | \"high\" | \"xhigh\" | \"max\" | null; response_format: {type: \"text\"} | {type: \"json_object\"} | {type: \"json_schema\", json_schema: {name, description?, schema?, strict?}}",
+          "semantics": "Reasoning effort enum (no token budget integer) and structured output format.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43103",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43183",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68095"
+            ]
+          }
+        },
+        {
+          "field_path": "store, metadata, user, safety_identifier, prompt_cache_key, prompt_cache_retention, service_tier, prediction, modalities, audio, web_search_options, stream, stream_options",
+          "schema_name": "CreateChatCompletionRequest operational controls",
+          "type": "service_tier: \"auto\" | \"default\" | \"flex\" | \"scale\" | \"priority\" | \"fast\" | null; prompt_cache_retention: \"in-memory\" | \"24h\" | null; stream_options: {include_usage?: boolean, include_obfuscation?: boolean}",
+          "semantics": "Storage, metadata, prompt caching, service tier, multimodal/audio/search, and streaming options.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41755",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43097",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43242-43362",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L55447-55535",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L74879"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "id, model, system_fingerprint, service_tier",
+          "schema_name": "CreateChatCompletionResponse metadata",
+          "type": "system_fingerprint: string | null; service_tier: ServiceTier | null",
+          "semantics": "Response-level fingerprint and active service_tier.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43428-43515"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "stream_options.include_usage, stream_options.include_obfuscation",
+          "schema_name": "ChatCompletionStreamOptions",
+          "type": "{include_usage?: boolean, include_obfuscation?: boolean}",
+          "semantics": "Controls emission of the trailing usage chunk and stream obfuscation padding.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41755"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_responses": {
+      "request": [
+        {
+          "field_path": "max_output_tokens, temperature, top_p, top_logprobs, truncation, max_tool_calls (NO top_k, NO seed, NO stop)",
+          "schema_name": "CreateResponse / ResponseProperties / ModelResponseProperties",
+          "type": "max_output_tokens: integer >= 16 | null; temperature: 0..2 | null; top_p: 0..1 | null; top_logprobs: 0..20 | null; truncation: \"auto\" | \"disabled\" | null; max_tool_calls: integer >= 1 | null; top_k: ABSENT; seed: ABSENT; stop: ABSENT",
+          "semantics": "Notably omits stop sequences, seed, and top_k (documented in dialect_table_v1_addendum_2026-10-06.md:L16); adds truncation and max_tool_calls.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L46237",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L46364",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L55444-55535",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70625",
+              "artifacts/g1/m1/specgaps/dialect_table_v1_addendum_2026-10-06.md:L16"
+            ]
+          }
+        },
+        {
+          "field_path": "tools, tool_choice, parallel_tool_calls",
+          "schema_name": "ResponseProperties.tools / tool_choice / CreateResponse.parallel_tool_calls",
+          "type": "FunctionTool (L80923): {type: \"function\", name: string, description?: string | null, parameters: object | null, strict?: boolean | null (defaults to true!)}; tool_choice: \"none\" | \"auto\" | \"required\" | {type: \"function\", name: string} | ToolChoiceAllowed | ToolChoiceTypes | ToolChoiceMCP | ToolChoiceCustom; parallel_tool_calls: boolean | null",
+          "semantics": "Flat FunctionTool shape (name/parameters at top level of tool object, unlike Chat Completions' nested function:{} wrapper; strict defaults to true).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L46296",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70636-70638",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L75380-75424",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L80923",
+              "artifacts/g4/same_vendor_openai_req/out/RESULTS.md:L1-60"
+            ]
+          }
+        },
+        {
+          "field_path": "reasoning, text, instructions, previous_response_id, conversation, store, include, background, service_tier, metadata, user, safety_identifier, prompt_cache_key, prompt_cache_retention, stream, stream_options",
+          "schema_name": "CreateResponse reasoning, text, and state controls",
+          "type": "reasoning: {effort?: ReasoningEffort, summary?: \"auto\" | \"concise\" | \"detailed\" | null, mode?: ..., context?: ...}; text: {format?: TextResponseFormatConfiguration (text | json_object | json_schema), verbosity?: \"low\" | \"medium\" | \"high\"}; include: IncludeEnum[] (e.g. \"reasoning.encrypted_content\", \"message.output_text.logprobs\")",
+          "semantics": "Reasoning config object (effort + summary), text format/verbosity wrapper, server-side state chaining (previous_response_id, conversation, store, background), and include selector.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L46225-46375",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68015",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70592-70640"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "Echoed controls on Response object (instructions, max_output_tokens, temperature, top_p, tools, tool_choice, parallel_tool_calls, reasoning, text, truncation, previous_response_id, metadata, service_tier, background)",
+          "schema_name": "Response",
+          "type": "Response resource",
+          "semantics": "Unlike Chat Completions, Responses echoes almost all request control parameters directly on the Response resource.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68225-68375"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "stream, stream_options",
+          "schema_name": "CreateResponse.stream / ResponseStreamOptions",
+          "type": "stream: boolean | null; stream_options: {include_obfuscation?: boolean} | null",
+          "semantics": "Enables typed ResponseStreamEvent SSE stream (usage is always included on terminal response.completed event without an include_usage flag).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L46336-46346"
+            ]
+          }
+        }
+      ]
+    },
+    "gemini_generatecontent": {
+      "request": [
+        {
+          "field_path": "generationConfig.{maxOutputTokens, temperature, topP, topK, seed, stopSequences, candidateCount, presencePenalty, frequencyPenalty, responseLogprobs, logprobs}",
+          "schema_name": "GenerationConfig",
+          "type": "maxOutputTokens: integer; temperature: number; topP: number; topK: integer; seed: integer; stopSequences: string[]; candidateCount: integer; presencePenalty: number; frequencyPenalty: number; responseLogprobs: boolean; logprobs: integer",
+          "semantics": "Nested under generationConfig (camelCase or snake_case accepted by Google REST JSON transcoder).",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L5713-5865",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1"
+            ]
+          }
+        },
+        {
+          "field_path": "generationConfig.{responseMimeType, responseSchema, responseJsonSchema, thinkingConfig}",
+          "schema_name": "GenerationConfig structured output & ThinkingConfig",
+          "type": "responseMimeType: \"text/plain\" | \"application/json\" | \"text/x.enum\"; responseSchema: Schema (OpenAPI 3.0 subset); responseJsonSchema: any (JSON Schema); thinkingConfig: {includeThoughts?: boolean, thinkingBudget?: integer, thinkingLevel?: \"THINKING_LEVEL_UNSPECIFIED\" | \"MINIMAL\" | \"LOW\" | \"MEDIUM\" | \"HIGH\"}",
+          "semantics": "Probed LIVE: thinkingConfig (thinkingBudget / includeThoughts) and responseSchema/responseJsonSchema (probe_schema_leniency.json verified live that responseSchema rejects additionalProperties:false with HTTP 400 while responseJsonSchema accepts standard JSON Schema keywords).",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L999-1018",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L5805-5825",
+              "artifacts/g1/m1/out/probe_schema_leniency.json:L1",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1"
+            ]
+          }
+        },
+        {
+          "field_path": "tools, toolConfig.functionCallingConfig (NO parallel_tool_calls control)",
+          "schema_name": "GenerateContentRequest.tools / ToolConfig.functionCallingConfig",
+          "type": "tools: Tool[] (functionDeclarations: FunctionDeclaration[], parameters or parametersJsonSchema; name max 128 chars probed LIVE: 100 chars -> 200, 129 chars -> 400); functionCallingConfig: {mode: \"MODE_UNSPECIFIED\" | \"AUTO\" | \"ANY\" | \"NONE\" | \"VALIDATED\", allowedFunctionNames?: string[]}; parallel_tool_calls: ABSENT",
+          "semantics": "Forced single-tool choice uses mode: \"ANY\" (or \"VALIDATED\") + allowedFunctionNames: [\"tool_name\"]. Gemini has no parallel_tool_calls disable switch.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L294",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L1073-1125",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L1561-1565",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L1637",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L226-229",
+              "artifacts/g1/m1/out/probe.json:L1",
+              "artifacts/g1/m1/out/M1_probe_report.md:L33-36"
+            ]
+          }
+        },
+        {
+          "field_path": "systemInstruction, safetySettings, cachedContent, labels, serviceTier, store",
+          "schema_name": "GenerateContentRequest top-level controls",
+          "type": "systemInstruction: Content; safetySettings: SafetySetting[]; cachedContent: string; labels: map<string, string>; serviceTier: \"unspecified\" | \"standard\" | \"flex\" | \"priority\"; store: boolean",
+          "semantics": "Top-level system instruction Content object, safety thresholds, explicit cache handle, billing labels, service tier, and storage toggle.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L1500-1570"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "modelVersion, responseId, usageMetadata.serviceTier",
+          "schema_name": "GenerateContentResponse metadata",
+          "type": "modelVersion: string; responseId: string",
+          "semantics": "Probed LIVE: modelVersion and responseId returned on GenerateContentResponse.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3649-3685",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": " Endpoint path :streamGenerateContent?alt=sse (query parameter, not request body field)",
+          "schema_name": "streamGenerateContent REST method",
+          "type": "URL endpoint + ?alt=sse query parameter",
+          "semantics": "Streaming is selected via the :streamGenerateContent method and ?alt=sse query parameter rather than a body boolean.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L6560-6620",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "empty_content_rules": {
+    "anthropic_messages": {
+      "request": [
+        {
+          "field_path": "messages[].content & RequestTextBlock.text & RequestToolResultBlock.content",
+          "schema_name": "InputMessage.content / RequestTextBlock / RequestToolResultBlock",
+          "type": "RequestTextBlock.text: string (minLength: 1 \u2014 empty string \"\" REJECTED); InputMessage.content: non-empty string or non-empty block array; RequestToolResultBlock.content: optional string | block[] (admits omitted, \"\", or [])",
+          "semantics": "Anthropic rejects empty text blocks (RequestTextBlock.text has minLength: 1 at L44976) and empty messages, whereas RequestToolResultBlock.content is optional and permits empty tool output.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L44976",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45171",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L148-166",
+              "artifacts/g1/m1/procheck/v16rules.py:L60-120"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "content (ResponseTextBlock.text, ResponseThinkingBlock.thinking)",
+          "schema_name": "Message.content / ResponseTextBlock / ResponseThinkingBlock",
+          "type": "ResponseTextBlock.text: string (minLength: 0 at L45962); ResponseThinkingBlock.thinking: string (\"\" when thinking.display == \"omitted\"); Message.content: array (can be [] on refusal or immediate stop)",
+          "semantics": "Response text blocks allow minLength: 0 (unlike RequestTextBlock minLength: 1), creating a round-trip replay trap if an empty response text block is replayed without filtering.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L45962",
+              "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L46125"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "message_start.message.content == [] & content_block_start.content_block.text == \"\"",
+          "schema_name": "RawMessageStartEvent / RawContentBlockStartEvent",
+          "type": "message_start.message.content: [] (empty array invariant); content_block_start text block: {type: \"text\", text: \"\"} (or tool_use input: {})",
+          "semantics": "In Anthropic SSE, message_start always initializes message.content to [], and content_block_start initializes text blocks with text: \"\" before content_block_delta frames append text.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/anth_streaming_guide_2026-10-06.md:L15-55",
+              "artifacts/g2/resp/anth_sse.py:L50",
+              "artifacts/g2/resp/anth_sse.py:L172",
+              "artifacts/g4/oracle_v15/PREREG.md:L26"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_chat": {
+      "request": [
+        {
+          "field_path": "messages[].content",
+          "schema_name": "ChatCompletionRequestMessage.content",
+          "type": "user/system/developer/tool string content: no minLength (\"\" allowed); array content: minItems: 1; assistant content: string | array | null (nullable when tool_calls or function_call present)",
+          "semantics": "String content permits \"\" on user/system/developer/tool messages, whereas array content requires minItems: 1. Assistant content may be null when tool_calls are present.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41196",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41282",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41502",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41543",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41576",
+              "artifacts/g1/m1/specgaps/spec_gaps_v1.md:L148-166"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "choices[].message.content",
+          "schema_name": "ChatCompletionResponseMessage.content",
+          "type": "string | null (required property, nullable)",
+          "semantics": "content is null when the model emits tool_calls without prose or when refusal is populated.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41619",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L74-88"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "choices[0].delta == {\"role\": \"assistant\", \"content\": \"\"} & final usage chunk choices == []",
+          "schema_name": "ChatCompletionStreamResponseDelta / CreateChatCompletionStreamResponse",
+          "type": "delta.content: string | null; choices: array (empty [] on usage-only final chunk)",
+          "semantics": "First SSE chunk typically carries role: \"assistant\" with content: \"\" (or content: null on tool-call streams), causing naive accumulators to distinguish \"\" vs null on tool-only streams; final usage chunk has choices: [].",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41755",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41808",
+              "artifacts/g2/resp/sse_openai.json:L1",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L74-88"
+            ]
+          }
+        }
+      ]
+    },
+    "openai_responses": {
+      "request": [
+        {
+          "field_path": "input & InputTextContentParam.text & FunctionCallOutputItemParam.output",
+          "schema_name": "InputTextContentParam / FunctionCallOutputItemParam",
+          "type": "InputTextContentParam.text: string (maxLength: 10485760, no minLength); FunctionCallOutputItemParam.output: string (maxLength: 10485760, no minLength) | array",
+          "semantics": "Both input_text.text and function_call_output.output allow empty strings \"\" in schema (no minLength constraint).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82357",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82473"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "output & OutputMessage.content (OutputTextContent.text)",
+          "schema_name": "Response.output / OutputTextContent",
+          "type": "Response.output: OutputItem[] (contains only FunctionToolCall / ReasoningItem and no OutputMessage on pure tool-call turns); OutputTextContent.text: string (no minLength)",
+          "semantics": "On tool-call-only turns, no OutputMessage item is emitted at all (rather than an OutputMessage with null content).",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L56170",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L80116",
+              "artifacts/g4/same_vendor_openai/out/RESULTS.md:L74-88"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "response.content_part.added (part.text == \"\") & response.output_item.added (item.content == [])",
+          "schema_name": "ResponseContentPartAddedEvent / ResponseOutputItemAddedEvent",
+          "type": "part: {type: \"output_text\", text: \"\", annotations: []}",
+          "semantics": "Streamed OutputMessage items open with content: [] on response.output_item.added and text: \"\" on response.content_part.added.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68938",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70408"
+            ]
+          }
+        }
+      ]
+    },
+    "gemini_generatecontent": {
+      "request": [
+        {
+          "field_path": "contents & contents[].parts & FunctionResponse.response",
+          "schema_name": "GenerateContentRequest.contents / Content.parts / FunctionResponse.response",
+          "type": "contents: non-empty Content[]; parts: non-empty Part[]; FunctionResponse.response: JSON object (Struct)",
+          "semantics": "Probed LIVE on gemini-3.5-flash-lite: FunctionResponse.response MUST be a JSON object (Struct), NOT a bare string, but both empty struct {} (G5_empty_response_struct) and {\"content\": \"\"} (G5_content_empty_string) are accepted with HTTP 200.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L763",
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3016",
+              "artifacts/g1/m1/out/probe.json:L1",
+              "artifacts/g1/m1/out/M1_probe_report.md:L29-30"
+            ]
+          }
+        }
+      ],
+      "response": [
+        {
+          "field_path": "candidates[].content.parts",
+          "schema_name": "Candidate.content",
+          "type": "Content (optional; parts may be absent or [] on safety-blocked/empty candidates)",
+          "semantics": "When finishReason is SAFETY/MAX_TOKENS or promptFeedback.blockReason is set, Candidate.content or Candidate.content.parts may be omitted or empty.",
+          "verification": "UNVERIFIED",
+          "probed_live_in_pack": false,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L2619",
+              "artifacts/g2/resp/sse_gemini.json:L1",
+              "artifacts/g4/stream_ee/RESULTS.md:L40-45"
+            ]
+          }
+        }
+      ],
+      "stream": [
+        {
+          "field_path": "candidates[].content.parts[] == {\"text\": \"\", \"thoughtSignature\": \"...\"}",
+          "schema_name": "Trailing Part on streamGenerateContent?alt=sse",
+          "type": "{text: \"\", thoughtSignature: string}",
+          "semantics": "Probed LIVE on gemini-3.5-flash-lite (and documented in vertex_thought_signatures.txt): streaming text responses emit a trailing SSE chunk containing a Part with empty string text: \"\" carrying the turn's thoughtSignature.",
+          "verification": "LIVE",
+          "probed_live_in_pack": true,
+          "exercised_in_pack_harness": true,
+          "provenance": {
+            "vendor_doc_urls": [
+              "https://docs.cloud.google.com/vertex-ai/generative-ai/docs/thought-signatures"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/vertex_thought_signatures.txt:L3",
+              "artifacts/g2/resp/out/gemini_live_streams.json:L1",
+              "artifacts/g2/resp/judge_resp.py:L82-86"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "responses_item_types": {
+    "openai_responses": {
+      "request_input_items": {
+        "union_schema": "InputItem (openai_openapi.yaml:L52421) / Item (openai_openapi.yaml:L52729)",
+        "verification": "UNVERIFIED",
+        "probed_live_in_pack": false,
+        "exercised_in_pack_harness": true,
+        "items": [
+          {
+            "type": "message",
+            "schema_names": [
+              "EasyInputMessage (L47962)",
+              "InputMessage (L52437)",
+              "OutputMessage (L56170)"
+            ],
+            "roles": [
+              "user",
+              "system",
+              "developer",
+              "assistant"
+            ],
+            "content_part_types": [
+              "input_text (L82357)",
+              "input_image (L82375)",
+              "input_file (L82414)",
+              "output_text (L80116)",
+              "refusal (L80197)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L47962",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L52437",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L56170"
+            ]
+          },
+          {
+            "type": "function_call",
+            "schema_names": [
+              "FunctionToolCall (L50743)"
+            ],
+            "key_fields": [
+              "call_id",
+              "name",
+              "arguments",
+              "id?",
+              "status?"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L50743"
+            ]
+          },
+          {
+            "type": "function_call_output",
+            "schema_names": [
+              "FunctionCallOutputItemParam (L82473)",
+              "FunctionToolCallOutputResource (L50866)"
+            ],
+            "key_fields": [
+              "call_id",
+              "output (string | InputText/Image/File[])",
+              "id?",
+              "status?"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L50866",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82473"
+            ]
+          },
+          {
+            "type": "reasoning",
+            "schema_names": [
+              "ReasoningItem (L68127)"
+            ],
+            "key_fields": [
+              "id",
+              "summary",
+              "content?",
+              "encrypted_content?",
+              "status?"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68127"
+            ]
+          },
+          {
+            "type": "item_reference",
+            "schema_names": [
+              "ItemReferenceParam (L83165)"
+            ],
+            "key_fields": [
+              "id"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L83165"
+            ]
+          },
+          {
+            "type": "file_search_call",
+            "schema_names": [
+              "FileSearchToolCall (L49881)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L49881"
+            ]
+          },
+          {
+            "type": "web_search_call",
+            "schema_names": [
+              "WebSearchToolCall (L78140)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L78140"
+            ]
+          },
+          {
+            "type": "computer_call",
+            "schema_names": [
+              "ComputerToolCall (L42350)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L42350"
+            ]
+          },
+          {
+            "type": "computer_call_output",
+            "schema_names": [
+              "ComputerCallOutputItemParam (L82312)",
+              "ComputerToolCallOutputResource (L42447)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L42447",
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82312"
+            ]
+          },
+          {
+            "type": "code_interpreter_call",
+            "schema_names": [
+              "CodeInterpreterToolCall (L42058)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L42058"
+            ]
+          },
+          {
+            "type": "image_generation_call",
+            "schema_names": [
+              "ImageGenToolCall (L80504)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L80504"
+            ]
+          },
+          {
+            "type": "local_shell_call",
+            "schema_names": [
+              "LocalShellToolCall (L53707)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L53707"
+            ]
+          },
+          {
+            "type": "local_shell_call_output",
+            "schema_names": [
+              "LocalShellToolCallOutput (L53744)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L53744"
+            ]
+          },
+          {
+            "type": "shell_call",
+            "schema_names": [
+              "FunctionShellCallItemParam (L82806)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82806"
+            ]
+          },
+          {
+            "type": "shell_call_output",
+            "schema_names": [
+              "FunctionShellCallOutputItemParam (L82917)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82917"
+            ]
+          },
+          {
+            "type": "apply_patch_call",
+            "schema_names": [
+              "ApplyPatchToolCallItemParam (L83051)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L83051"
+            ]
+          },
+          {
+            "type": "apply_patch_call_output",
+            "schema_names": [
+              "ApplyPatchToolCallOutputItemParam (L83101)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L83101"
+            ]
+          },
+          {
+            "type": "mcp_list_tools",
+            "schema_names": [
+              "MCPListTools (L53915)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L53915"
+            ]
+          },
+          {
+            "type": "mcp_approval_request",
+            "schema_names": [
+              "MCPApprovalRequest (L53805)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L53805"
+            ]
+          },
+          {
+            "type": "mcp_approval_response",
+            "schema_names": [
+              "MCPApprovalResponse (L53840)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L53840"
+            ]
+          },
+          {
+            "type": "mcp_call",
+            "schema_names": [
+              "MCPToolCall (L54130)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L54130"
+            ]
+          },
+          {
+            "type": "custom_tool_call",
+            "schema_names": [
+              "CustomToolCall (L47552)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L47552"
+            ]
+          },
+          {
+            "type": "custom_tool_call_output",
+            "schema_names": [
+              "CustomToolCallOutput (L47599)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L47599"
+            ]
+          },
+          {
+            "type": "compaction",
+            "schema_names": [
+              "CompactionSummaryItemParam (L82748)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82748"
+            ]
+          },
+          {
+            "type": "compaction_trigger",
+            "schema_names": [
+              "CompactionTriggerItemParam (L83145)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L83145"
+            ]
+          },
+          {
+            "type": "program",
+            "schema_names": [
+              "ProgramItemParam (L83184)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L83184"
+            ]
+          },
+          {
+            "type": "program_output",
+            "schema_names": [
+              "ProgramOutputItemParam (L83222)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L83222"
+            ]
+          },
+          {
+            "type": "tool_search_call",
+            "schema_names": [
+              "ToolSearchCallItemParam (L82639)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82639"
+            ]
+          },
+          {
+            "type": "tool_search_output",
+            "schema_names": [
+              "ToolSearchOutputItemParam (L82676)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82676"
+            ]
+          },
+          {
+            "type": "additional_tools",
+            "schema_names": [
+              "AdditionalToolsItemParam (L82715)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L82715"
+            ]
+          },
+          {
+            "type": "configuration_update",
+            "schema_names": [
+              "ResponseConfigurationUpdateItemParam (L68901)"
+            ],
+            "pack_refs": [
+              "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68901"
+            ]
+          }
+        ],
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L52421",
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L52729",
+            "artifacts/g4/responses_route/out/RESULTS.md:L1-60"
+          ]
+        }
+      },
+      "response_output_items": {
+        "union_schema": "OutputItem (openai_openapi.yaml:L56138)",
+        "verification": "UNVERIFIED",
+        "probed_live_in_pack": false,
+        "exercised_in_pack_harness": true,
+        "items": [
+          {
+            "type": "message",
+            "schema_name": "OutputMessage (L56170)"
+          },
+          {
+            "type": "function_call",
+            "schema_name": "FunctionToolCall (L50743)"
+          },
+          {
+            "type": "reasoning",
+            "schema_name": "ReasoningItem (L68127)"
+          },
+          {
+            "type": "file_search_call",
+            "schema_name": "FileSearchToolCall (L49881)"
+          },
+          {
+            "type": "web_search_call",
+            "schema_name": "WebSearchToolCall (L78140)"
+          },
+          {
+            "type": "computer_call",
+            "schema_name": "ComputerToolCall (L42350)"
+          },
+          {
+            "type": "code_interpreter_call",
+            "schema_name": "CodeInterpreterToolCall (L42058)"
+          },
+          {
+            "type": "image_generation_call",
+            "schema_name": "ImageGenToolCall (L80504)"
+          },
+          {
+            "type": "local_shell_call",
+            "schema_name": "LocalShellToolCall (L53707)"
+          },
+          {
+            "type": "shell_call",
+            "schema_name": "FunctionShellCall (L81919)"
+          },
+          {
+            "type": "shell_call_output",
+            "schema_name": "FunctionShellCallOutput (L82034)"
+          },
+          {
+            "type": "apply_patch_call",
+            "schema_name": "ApplyPatchToolCall (L82150)"
+          },
+          {
+            "type": "apply_patch_call_output",
+            "schema_name": "ApplyPatchToolCallOutput (L82203)"
+          },
+          {
+            "type": "mcp_list_tools",
+            "schema_name": "MCPListTools (L53915)"
+          },
+          {
+            "type": "mcp_approval_request",
+            "schema_name": "MCPApprovalRequest (L53805)"
+          },
+          {
+            "type": "mcp_call",
+            "schema_name": "MCPToolCall (L54130)"
+          },
+          {
+            "type": "custom_tool_call",
+            "schema_name": "CustomToolCall (L47552)"
+          },
+          {
+            "type": "compaction",
+            "schema_name": "CompactionBody (L81753)"
+          },
+          {
+            "type": "program",
+            "schema_name": "Program (L81692)"
+          },
+          {
+            "type": "program_output",
+            "schema_name": "ProgramOutput (L81725)"
+          },
+          {
+            "type": "tool_search_call",
+            "schema_name": "ToolSearchCall (L80882)"
+          },
+          {
+            "type": "tool_search_output",
+            "schema_name": "ToolSearchOutput (L81627)"
+          },
+          {
+            "type": "additional_tools",
+            "schema_name": "AdditionalTools (L81666)"
+          }
+        ],
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L56138"
+          ]
+        }
+      },
+      "stream_item_delivery": {
+        "events": [
+          "response.output_item.added (L70408)",
+          "response.output_item.done (L70461)",
+          "response.content_part.added (L68938)",
+          "response.content_part.done (L68992)",
+          "response.reasoning_summary_part.added (L70690)",
+          "response.reasoning_summary_part.done (L70757)"
+        ],
+        "verification": "UNVERIFIED",
+        "probed_live_in_pack": false,
+        "exercised_in_pack_harness": true,
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L68938-68992",
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70408-70461",
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L70690-70757"
+          ]
+        }
+      }
+    },
+    "other_dialects_counterpart_note": {
+      "openai_chat": "Uses role-based messages[] (developer, system, user, assistant, tool, function) rather than typed Item unions (openai_openapi.yaml:L41328).",
+      "anthropic_messages": "Uses role-based messages[] (user, assistant) with typed content[] blocks (text, image, document, search_result, thinking, redacted_thinking, tool_use, tool_result, server_tool_use, web_search_tool_result, etc., anthropic_openapi_sdk-v1.3.0.yaml:L42874, L51465).",
+      "gemini_generatecontent": "Uses role-based contents[] (user, model) with Part union structs (text, inlineData, fileData, functionCall, functionResponse, executableCode, codeExecutionResult, thought, thoughtSignature, gemini_discovery_v1beta.json:L2984-3055)."
+    }
+  },
+  "stream_event_types": {
+    "anthropic_messages": {
+      "stream": {
+        "framing": "Named SSE events (`event: <type>\\ndata: <json>\\n\\n`); no `data: [DONE]` sentinel (`message_stop` is terminal).",
+        "verification": "UNVERIFIED",
+        "probed_live_in_pack": false,
+        "exercised_in_pack_harness": true,
+        "events": [
+          {
+            "event_type": "message_start",
+            "schema_name": "RawMessageStartEvent (L44047)",
+            "payload": "{type: \"message_start\", message: Message (with content: [] and stop_reason: null)}"
+          },
+          {
+            "event_type": "content_block_start",
+            "schema_name": "RawContentBlockStartEvent (L42807)",
+            "payload": "{type: \"content_block_start\", index: integer, content_block: text | thinking | redacted_thinking | tool_use | server_tool_use | ...}"
+          },
+          {
+            "event_type": "content_block_delta",
+            "schema_name": "RawContentBlockDeltaEvent (L42738) / RawContentBlockDelta (L51499)",
+            "delta_subtypes": [
+              "text_delta (TextContentBlockDelta, L46736)",
+              "input_json_delta (InputJsonContentBlockDelta, L43501)",
+              "thinking_delta (ThinkingContentBlockDelta, L46848)",
+              "signature_delta (SignatureContentBlockDelta, L46477)",
+              "citations_delta (CitationsDelta, L42038)"
+            ]
+          },
+          {
+            "event_type": "content_block_stop",
+            "schema_name": "RawContentBlockStopEvent (L42856)",
+            "payload": "{type: \"content_block_stop\", index: integer}"
+          },
+          {
+            "event_type": "message_delta",
+            "schema_name": "RawMessageDeltaEvent (L43981)",
+            "payload": "{type: \"message_delta\", delta: {stop_reason, stop_sequence, stop_details}, usage: MessageDeltaUsage}"
+          },
+          {
+            "event_type": "message_stop",
+            "schema_name": "RawMessageStopEvent (L44057)",
+            "payload": "{type: \"message_stop\"}"
+          },
+          {
+            "event_type": "ping",
+            "schema_name": "SSE keepalive frame (documented in anth_streaming_guide_2026-10-06.md; absent from RawMessageStreamEvent OpenAPI union)",
+            "payload": "{type: \"ping\"}"
+          },
+          {
+            "event_type": "error",
+            "schema_name": "SSE error frame (documented in anth_streaming_guide_2026-10-06.md; absent from RawMessageStreamEvent OpenAPI union)",
+            "payload": "{type: \"error\", error: {type: string, message: string}}"
+          }
+        ],
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+            "https://docs.anthropic.com/en/docs/build-with-claude/streaming"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L42738-42865",
+            "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L43981-44065",
+            "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L51499",
+            "artifacts/g1/m1/specgaps/docs/anth_streaming_guide_2026-10-06.md:L1-235",
+            "artifacts/g1/m1/procheck/v14rules.py:L152",
+            "artifacts/g2/resp/anth_sse.py:L36-78"
+          ]
+        }
+      }
+    },
+    "openai_chat": {
+      "stream": {
+        "framing": "Unnamed SSE data-only frames (`data: <CreateChatCompletionStreamResponse JSON>\\n\\n`) with `object: \"chat.completion.chunk\"`, terminated by literal `data: [DONE]\\n\\n`.",
+        "verification": "UNVERIFIED",
+        "probed_live_in_pack": false,
+        "exercised_in_pack_harness": true,
+        "events": [
+          {
+            "event_type": "data: (object == \"chat.completion.chunk\")",
+            "schema_name": "CreateChatCompletionStreamResponse (L43591)",
+            "payload": "{id, object: \"chat.completion.chunk\", created, model, service_tier?, system_fingerprint?, choices: [{index, delta: {role?, content?, refusal?, tool_calls?, function_call?}, logprobs?, finish_reason}], usage?: CompletionUsage | null}"
+          },
+          {
+            "event_type": "data: [DONE]",
+            "schema_name": "SSE stream termination sentinel (documented at L41755)",
+            "payload": "[DONE]"
+          }
+        ],
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41755",
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L41808",
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L43591",
+            "artifacts/g2/resp/sse_openai.json:L1"
+          ]
+        }
+      }
+    },
+    "openai_responses": {
+      "stream": {
+        "framing": "Named SSE events (`event: <type>\\ndata: <ResponseStreamEvent JSON>\\n\\n`) where every payload carries `type` and monotonically increasing `sequence_number`.",
+        "union_schema": "ResponseStreamEvent (openai_openapi.yaml:L71773 \u2014 58 variants)",
+        "verification": "UNVERIFIED",
+        "probed_live_in_pack": false,
+        "exercised_in_pack_harness": true,
+        "core_lifecycle_and_content_events": [
+          "response.created (ResponseCreatedEvent, L69046)",
+          "response.in_progress (ResponseInProgressEvent, L69851)",
+          "response.queued (ResponseQueuedEvent, L70642)",
+          "response.completed (ResponseCompletedEvent, L68784)",
+          "response.incomplete (ResponseIncompleteEvent, L69915)",
+          "response.failed (ResponseFailedEvent, L69285)",
+          "error (ResponseErrorEvent, L69238)",
+          "response.output_item.added (ResponseOutputItemAddedEvent, L70408)",
+          "response.output_item.done (ResponseOutputItemDoneEvent, L70461)",
+          "response.content_part.added (ResponseContentPartAddedEvent, L68938)",
+          "response.content_part.done (ResponseContentPartDoneEvent, L68992)",
+          "response.output_text.delta (ResponseTextDeltaEvent, L71869)",
+          "response.output_text.done (ResponseTextDoneEvent, L71926)",
+          "response.output_text.annotation.added (ResponseOutputTextAnnotationAddedEvent, L70512)",
+          "response.refusal.delta (ResponseRefusalDeltaEvent, L71036)",
+          "response.refusal.done (ResponseRefusalDoneEvent, L71086)",
+          "response.function_call_arguments.delta (ResponseFunctionCallArgumentsDeltaEvent, L69592)",
+          "response.function_call_arguments.done (ResponseFunctionCallArgumentsDoneEvent, L69638)",
+          "response.reasoning_summary_part.added (ResponseReasoningSummaryPartAddedEvent, L70690)",
+          "response.reasoning_summary_part.done (ResponseReasoningSummaryPartDoneEvent, L70757)",
+          "response.reasoning_summary_text.delta (ResponseReasoningSummaryTextDeltaEvent, L70832)",
+          "response.reasoning_summary_text.done (ResponseReasoningSummaryTextDoneEvent, L70884)",
+          "response.reasoning_text.delta (ResponseReasoningTextDeltaEvent, L70934)",
+          "response.reasoning_text.done (ResponseReasoningTextDoneEvent, L70986)"
+        ],
+        "built_in_tool_and_audio_events": [
+          "response.audio.delta (L68526)",
+          "response.audio.done (L68562)",
+          "response.audio.transcript.delta (L68592)",
+          "response.audio.transcript.done (L68628)",
+          "response.code_interpreter_call_code.delta (L68658)",
+          "response.code_interpreter_call_code.done (L68702)",
+          "response.code_interpreter_call.completed (L68746)",
+          "response.code_interpreter_call.in_progress (L68780)",
+          "response.code_interpreter_call.interpreting (L68816)",
+          "response.compaction.completed (L68854)",
+          "response.compaction.in_progress (L68877)",
+          "response.file_search_call.completed (L69469)",
+          "response.file_search_call.in_progress (L69510)",
+          "response.file_search_call.searching (L69551)",
+          "response.web_search_call.completed (L72089)",
+          "response.web_search_call.in_progress (L72130)",
+          "response.web_search_call.searching (L72171)",
+          "response.image_generation_call.completed (L69688)",
+          "response.image_generation_call.generating (L69729)",
+          "response.image_generation_call.in_progress (L69770)",
+          "response.image_generation_call.partial_image (L69811)",
+          "response.mcp_call_arguments.delta (L70109)",
+          "response.mcp_call_arguments.done (L70158)",
+          "response.mcp_call.completed (L70205)",
+          "response.mcp_call.failed (L70244)",
+          "response.mcp_call.in_progress (L70283)",
+          "response.mcp_list_tools.completed (L70324)",
+          "response.mcp_list_tools.failed (L70363)",
+          "response.mcp_list_tools.in_progress (L70402)",
+          "response.shell_call_command.added (L71134)",
+          "response.shell_call_command.delta (L71186)",
+          "response.shell_call_command.done (L71242)",
+          "response.custom_tool_call_input.delta (L69092)",
+          "response.custom_tool_call_input.done (L69141)"
+        ],
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L71773-71865",
+            "artifacts/g4/responses_route/out/RESULTS.md:L1-60"
+          ]
+        }
+      }
+    },
+    "gemini_generatecontent": {
+      "stream": {
+        "framing": "Unnamed SSE data-only frames (`data: <GenerateContentResponse JSON>\\r\\n\\r\\n`) on `:streamGenerateContent?alt=sse`. NO `event:` header and NO `data: [DONE]` sentinel; stream ends on HTTP EOF after the chunk carrying `candidates[].finishReason` and final `usageMetadata`.",
+        "verification": "LIVE",
+        "probed_live_in_pack": true,
+        "exercised_in_pack_harness": true,
+        "events": [
+          {
+            "event_type": "data: <GenerateContentResponse>",
+            "schema_name": "GenerateContentResponse (gemini_discovery_v1beta.json:L3649)",
+            "payload": "{candidates: Candidate[], promptFeedback?: PromptFeedback, usageMetadata?: UsageMetadata, modelVersion?: string, responseId?: string}"
+          }
+        ],
+        "provenance": {
+          "vendor_doc_urls": [
+            "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+          ],
+          "pack_refs": [
+            "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L3649",
+            "artifacts/g2/resp/out/gemini_live_streams.json:L1",
+            "artifacts/g2/resp/sse_gemini.json:L1",
+            "artifacts/g2/resp/judge_resp.py:L70-95"
+          ]
+        }
+      }
+    }
+  },
+  "wire_tables": {
+    "provenance": {
+      "vendor_doc_urls": [
+        "https://app.stainless.com/api/spec/documented/openai/openapi.documented.yml",
+        "https://raw.githubusercontent.com/anthropics/anthropic-sdk-typescript/main/.stats.yml",
+        "https://generativelanguage.googleapis.com/$discovery/rest?version=v1beta"
+      ],
+      "pack_refs": [
+        "artifacts/g1/m1/specgaps/docs/openai_openapi.yaml:L1",
+        "artifacts/g1/m1/specgaps/docs/anthropic_openapi_sdk-v1.3.0.yaml:L1",
+        "artifacts/g1/m1/specgaps/docs/gemini_discovery_v1beta.json:L1",
+        "artifacts/g1/m1/procheck/convir.py:L1-321",
+        "artifacts/g2/resp/respir.py:L1-247",
+        "artifacts/g2/resp/anth_sse.py:L1-117"
+      ]
+    },
+    "dialect_aliases": {
+      "anthropic": "anthropic_messages",
+      "anthropic_messages": "anthropic_messages",
+      "openai": "openai_chat",
+      "openai_chat": "openai_chat",
+      "responses": "openai_responses",
+      "openai_responses": "openai_responses",
+      "gemini": "gemini_generatecontent",
+      "gemini_generatecontent": "gemini_generatecontent"
+    },
+    "common": {
+      "id_embedded_sig_delim": "__thought__",
+      "signature_key_substring": "signature",
+      "signature_exclude_keys": [
+        "input",
+        "args",
+        "arguments",
+        "function",
+        "parameters"
+      ],
+      "known_bypass_sentinels": [
+        "skip_thought_signature_validator",
+        "c2tpcF90aG91Z2h0X3NpZ25hdHVyZV92YWxpZGF0b3I="
+      ],
+      "ai_sdk_prompt_keys": {
+        "tool_choice": "toolChoice",
+        "tool_name": "toolName",
+        "provider_options": "providerOptions",
+        "openai": "openai",
+        "anthropic": "anthropic",
+        "parallel_tool_calls": "parallelToolCalls",
+        "disable_parallel_tool_use": "disableParallelToolUse",
+        "input_schema": "inputSchema",
+        "reasoning_type": "reasoning",
+        "google": "google",
+        "signature": "signature",
+        "thought_signature": "thoughtSignature",
+        "tool_call_type": "tool-call",
+        "tool_call_id": "toolCallId",
+        "tool_result_type": "tool-result"
+      },
+      "schema_annotation_keys": [
+        "description",
+        "title",
+        "examples",
+        "default",
+        "$comment",
+        "$schema",
+        "$id",
+        "deprecated",
+        "readOnly",
+        "writeOnly"
+      ],
+      "schema_structural_keys": [
+        "type",
+        "enum",
+        "const",
+        "required",
+        "properties",
+        "items",
+        "prefixItems",
+        "additionalProperties",
+        "unevaluatedProperties",
+        "patternProperties",
+        "propertyNames",
+        "minimum",
+        "maximum",
+        "exclusiveMinimum",
+        "exclusiveMaximum",
+        "multipleOf",
+        "minLength",
+        "maxLength",
+        "minItems",
+        "maxItems",
+        "uniqueItems",
+        "minProperties",
+        "maxProperties",
+        "dependentRequired",
+        "pattern",
+        "format",
+        "anyOf",
+        "oneOf",
+        "allOf",
+        "not",
+        "if",
+        "then",
+        "else",
+        "nullable",
+        "propertyOrdering",
+        "$ref",
+        "$defs",
+        "definitions"
+      ],
+      "schema_keywords": {
+        "properties_key": "properties",
+        "description_key": "description",
+        "combinator_list_keys": [
+          "anyOf",
+          "oneOf",
+          "allOf",
+          "prefixItems"
+        ],
+        "nested_schema_keys": [
+          "items",
+          "additionalProperties",
+          "unevaluatedProperties",
+          "propertyNames",
+          "not",
+          "if",
+          "then",
+          "else"
+        ],
+        "ref_keys": [
+          "$ref",
+          "$defs",
+          "definitions"
+        ],
+        "type_key": "type",
+        "object_val": "object",
+        "null_type_val": "null",
+        "any_of_key": "anyOf"
+      },
+      "sse_prefixes": {
+        "event": "event:",
+        "data": "data:"
+      }
+    },
+    "anthropic_messages": {
+      "request": {
+        "messages_key": "messages",
+        "system_key": "system",
+        "model_key": "model",
+        "role_key": "role",
+        "content_key": "content",
+        "roles": {
+          "user": "user",
+          "assistant": "assistant",
+          "system": "system"
+        },
+        "block_type_key": "type",
+        "block_types": {
+          "text": "text",
+          "image": "image",
+          "tool_use": "tool_use",
+          "tool_result": "tool_result",
+          "thinking": "thinking",
+          "redacted_thinking": "redacted_thinking",
+          "document": "document",
+          "server_tool_use": "server_tool_use",
+          "web_search_tool_result": "web_search_tool_result",
+          "code_execution_tool_result": "code_execution_tool_result",
+          "mcp_tool_use": "mcp_tool_use",
+          "mcp_tool_result": "mcp_tool_result"
+        },
+        "text_key": "text",
+        "tool_use_fields": {
+          "id": "id",
+          "name": "name",
+          "input": "input"
+        },
+        "tool_result_fields": {
+          "id": "tool_use_id",
+          "content": "content",
+          "is_error": "is_error"
+        },
+        "thinking_fields": {
+          "text": "thinking",
+          "signature": "signature"
+        },
+        "redacted_thinking_fields": {
+          "data": "data"
+        },
+        "image_fields": {
+          "source": "source",
+          "type": "type",
+          "base64": "base64",
+          "media_type": "media_type",
+          "data": "data",
+          "url": "url"
+        },
+        "cache_hint_key": "cache_control",
+        "tools_key": "tools",
+        "tool_fields": {
+          "name": "name",
+          "description": "description",
+          "schema": "input_schema",
+          "strict": "strict",
+          "type": "type",
+          "cache_control": "cache_control"
+        },
+        "strict_default": false,
+        "controls": {
+          "temperature": "temperature",
+          "top_p": "top_p",
+          "top_k": "top_k",
+          "stop": "stop_sequences",
+          "max_tokens": "max_tokens",
+          "tool_choice": "tool_choice",
+          "thinking": "thinking",
+          "metadata": "metadata",
+          "service_tier": "service_tier",
+          "container": "container"
+        },
+        "metadata_user_id_key": "user_id",
+        "tool_choice_fields": {
+          "type": "type",
+          "name": "name",
+          "disable_parallel": "disable_parallel_tool_use",
+          "modes": {
+            "auto": "auto",
+            "any": "any",
+            "tool": "tool",
+            "none": "none"
+          }
+        },
+        "id_constraints": {
+          "pattern": "^[a-zA-Z0-9_-]+$",
+          "max_length": 64
+        },
+        "empty_text_rejected_live": false,
+        "supports_inline_cache_control": true,
+        "max_cache_control_blocks": 4
+      },
+      "response": {
+        "id_key": "id",
+        "type_key": "type",
+        "type_val": "message",
+        "role_key": "role",
+        "role_val": "assistant",
+        "model_key": "model",
+        "content_key": "content",
+        "stop_key": "stop_reason",
+        "stop_seq_key": "stop_sequence",
+        "stop_details_key": "stop_details",
+        "stop_map": {
+          "end_turn": "end_turn",
+          "stop_sequence": "end_turn",
+          "tool_use": "tool_use",
+          "max_tokens": "max_tokens",
+          "refusal": "refusal",
+          "pause_turn": "pause"
+        },
+        "usage_key": "usage",
+        "usage_fields": {
+          "input": "input_tokens",
+          "output": "output_tokens",
+          "cache_read": "cache_read_input_tokens",
+          "cache_write": "cache_creation_input_tokens"
+        },
+        "envelope_allowed_keys": [
+          "id",
+          "type",
+          "role",
+          "content",
+          "model",
+          "stop_reason",
+          "stop_sequence",
+          "stop_details",
+          "usage",
+          "container",
+          "input_transformations",
+          "diagnostics",
+          "context_management"
+        ],
+        "foreign_envelope_keys": [
+          "created",
+          "created_at",
+          "object",
+          "choices",
+          "system_fingerprint",
+          "service_tier",
+          "candidates",
+          "usageMetadata",
+          "modelVersion"
+        ],
+        "nullable_required_keys": [
+          "stop_reason",
+          "stop_sequence"
+        ],
+        "empty_text_rejected_live": false,
+        "stop_sequence_allowed_reasons": [
+          "stop_sequence"
+        ]
+      },
+      "stream": {
+        "event_types": {
+          "message_start": "message_start",
+          "content_block_start": "content_block_start",
+          "content_block_delta": "content_block_delta",
+          "content_block_stop": "content_block_stop",
+          "message_delta": "message_delta",
+          "message_stop": "message_stop",
+          "ping": "ping",
+          "error": "error"
+        },
+        "delta_types": {
+          "text": "text_delta",
+          "input_json": "input_json_delta",
+          "thinking": "thinking_delta",
+          "signature": "signature_delta",
+          "citations": "citations_delta"
+        },
+        "fields": {
+          "type": "type",
+          "message": "message",
+          "index": "index",
+          "content_block": "content_block",
+          "delta": "delta",
+          "usage": "usage",
+          "text": "text",
+          "partial_json": "partial_json",
+          "thinking": "thinking",
+          "signature": "signature",
+          "error": "error",
+          "is_error": "is_error"
+        },
+        "message_start_foreign_keys": [
+          "metadata",
+          "created_at",
+          "created",
+          "system_fingerprint"
+        ],
+        "done_sentinel": "[DONE]",
+        "empty_text_rejected_live": false
+      }
+    },
+    "openai_chat": {
+      "request": {
+        "messages_key": "messages",
+        "model_key": "model",
+        "role_key": "role",
+        "content_key": "content",
+        "roles": {
+          "system": "system",
+          "developer": "developer",
+          "user": "user",
+          "assistant": "assistant",
+          "tool": "tool",
+          "function": "function"
+        },
+        "part_type_key": "type",
+        "part_types": {
+          "text": "text",
+          "image_url": "image_url",
+          "input_audio": "input_audio",
+          "file": "file",
+          "refusal": "refusal"
+        },
+        "text_key": "text",
+        "image_url_key": "image_url",
+        "url_key": "url",
+        "cache_hint_key": "cache_control",
+        "assistant_tool_calls_key": "tool_calls",
+        "tool_call_fields": {
+          "id": "id",
+          "type": "type",
+          "function": "function",
+          "name": "name",
+          "arguments": "arguments"
+        },
+        "tool_result_id_key": "tool_call_id",
+        "tool_result_name_key": "name",
+        "assistant_reasoning_keys": {
+          "reasoning_content": "reasoning_content",
+          "thinking_blocks": "thinking_blocks",
+          "thinking": "thinking",
+          "reasoning_details": "reasoning_details",
+          "reasoning": "reasoning",
+          "refusal": "refusal"
+        },
+        "thinking_block_fields": {
+          "type": "type",
+          "thinking": "thinking",
+          "signature": "signature",
+          "redacted_type": "redacted_thinking",
+          "data": "data",
+          "content": "content",
+          "text": "text",
+          "summary": "summary",
+          "encrypted_type": "reasoning.encrypted"
+        },
+        "tools_key": "tools",
+        "tool_fields": {
+          "type": "type",
+          "function_val": "function",
+          "function": "function",
+          "name": "name",
+          "description": "description",
+          "schema": "parameters",
+          "strict": "strict"
+        },
+        "strict_default": false,
+        "controls": {
+          "temperature": "temperature",
+          "top_p": "top_p",
+          "top_k": "top_k",
+          "seed": "seed",
+          "stop": "stop",
+          "max_tokens": "max_tokens",
+          "max_completion_tokens": "max_completion_tokens",
+          "tool_choice": "tool_choice",
+          "parallel_tool_calls": "parallel_tool_calls",
+          "response_format": "response_format",
+          "reasoning_effort": "reasoning_effort",
+          "user": "user",
+          "store": "store",
+          "logprobs": "logprobs",
+          "top_logprobs": "top_logprobs",
+          "service_tier": "service_tier",
+          "metadata": "metadata",
+          "thinking": "thinking",
+          "prompt_cache_key": "prompt_cache_key",
+          "prompt_cache_retention": "prompt_cache_retention",
+          "presence_penalty": "presence_penalty",
+          "frequency_penalty": "frequency_penalty",
+          "logit_bias": "logit_bias",
+          "n": "n"
+        },
+        "tool_choice_fields": {
+          "type": "type",
+          "function": "function",
+          "name": "name",
+          "modes": {
+            "auto": "auto",
+            "required": "required",
+            "none": "none",
+            "function": "function"
+          }
+        },
+        "response_format_fields": {
+          "type": "type",
+          "json_schema": "json_schema",
+          "schema": "schema",
+          "strict": "strict",
+          "modes": {
+            "text": "text",
+            "json_object": "json",
+            "json_schema": "json_schema"
+          }
+        },
+        "id_constraints": {
+          "pattern": null,
+          "max_length": 40
+        },
+        "empty_text_rejected_live": false,
+        "supports_inline_cache_control": true,
+        "cache_control_injection_points_key": "cache_control_injection_points",
+        "web_search_options_key": "web_search_options",
+        "web_search_server_type": "web_search",
+        "envelope_allowed_keys": [
+          "messages",
+          "model",
+          "tools",
+          "tool_choice",
+          "parallel_tool_calls",
+          "temperature",
+          "top_p",
+          "top_k",
+          "n",
+          "stream",
+          "stream_options",
+          "stop",
+          "max_tokens",
+          "max_completion_tokens",
+          "presence_penalty",
+          "frequency_penalty",
+          "logit_bias",
+          "user",
+          "seed",
+          "response_format",
+          "service_tier",
+          "store",
+          "metadata",
+          "reasoning_effort",
+          "thinking",
+          "logprobs",
+          "top_logprobs",
+          "modalities",
+          "audio",
+          "prediction",
+          "web_search_options",
+          "function_call",
+          "functions",
+          "prompt_cache_key",
+          "prompt_cache_retention",
+          "cache_control_injection_points",
+          "extra_body",
+          "extra_headers"
+        ],
+        "message_allowed_keys": [
+          "role",
+          "content",
+          "name",
+          "tool_calls",
+          "tool_call_id",
+          "function_call",
+          "refusal",
+          "audio",
+          "reasoning_content",
+          "thinking_blocks",
+          "thinking",
+          "reasoning_details",
+          "reasoning",
+          "cache_control",
+          "provider_specific_fields",
+          "annotations"
+        ],
+        "tool_call_function_allowed_keys": [
+          "name",
+          "arguments"
+        ],
+        "nullable_optional_message_keys": [
+          "thinking_blocks",
+          "reasoning_content"
+        ]
+      },
+      "response": {
+        "id_key": "id",
+        "object_key": "object",
+        "created_key": "created",
+        "model_key": "model",
+        "choices_key": "choices",
+        "message_key": "message",
+        "stop_key": "finish_reason",
+        "stop_map": {
+          "stop": "end_turn",
+          "tool_calls": "tool_use",
+          "function_call": "tool_use",
+          "length": "max_tokens",
+          "content_filter": "content_filter"
+        },
+        "usage_key": "usage",
+        "usage_fields": {
+          "input": "prompt_tokens",
+          "output": "completion_tokens",
+          "total": "total_tokens",
+          "prompt_details": "prompt_tokens_details",
+          "cached": "cached_tokens",
+          "completion_details": "completion_tokens_details",
+          "reasoning": "reasoning_tokens"
+        },
+        "empty_text_rejected_live": false
+      },
+      "stream": {
+        "choices_key": "choices",
+        "delta_key": "delta",
+        "finish_reason_key": "finish_reason",
+        "usage_key": "usage",
+        "done_sentinel": "[DONE]",
+        "empty_text_rejected_live": false
+      }
+    },
+    "openai_responses": {
+      "request": {
+        "input_key": "input",
+        "instructions_key": "instructions",
+        "model_key": "model",
+        "item_type_key": "type",
+        "role_key": "role",
+        "content_key": "content",
+        "id_key": "id",
+        "status_key": "status",
+        "roles": {
+          "system": "system",
+          "developer": "developer",
+          "user": "user",
+          "assistant": "assistant"
+        },
+        "item_types": {
+          "message": "message",
+          "function_call": "function_call",
+          "function_call_output": "function_call_output",
+          "reasoning": "reasoning",
+          "item_reference": "item_reference",
+          "web_search_call": "web_search_call",
+          "file_search_call": "file_search_call",
+          "code_interpreter_call": "code_interpreter_call",
+          "computer_call": "computer_call",
+          "computer_call_output": "computer_call_output",
+          "mcp_call": "mcp_call",
+          "image_generation_call": "image_generation_call"
+        },
+        "part_types": {
+          "input_text": "input_text",
+          "output_text": "output_text",
+          "text": "text",
+          "input_image": "input_image",
+          "input_file": "input_file",
+          "refusal": "refusal",
+          "summary_text": "summary_text"
+        },
+        "text_key": "text",
+        "refusal_key": "refusal",
+        "image_url_key": "image_url",
+        "function_call_fields": {
+          "call_id": "call_id",
+          "id": "id",
+          "name": "name",
+          "arguments": "arguments",
+          "status": "status"
+        },
+        "function_call_output_fields": {
+          "call_id": "call_id",
+          "id": "id",
+          "output": "output",
+          "status": "status",
+          "incomplete_details": "incomplete_details",
+          "error_status_val": "incomplete",
+          "ok_status_val": "completed"
+        },
+        "reasoning_fields": {
+          "id": "id",
+          "summary": "summary",
+          "encrypted_content": "encrypted_content",
+          "content": "content",
+          "summary_text_type": "summary_text",
+          "text": "text"
+        },
+        "tools_key": "tools",
+        "tool_fields": {
+          "type": "type",
+          "function_val": "function",
+          "name": "name",
+          "description": "description",
+          "schema": "parameters",
+          "strict": "strict"
+        },
+        "strict_default": true,
+        "controls": {
+          "temperature": "temperature",
+          "top_p": "top_p",
+          "max_output_tokens": "max_output_tokens",
+          "tool_choice": "tool_choice",
+          "parallel_tool_calls": "parallel_tool_calls",
+          "reasoning": "reasoning",
+          "text": "text",
+          "include": "include",
+          "user": "user",
+          "metadata": "metadata",
+          "store": "store",
+          "service_tier": "service_tier",
+          "prompt_cache_key": "prompt_cache_key",
+          "prompt_cache_retention": "prompt_cache_retention",
+          "truncation": "truncation",
+          "max_tool_calls": "max_tool_calls"
+        },
+        "tool_choice_fields": {
+          "type": "type",
+          "name": "name",
+          "modes": {
+            "auto": "auto",
+            "required": "required",
+            "none": "none",
+            "function": "function"
+          }
+        },
+        "text_format_fields": {
+          "format": "format",
+          "type": "type",
+          "schema": "schema",
+          "strict": "strict",
+          "modes": {
+            "text": "text",
+            "json_object": "json",
+            "json_schema": "json_schema"
+          }
+        },
+        "reasoning_ctl_fields": {
+          "effort": "effort",
+          "summary": "summary"
+        },
+        "id_constraints": {
+          "pattern": null,
+          "max_length": 64
+        },
+        "empty_text_rejected_live": false
+      },
+      "response": {
+        "id_key": "id",
+        "object_key": "object",
+        "status_key": "status",
+        "model_key": "model",
+        "output_key": "output",
+        "incomplete_details_key": "incomplete_details",
+        "reason_key": "reason",
+        "error_key": "error",
+        "stop_map": {
+          "completed": "end_turn",
+          "incomplete": "max_tokens",
+          "failed": "error",
+          "cancelled": "other",
+          "in_progress": "other",
+          "queued": "other"
+        },
+        "incomplete_reason_map": {
+          "max_output_tokens": "max_tokens",
+          "content_filter": "content_filter"
+        },
+        "usage_key": "usage",
+        "usage_fields": {
+          "input": "input_tokens",
+          "output": "output_tokens",
+          "total": "total_tokens",
+          "input_details": "input_tokens_details",
+          "cached": "cached_tokens",
+          "output_details": "output_tokens_details",
+          "reasoning": "reasoning_tokens"
+        },
+        "empty_text_rejected_live": false
+      },
+      "stream": {
+        "event_prefix": "response.",
+        "events": {
+          "created": "response.created",
+          "completed": "response.completed",
+          "incomplete": "response.incomplete",
+          "failed": "response.failed",
+          "output_item_added": "response.output_item.added",
+          "output_item_done": "response.output_item.done",
+          "output_text_delta": "response.output_text.delta",
+          "function_call_arguments_delta": "response.function_call_arguments.delta",
+          "reasoning_summary_text_delta": "response.reasoning_summary_text.delta",
+          "refusal_delta": "response.refusal.delta",
+          "error": "error"
+        },
+        "fields": {
+          "type": "type",
+          "response": "response",
+          "item": "item",
+          "delta": "delta",
+          "item_id": "item_id",
+          "output_index": "output_index",
+          "content_index": "content_index"
+        },
+        "empty_text_rejected_live": false
+      }
+    },
+    "gemini_generatecontent": {
+      "request": {
+        "contents_key": "contents",
+        "system_keys": [
+          "systemInstruction",
+          "system_instruction"
+        ],
+        "model_key": "model",
+        "role_key": "role",
+        "parts_key": "parts",
+        "roles": {
+          "user": "user",
+          "model": "model",
+          "function": "function",
+          "tool": "tool"
+        },
+        "part_keys": {
+          "text": "text",
+          "thought": "thought",
+          "thought_sigs": [
+            "thoughtSignature",
+            "thought_signature"
+          ],
+          "function_calls": [
+            "functionCall",
+            "function_call"
+          ],
+          "function_responses": [
+            "functionResponse",
+            "function_response"
+          ],
+          "inline_datas": [
+            "inlineData",
+            "inline_data"
+          ],
+          "file_datas": [
+            "fileData",
+            "file_data"
+          ],
+          "executable_code": [
+            "executableCode",
+            "executable_code"
+          ],
+          "code_execution_result": [
+            "codeExecutionResult",
+            "code_execution_result"
+          ]
+        },
+        "function_call_fields": {
+          "id": "id",
+          "name": "name",
+          "args": "args"
+        },
+        "function_response_fields": {
+          "id": "id",
+          "name": "name",
+          "response": "response",
+          "parts": "parts",
+          "error_key": "error",
+          "wrapper_keys": [
+            "content",
+            "result",
+            "output"
+          ]
+        },
+        "media_fields": {
+          "mime_types": [
+            "mimeType",
+            "mime_type"
+          ],
+          "data": "data",
+          "file_uris": [
+            "fileUri",
+            "file_uri"
+          ]
+        },
+        "tools_key": "tools",
+        "func_decls_keys": [
+          "functionDeclarations",
+          "function_declarations"
+        ],
+        "tool_fields": {
+          "name": "name",
+          "description": "description",
+          "schemas": [
+            "parametersJsonSchema",
+            "parameters_json_schema",
+            "parameters"
+          ]
+        },
+        "strict_default": false,
+        "gen_config_keys": [
+          "generationConfig",
+          "generation_config"
+        ],
+        "controls": {
+          "temperature": [
+            "temperature"
+          ],
+          "top_p": [
+            "topP",
+            "top_p"
+          ],
+          "top_k": [
+            "topK",
+            "top_k"
+          ],
+          "seed": [
+            "seed"
+          ],
+          "stop": [
+            "stopSequences",
+            "stop_sequences"
+          ],
+          "max_tokens": [
+            "maxOutputTokens",
+            "max_output_tokens"
+          ],
+          "response_mime_type": [
+            "responseMimeType",
+            "response_mime_type"
+          ],
+          "response_schema": [
+            "responseSchema",
+            "response_schema",
+            "responseJsonSchema",
+            "response_json_schema"
+          ],
+          "thinking_config": [
+            "thinkingConfig",
+            "thinking_config"
+          ],
+          "candidate_count": [
+            "candidateCount",
+            "candidate_count"
+          ]
+        },
+        "tool_config_keys": [
+          "toolConfig",
+          "tool_config"
+        ],
+        "func_calling_config_keys": [
+          "functionCallingConfig",
+          "function_calling_config"
+        ],
+        "tool_choice_fields": {
+          "mode": "mode",
+          "allowed_names": [
+            "allowedFunctionNames",
+            "allowed_function_names"
+          ],
+          "modes": {
+            "AUTO": "auto",
+            "ANY": "any",
+            "NONE": "none",
+            "VALIDATED": "validated"
+          }
+        },
+        "id_constraints": {
+          "pattern": null,
+          "max_length": null
+        },
+        "empty_text_rejected_live": false,
+        "supports_inline_cache_control": false,
+        "system_disallowed_roles": [
+          "system",
+          "assistant"
+        ],
+        "tool_config_allowed_keys": [
+          "functionCallingConfig",
+          "function_calling_config",
+          "retrievalConfig",
+          "retrieval_config"
+        ]
+      },
+      "response": {
+        "candidates_key": "candidates",
+        "content_key": "content",
+        "parts_key": "parts",
+        "finish_reason_keys": [
+          "finishReason",
+          "finish_reason"
+        ],
+        "model_version_keys": [
+          "modelVersion",
+          "model_version"
+        ],
+        "stop_map": {
+          "STOP": "end_turn",
+          "MAX_TOKENS": "max_tokens",
+          "SAFETY": "content_filter",
+          "RECITATION": "content_filter",
+          "BLOCKLIST": "content_filter",
+          "PROHIBITED_CONTENT": "content_filter",
+          "SPII": "content_filter",
+          "IMAGE_SAFETY": "content_filter",
+          "MALFORMED_FUNCTION_CALL": "error",
+          "MISSING_THOUGHT_SIGNATURE": "error",
+          "UNEXPECTED_TOOL_CALL": "error",
+          "TOO_MANY_TOOL_CALLS": "error",
+          "MALFORMED_RESPONSE": "error",
+          "OTHER": "other"
+        },
+        "usage_keys": [
+          "usageMetadata",
+          "usage_metadata"
+        ],
+        "usage_fields": {
+          "input": [
+            "promptTokenCount",
+            "prompt_token_count"
+          ],
+          "output": [
+            "candidatesTokenCount",
+            "candidates_token_count"
+          ],
+          "total": [
+            "totalTokenCount",
+            "total_token_count"
+          ],
+          "cached": [
+            "cachedContentTokenCount",
+            "cached_content_token_count"
+          ],
+          "reasoning": [
+            "thoughtsTokenCount",
+            "thoughts_token_count"
+          ]
+        },
+        "empty_text_rejected_live": false
+      },
+      "stream": {
+        "candidates_key": "candidates",
+        "empty_text_rejected_live": false
+      }
+    }
+  }
+}

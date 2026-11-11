@@ -1,0 +1,221 @@
+{
+  "version": "1.0",
+  "rules": [
+    {
+      "id": "S01",
+      "name": "MERGE",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V01",
+      "meaning": "content from two sources merged into one event"
+    },
+    {
+      "id": "S02",
+      "name": "SOURCE",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V02",
+      "meaning": "speaker changed user<->assistant<->tool; system->user/developer lowering is D02"
+    },
+    {
+      "id": "S03",
+      "name": "FLAG",
+      "tier": "T1",
+      "principle": "P3",
+      "replaces": "V03",
+      "meaning": "semantic flag lost / invented / moved: is_error and its per-dialect carriers, redacted/thinking presence, strict on a tool"
+    },
+    {
+      "id": "S04",
+      "name": "REINTERP",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V04",
+      "meaning": "payload re-interpretation (typed JSON <-> string, nested result flattened)"
+    },
+    {
+      "id": "S05",
+      "name": "CONTENT",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V05",
+      "meaning": "non-empty content event lost or invented: text, thinking, tool_call, tool_result, image, server-tool blocks; empty blocks -> R05"
+    },
+    {
+      "id": "S06",
+      "name": "REF",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V06",
+      "meaning": "reference broken: tool_result->tool_call, Responses call_id/item ids, ids exceeding documented length/charset"
+    },
+    {
+      "id": "S07",
+      "name": "ORDER",
+      "tier": "T1",
+      "principle": "P2",
+      "replaces": "V07",
+      "meaning": "causal partial order violated: edge families E1-E5 of CAUSAL_ORDER.md \u00a72, with sibling tool_results unordered (R07)"
+    },
+    {
+      "id": "S08",
+      "name": "CONTROL",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V08a",
+      "meaning": "a control the source SET is dropped or changed without a documented equivalent carrier"
+    },
+    {
+      "id": "S09",
+      "name": "TOOLNAME",
+      "tier": "T1",
+      "principle": "P1",
+      "replaces": "V09",
+      "meaning": "tool name altered"
+    },
+    {
+      "id": "S10",
+      "name": "INTEGRITY",
+      "tier": "T1",
+      "principle": "P4",
+      "replaces": "V10",
+      "meaning": "integrity token replaced by a value the vendor did not issue in this conversation (provenance check)"
+    },
+    {
+      "id": "S11",
+      "name": "SCHEMA",
+      "tier": "T1",
+      "principle": "P5",
+      "replaces": "V11",
+      "meaning": "tool JSON-Schema structural/constraint change after schemacanon normalisation"
+    },
+    {
+      "id": "S12",
+      "name": "STOP",
+      "tier": "T1",
+      "principle": "P6",
+      "replaces": "RV06",
+      "meaning": "stop/finish reason semantic class changed or missing on the terminal event"
+    },
+    {
+      "id": "S13",
+      "name": "STREAM",
+      "tier": "T1",
+      "principle": "P6",
+      "replaces": "RV12",
+      "meaning": "stream accounting: reassembled content != non-stream equivalent, delta after stop, start/stop pairing broken, tool input outside carrier, is_error on delta"
+    },
+    {
+      "id": "D01",
+      "name": "CONTROL-DEFAULT",
+      "tier": "T2",
+      "principle": "P1",
+      "replaces": "V08-default",
+      "meaning": "control injected by adapter default where source unset"
+    },
+    {
+      "id": "D02",
+      "name": "LOWER",
+      "tier": "T2",
+      "principle": "P1",
+      "replaces": "V02-lower",
+      "meaning": "system->user/developer lowering although the target has a system slot"
+    },
+    {
+      "id": "D03",
+      "name": "HINT",
+      "tier": "T2",
+      "principle": "P1",
+      "replaces": "new",
+      "meaning": "cache_control / service_tier / prompt-cache hints dropped or mis-mapped"
+    },
+    {
+      "id": "D04",
+      "name": "USAGE",
+      "tier": "T2",
+      "principle": "P1",
+      "replaces": "RV07",
+      "meaning": "usage numbers changed, leaked, or missing initial output_tokens"
+    },
+    {
+      "id": "D05",
+      "name": "MODEL",
+      "tier": "T2",
+      "principle": "P1",
+      "replaces": "new",
+      "meaning": "model echo/name changed"
+    },
+    {
+      "id": "D06",
+      "name": "ENVELOPE-LEAK",
+      "tier": "T2",
+      "principle": "P1",
+      "replaces": "RV11-R3b",
+      "meaning": "reserved keys of another dialect leaking or duplicated stop_reason"
+    },
+    {
+      "id": "R01",
+      "name": "NULLABLE",
+      "tier": "T3",
+      "principle": "P1",
+      "replaces": "V14/RV14-nullable",
+      "meaning": "absent vs null on nullable required keys"
+    },
+    {
+      "id": "R02",
+      "name": "EMPTYSTR",
+      "tier": "T3",
+      "principle": "P1",
+      "replaces": "new",
+      "meaning": "empty string vs null content beside tool calls"
+    },
+    {
+      "id": "R03",
+      "name": "TEXTFORM",
+      "tier": "T3",
+      "principle": "P1",
+      "replaces": "L02/L07/L09",
+      "meaning": "string vs 1-element array; adjacent text coalesced/split with same concatenation"
+    },
+    {
+      "id": "R04",
+      "name": "CUSTOMKEY",
+      "tier": "T3",
+      "principle": "P1",
+      "replaces": "new",
+      "meaning": "unknown custom keys"
+    },
+    {
+      "id": "R05",
+      "name": "EMPTYBLOCK",
+      "tier": "T3",
+      "principle": "P6",
+      "replaces": "R-empty",
+      "meaning": "empty text block/part/delta injected"
+    },
+    {
+      "id": "R06",
+      "name": "ANNOTATION",
+      "tier": "T3",
+      "principle": "P5",
+      "replaces": "V11.d",
+      "meaning": "schema annotation keys changed"
+    },
+    {
+      "id": "R07",
+      "name": "SIBLING",
+      "tier": "T3",
+      "principle": "P2",
+      "replaces": "new",
+      "meaning": "sibling tool_result order within one parallel group changed"
+    },
+    {
+      "id": "R08",
+      "name": "ENVELOPE-ID",
+      "tier": "T3",
+      "principle": "P1",
+      "replaces": "new",
+      "meaning": "envelope identifiers changed"
+    }
+  ]
+}
