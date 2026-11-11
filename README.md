@@ -310,7 +310,7 @@ Apache-2.0 (`LICENSE`).
 
 ```bibtex
 @article{convpreserve2026,
-  title   = {Different Dialect, Same Conversation? A Test Oracle for Silent Semantic Changes in LLM API Translators},
+  title   = {Testing Conversation Preservation Across LLM APIs: A Rule-Based Oracle for Detecting Silent Information Loss},
   author  = {Anonymous},
   journal = {Under review},
   year    = {2026}
