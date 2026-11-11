@@ -305,14 +305,3 @@ Oracle v1.0 is frozen. Bug fixes to the oracle logic go to a new oracle version,
 ## License
 
 Apache-2.0 (`LICENSE`).
-
-## Citation
-
-```bibtex
-@article{convpreserve2026,
-  title   = {Testing Conversation Preservation Across LLM APIs: A Rule-Based Oracle for Detecting Silent Information Loss},
-  author  = {Anonymous},
-  journal = {Under review},
-  year    = {2026}
-}
-```
