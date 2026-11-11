@@ -5,12 +5,12 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "convpreserve"
 version = "0.1.0"
-description = "Deterministic, rule-based test oracle for silent semantic changes across LLM API translators"
+description = "Detect silent semantic changes when gateways and SDKs translate between OpenAI, Anthropic, and Gemini APIs"
 readme = "README.md"
 requires-python = ">=3.11"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
-keywords = ["llm", "api-gateway", "openai", "anthropic", "gemini", "translation", "testing", "oracle"]
+keywords = ["llm", "api-gateway", "openai", "anthropic", "gemini", "translation", "testing"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",

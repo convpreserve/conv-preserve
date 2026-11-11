@@ -63,7 +63,7 @@ class TestCheckGithub(unittest.TestCase):
         rows = [ln for ln in lines if ln.startswith("| `")]
         self.assertEqual(len(rows), 1)
         self.assertTrue(rows[0].startswith("| `S08` | T1 | dst:/thinking | "))
-        self.assertIn("a control the source SET is dropped or changed", rows[0])
+        self.assertIn("generation or tool-choice parameter set by the caller was dropped or altered", rows[0])
         self.assertNotIn("<details>", out)
 
     def test_clean_pair(self):

@@ -369,10 +369,10 @@ def add_arguments(p):
     p.add_argument("--src-dialect", choices=["anthropic"], default="anthropic",
                    help="inbound dialect of the shapes (only anthropic)")
     p.add_argument("--shapes", default="bundled", metavar="bundled|PATH",
-                   help="request shapes: the 51 bundled Anthropic Messages shapes, or a JSON file")
+                   help="test requests to send: `bundled` (51 built-in Anthropic requests) or path to a JSON file")
     p.add_argument("--sink-port", type=int, default=DEFAULT_SINK_PORT,
-                   help="loopback port of the upstream sink (default %(default)s; 0 = any free port); "
-                        "point the gateway's upstream base URL at http://127.0.0.1:<port>")
+                   help="local port for the mock upstream server (default %(default)s; 0 = random free port); "
+                        "configure your gateway's upstream URL to http://127.0.0.1:<port>")
     p.add_argument("--model", help="replace the posted model name (the judge still sees the original shape)")
     p.add_argument("--header", action="append", metavar="'Name: value'",
                    help="extra request header for the gateway (repeatable; replaces a default of the same name; "

@@ -1,8 +1,7 @@
-"""Oracle versions shipped in ConvPreserve.
+"""Judge ruleset versions available in ConvPreserve.
 
-- v1.0: Frozen baseline oracle used for the paper's request evaluation (`convpreserve.judge`).
-- v1.3: Default oracle (`convpreserve.judge_v13`); assembles streamed OpenAI Chat reasoning deltas
-        and attaches RFC 6901 JSON Pointer evidence locations to findings.
+- v1.3 (default): Assembles streamed OpenAI Chat reasoning deltas and attaches RFC 6901 JSON Pointer locations.
+- v1.0: Frozen baseline ruleset used for the paper's request-side evaluation (`convpreserve.judge`).
 """
 import importlib
 import os

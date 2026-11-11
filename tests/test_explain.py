@@ -1,9 +1,8 @@
-"""`convpreserve explain`: rule lookup, unknown rules, --list, --json, and the curated root-cause notes."""
+"""Tests for `convpreserve explain`."""
 import contextlib
 import io
 import json
 import os
-import re
 import unittest
 
 from convpreserve import cli, explain
@@ -32,15 +31,15 @@ class TestExplain(unittest.TestCase):
         code, out, err = run(["explain", "S08"])
         self.assertEqual(code, 0, err)
         self.assertTrue(out.startswith("S08  CONTROL  (T1)"))
-        self.assertIn("Meaning: a control the source SET is dropped or changed", out)
-        self.assertIn("Common root causes", out)
-        self.assertIn("Source: ", out)
+        self.assertIn("Summary: generation or tool-choice parameter set by the caller was dropped or altered", out)
+        self.assertIn("Known translator bug patterns:", out)
+        self.assertIn("claude-code-router -> gemini", out)
 
     def test_rule_without_notes(self):
         code, out, err = run(["explain", "D03"])
-        self.assertEqual(code, 0, err)
-        self.assertIn("Meaning: cache_control / service_tier / prompt-cache hints dropped or mis-mapped", out)
-        self.assertIn("no curated notes yet", out)
+        self.assertEqual(code, 0)
+        self.assertIn("Summary: prompt-caching or service-tier hints dropped or mis-mapped", out)
+        self.assertIn("none recorded", out)
 
     def test_case_insensitive_and_name(self):
         self.assertEqual(run(["explain", "s08"]), run(["explain", "S08"]))
@@ -82,7 +81,7 @@ class TestExplain(unittest.TestCase):
         d = json.loads(out)
         self.assertEqual(d["id"], "S08")
         self.assertTrue(d["curated_notes"])
-        self.assertTrue(all(n["source"] and n["cause"] for n in d["root_causes"]))
+        self.assertTrue(all(n["pattern"] and n["projects"] and n["cause"] for n in d["root_causes"]))
         d = json.loads(run(["explain", "D03", "--json"])[1])
         self.assertFalse(d["curated_notes"])
         self.assertEqual(d["root_causes"], [])
@@ -110,17 +109,16 @@ class TestNotesFile(unittest.TestCase):
     def test_covered_rules(self):
         self.assertEqual(sorted(self.notes["rules"]), ["S03", "S04", "S05", "S06", "S07", "S08", "S09"])
         notes = [n for v in self.notes["rules"].values() for n in v]
-        self.assertEqual(len(notes), 21)                                  # a mechanism may explain several rules
-        self.assertEqual(len({n["mechanism"] for n in notes}), 19)
+        self.assertEqual(len(notes), 21)
+        self.assertEqual(len({n["pattern"] for n in notes}), 19)
 
-    def test_every_note_has_a_source(self):
+    def test_every_note_has_required_fields(self):
         for rid, items in self.notes["rules"].items():
             for n in items:
-                for k in ("mechanism", "kind", "cause", "source"):
-                    self.assertTrue(n.get(k), f"{rid}: {n.get('mechanism')} lacks {k}")
-                self.assertIn(n["mechanism"], n["source"])
+                for k in ("pattern", "projects", "cause"):
+                    self.assertTrue(n.get(k), f"{rid}: {n.get('pattern')} lacks {k}")
 
-    def test_no_banned_words_or_paths(self):
+    def test_no_local_paths(self):
         self.assertNotIn("/" + "home" + "/", self.raw)
         self.assertNotIn("github.com", self.raw)
 

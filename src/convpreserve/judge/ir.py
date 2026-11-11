@@ -332,7 +332,7 @@ def _parse_anthropic_request(req, disabled):
             else:
                 ir["controls"][ck] = req[wk]
 
-    # AI-SDK prompt format compatibility (gen4 aisdk captures)
+    # Vercel AI SDK prompt format compatibility
     aisdk = cm["ai_sdk_prompt_keys"]
     if aisdk["tool_choice"] in req and "tool_choice" not in ir["controls"]:
         tc = req[aisdk["tool_choice"]]

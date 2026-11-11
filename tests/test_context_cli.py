@@ -146,8 +146,8 @@ GOLDEN = {
     "batch_text": "efb7e506830c15706e3deebb1a377865555aa43c0a0b3b5b2e2d88582e315c52",
     "check_json": "cfc86a2d59eb67ce51ded0af1d5cf0d201e02c9b72838a20a67bfe18dde14789",
     "batch_json": "2ceead95c2aecac04d03c9a3eb44381c2f660437a58ea627d99667732f15ee55",
-    "check_github": "fc3b94771986818b066d9ed5fc2afd81021aaba26a98687093a2969f6c54c56c",
-    "batch_github": "bccb7600bcac8a85bc74c5d1d032e2efadea20b7d1c432c298d4516a8f7df0bc",
+    "check_github": "c5ddebaaf395eefc7a9beb60f39b32ddf1687950b3fc6edcd207b5fa2fe3d237",
+    "batch_github": "756fd8ada46a622c70226cf7e02bb88abfde1480def44b79b8487d61ad1ffdaf"
 }
 
 

@@ -1,7 +1,6 @@
 """Core comparator for Oracle v1.0.
 Exposes `Finding(rule_id, tier, object_id, detail)` and
 `compare(src_body, src_dialect, dst_body, dst_dialect, side, *, context=None) -> list[Finding]`.
-Supports ablation switches `V100_DISABLE=P1,...,P6`.
 Zero vendor wire field names or sentinel strings live in Python code; all come from `carriers.json`.
 """
 from collections import namedtuple

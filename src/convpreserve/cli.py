@@ -441,7 +441,7 @@ def _cmd_version(_args):
     sha = _get_carriers_sha()
     print(f"convpreserve {__version__} / oracle v1.0 (frozen paper baseline)"
           + (" [default]" if d == "v1.0" else "") + f" / carriers.json sha256 {sha}")
-    print(f"convpreserve {__version__} / oracle v1.3 (stream reasoning + JSON Pointer evidence)"
+    print(f"convpreserve {__version__} / oracle v1.3 (stream reasoning + JSON Pointer locations)"
           + (" [default]" if d == "v1.3" else "") + f" / carriers.json sha256 {sha}")
     return 0
 
@@ -457,26 +457,24 @@ def build_parser():
 
     check_p = sub.add_parser("check", help="compare one source/destination pair")
     check_p.add_argument("--side", choices=["request", "response", "stream"], required=True)
-    check_p.add_argument("--src-dialect", required=True, help="see `convpreserve dialects`")
-    check_p.add_argument("--dst-dialect", required=True, help="see `convpreserve dialects`")
+    check_p.add_argument("--src-dialect", required=True, help="API format: openai, responses, anthropic, or gemini")
+    check_p.add_argument("--dst-dialect", required=True, help="API format: openai, responses, anthropic, or gemini")
     check_p.add_argument("--json", action="store_true", help="machine-readable output (alias of --format json)")
     check_p.add_argument("--format", choices=["text", "json", "github"], default=None,
                          help="output format (default text); github is Markdown for a pull-request comment or "
                               "a workflow step summary")
     check_p.add_argument("--fail-on", choices=["T1", "T2", "T3", "none"], default="T1")
     check_p.add_argument("--context", nargs="*", metavar="K=V",
-                         help="extra judge context, K=V pairs. Keys: object_id=ID (label shown on each finding); "
-                              "vendor_tokens=a,b (integrity tokens to count as present in the source conversation, "
-                              "so rule S10 does not flag them on the destination); disabled=P1,P4 (ablation switch "
-                              "for the judge's principles, for experiments). non_stream_body is manifest-only. "
-                              "Place --context after src and dst, or end the pairs with --")
+                         help="optional K=V settings: object_id=ID (label echoed on findings); "
+                              "vendor_tokens=a,b (prior-turn signature tokens accepted by S10); "
+                              "disabled=P1,P4 (disable rule groups). non_stream_body is manifest-only. "
+                              "Place --context after src and dst, or end pairs with --")
     _add_baseline_args(check_p)
     check_p.add_argument("src", help="source payload file ('-' = stdin; for --side stream: "
                                      "raw SSE text, or a .json event list)")
     check_p.add_argument("dst", help="destination payload file ('-' = stdin)")
     check_p.add_argument("--oracle", choices=sorted(ORACLES), default=default_oracle(),
-                   help="judge version (default %(default)s; env CONVPRESERVE_ORACLE). v1.0 is the frozen "
-                        "paper oracle, v1.3 adds the changes listed in CHANGELOG.md")
+                   help="ruleset version (default %(default)s; pass v1.0 to reproduce paper request-side tables)")
     check_p.set_defaults(fn=_cmd_check)
 
     batch_p = sub.add_parser(
@@ -494,8 +492,7 @@ def build_parser():
                          help="what to print on stdout (default text: totals and one line per rule); json prints the "
                               "run statistics as one object, github Markdown for a pull-request comment or step summary")
     batch_p.add_argument("--oracle", choices=sorted(ORACLES), default=default_oracle(),
-                   help="judge version (default %(default)s; env CONVPRESERVE_ORACLE). v1.0 is the frozen "
-                        "paper oracle, v1.3 adds the changes listed in CHANGELOG.md")
+                   help="ruleset version (default %(default)s; pass v1.0 to reproduce paper request-side tables)")
     batch_p.set_defaults(fn=_cmd_batch)
 
     explain_p = sub.add_parser(
@@ -508,7 +505,7 @@ def build_parser():
     explain_p.set_defaults(fn=_explain.run)
 
     probe_p = sub.add_parser(
-        "probe", help="send the 51 bundled request shapes through a running gateway and judge what it forwards",
+        "probe", help="test a running local gateway using a built-in mock upstream server and 51 test requests",
         description="Starts a loopback sink that stands in for the upstream provider, POSTs the bundled Anthropic "
                     "Messages request shapes to --gateway, captures the body the gateway forwards to the sink and "
                     "judges it (request side). The judge opens no sockets; probe is the one sub-command that does. "
@@ -520,8 +517,7 @@ def build_parser():
     sub.add_parser("version", help="print versions and carriers hash").set_defaults(fn=_cmd_version)
     selftest_p = sub.add_parser("selftest", help="replay the bundled sample; must print PASS")
     selftest_p.add_argument("--oracle", choices=sorted(ORACLES), default=default_oracle(),
-                   help="judge version (default %(default)s; env CONVPRESERVE_ORACLE). v1.0 is the frozen "
-                        "paper oracle, v1.3 adds the changes listed in CHANGELOG.md")
+                   help="ruleset version (default %(default)s; pass v1.0 to reproduce paper request-side tables)")
     selftest_p.set_defaults(fn=_cmd_selftest)
     return parser
 

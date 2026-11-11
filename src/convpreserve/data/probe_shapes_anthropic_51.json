@@ -1,5 +1,5 @@
 {
-  "description": "51 statically contract-valid Anthropic Messages request shapes derived from the 14-dimension covering-array test suite.",
+  "description": "51 valid Anthropic Messages test requests covering system prompts, multi-turn history, tools, tool results, thinking blocks, and sampling parameters.",
   "source_shapes_sha256": "af6a4d7597846287e9bfcae12c1ea04362f1e865f9260cc1f4000cdd19ae0678",
   "source_validity_sha256": "860f36cd9e27a4679cac5245e8f3ce8ea657ee2d5cbd9116d8063e8af80fa4f2",
   "ids": [

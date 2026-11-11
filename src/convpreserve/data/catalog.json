@@ -5,217 +5,163 @@
       "id": "S01",
       "name": "MERGE",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V01",
-      "meaning": "content from two sources merged into one event"
+      "meaning": "content from two distinct sources merged into a single event"
     },
     {
       "id": "S02",
       "name": "SOURCE",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V02",
-      "meaning": "speaker changed user<->assistant<->tool; system->user/developer lowering is D02"
+      "meaning": "message role altered between user, assistant, and tool (system demoted to user/developer is D02)"
     },
     {
       "id": "S03",
       "name": "FLAG",
       "tier": "T1",
-      "principle": "P3",
-      "replaces": "V03",
-      "meaning": "semantic flag lost / invented / moved: is_error and its per-dialect carriers, redacted/thinking presence, strict on a tool"
+      "meaning": "semantic flag lost, added, or moved (e.g., tool_result is_error, thinking presence, or tool strict mode)"
     },
     {
       "id": "S04",
       "name": "REINTERP",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V04",
-      "meaning": "payload re-interpretation (typed JSON <-> string, nested result flattened)"
+      "meaning": "payload value re-interpreted (e.g., typed JSON object serialized into string or flattened)"
     },
     {
       "id": "S05",
       "name": "CONTENT",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V05",
-      "meaning": "non-empty content event lost or invented: text, thinking, tool_call, tool_result, image, server-tool blocks; empty blocks -> R05"
+      "meaning": "non-empty content block lost or added (text, thinking, tool_call, tool_result, or media)"
     },
     {
       "id": "S06",
       "name": "REF",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V06",
-      "meaning": "reference broken: tool_result->tool_call, Responses call_id/item ids, ids exceeding documented length/charset"
+      "meaning": "tool_result to tool_call reference broken, or call/item IDs invalid"
     },
     {
       "id": "S07",
       "name": "ORDER",
       "tier": "T1",
-      "principle": "P2",
-      "replaces": "V07",
-      "meaning": "causal partial order violated across edge families E1-E5, with sibling tool_results unordered (R07)"
+      "meaning": "causal order of messages or tool interactions altered (excluding parallel tool results in R07)"
     },
     {
       "id": "S08",
       "name": "CONTROL",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V08a",
-      "meaning": "a control the source SET is dropped or changed without a documented equivalent carrier"
+      "meaning": "generation or tool-choice parameter set by the caller was dropped or altered"
     },
     {
       "id": "S09",
       "name": "TOOLNAME",
       "tier": "T1",
-      "principle": "P1",
-      "replaces": "V09",
-      "meaning": "tool name altered"
+      "meaning": "declared or invoked tool name altered"
     },
     {
       "id": "S10",
       "name": "INTEGRITY",
       "tier": "T1",
-      "principle": "P4",
-      "replaces": "V10",
-      "meaning": "integrity token replaced by a value the vendor did not issue in this conversation (provenance check)"
+      "meaning": "reasoning or integrity signature replaced by a value not issued in this conversation"
     },
     {
       "id": "S11",
       "name": "SCHEMA",
       "tier": "T1",
-      "principle": "P5",
-      "replaces": "V11",
-      "meaning": "tool JSON-Schema structural/constraint change after schemacanon normalisation"
+      "meaning": "tool JSON Schema type, required fields, or validation constraints altered"
     },
     {
       "id": "S12",
       "name": "STOP",
       "tier": "T1",
-      "principle": "P6",
-      "replaces": "RV06",
-      "meaning": "stop/finish reason semantic class changed or missing on the terminal event"
+      "meaning": "stop or finish reason class altered or missing on the terminal message"
     },
     {
       "id": "S13",
       "name": "STREAM",
       "tier": "T1",
-      "principle": "P6",
-      "replaces": "RV12",
-      "meaning": "stream accounting: reassembled content != non-stream equivalent, delta after stop, start/stop pairing broken, tool input outside carrier, is_error on delta"
+      "meaning": "streamed reply differs from non-streaming equivalent, emits deltas after block stop, or breaks block pairing"
     },
     {
       "id": "D01",
       "name": "CONTROL-DEFAULT",
       "tier": "T2",
-      "principle": "P1",
-      "replaces": "V08-default",
-      "meaning": "control injected by adapter default where source unset"
+      "meaning": "default generation parameter injected by translator when unset in source"
     },
     {
       "id": "D02",
       "name": "LOWER",
       "tier": "T2",
-      "principle": "P1",
-      "replaces": "V02-lower",
-      "meaning": "system->user/developer lowering although the target has a system slot"
+      "meaning": "system prompt demoted to user or developer message although target API supports a system field"
     },
     {
       "id": "D03",
       "name": "HINT",
       "tier": "T2",
-      "principle": "P1",
-      "replaces": "new",
-      "meaning": "cache_control / service_tier / prompt-cache hints dropped or mis-mapped"
+      "meaning": "prompt-caching or service-tier hints dropped or mis-mapped"
     },
     {
       "id": "D04",
       "name": "USAGE",
       "tier": "T2",
-      "principle": "P1",
-      "replaces": "RV07",
-      "meaning": "usage numbers changed, leaked, or missing initial output_tokens"
+      "meaning": "token usage counts altered, leaked across dialects, or missing initial output_tokens"
     },
     {
       "id": "D05",
       "name": "MODEL",
       "tier": "T2",
-      "principle": "P1",
-      "replaces": "new",
-      "meaning": "model echo/name changed"
+      "meaning": "echoed model identifier changed"
     },
     {
       "id": "D06",
       "name": "ENVELOPE-LEAK",
       "tier": "T2",
-      "principle": "P1",
-      "replaces": "RV11-R3b",
-      "meaning": "reserved keys of another dialect leaking or duplicated stop_reason"
+      "meaning": "fields specific to another API format leaked onto response envelope, or stop_reason duplicated"
     },
     {
       "id": "R01",
       "name": "NULLABLE",
       "tier": "T3",
-      "principle": "P1",
-      "replaces": "V14/RV14-nullable",
-      "meaning": "absent vs null on nullable required keys"
+      "meaning": "absent key vs. explicit null on nullable fields"
     },
     {
       "id": "R02",
       "name": "EMPTYSTR",
       "tier": "T3",
-      "principle": "P1",
-      "replaces": "new",
-      "meaning": "empty string vs null content beside tool calls"
+      "meaning": "empty string vs. null text content alongside tool calls"
     },
     {
       "id": "R03",
       "name": "TEXTFORM",
       "tier": "T3",
-      "principle": "P1",
-      "replaces": "L02/L07/L09",
-      "meaning": "string vs 1-element array; adjacent text coalesced/split with same concatenation"
+      "meaning": "plain string vs. single-element text array, or adjacent text blocks merged/split with identical text"
     },
     {
       "id": "R04",
       "name": "CUSTOMKEY",
       "tier": "T3",
-      "principle": "P1",
-      "replaces": "new",
-      "meaning": "unknown custom keys"
+      "meaning": "unrecognized custom extension keys present"
     },
     {
       "id": "R05",
       "name": "EMPTYBLOCK",
       "tier": "T3",
-      "principle": "P6",
-      "replaces": "R-empty",
-      "meaning": "empty text block/part/delta injected"
+      "meaning": "empty text block or empty stream delta inserted"
     },
     {
       "id": "R06",
       "name": "ANNOTATION",
       "tier": "T3",
-      "principle": "P5",
-      "replaces": "V11.d",
-      "meaning": "schema annotation keys changed"
+      "meaning": "non-semantic JSON Schema annotation keywords changed (e.g., title or $schema)"
     },
     {
       "id": "R07",
       "name": "SIBLING",
       "tier": "T3",
-      "principle": "P2",
-      "replaces": "new",
-      "meaning": "sibling tool_result order within one parallel group changed"
+      "meaning": "order of parallel tool_result items changed within the same turn"
     },
     {
       "id": "R08",
       "name": "ENVELOPE-ID",
       "tier": "T3",
-      "principle": "P1",
-      "replaces": "new",
-      "meaning": "envelope identifiers changed"
+      "meaning": "message or response envelope ID changed"
     }
   ]
 }
